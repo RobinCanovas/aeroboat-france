@@ -1,0 +1,87 @@
+/*
+ * Jetons de design (contrat figé). Identité : bleu / blanc / rouge / noir (logo rond).
+ * Contrastes mesurés (WCAG 2.x, AA = 4.5:1 texte courant) :
+ *   --c-ink   / --c-bg 19.1 · / --c-surface 17.7
+ *   --c-muted / --c-bg  7.6 · / --c-surface  7.0 · / --c-surface-2 6.5
+ *   --c-blue  / --c-bg  8.2 · / --c-surface  7.6  (liens ; texte blanc sur bleu : 8.2)
+ *   --c-red   / --c-bg  5.5 · / --c-surface  5.1  (texte blanc sur rouge : 5.5)
+ *   --c-white / --c-navy 16.3 · / --c-ink 19.1
+ *   --c-sky   / --c-navy  9.0
+ *   --c-ok / --c-bg 5.0 (texte blanc sur --c-ok : 5.0) · --c-warn / --c-bg 5.9
+ * Ne pas utiliser --c-red ou --c-ok sur un fond plus sombre que --c-surface sans re-mesurer.
+ * Mobile-first : media queries en min-width 48em (768px) et 80em (1280px).
+ */
+:root {
+  /* Couleurs de marque */
+  --c-ink: #0b0f1a;
+  --c-navy: #0a1f44;
+  --c-blue: #1d4c9a;
+  --c-blue-600: #163a78;
+  --c-sky: #9fc2ff;
+  --c-red: #c62f25;
+  --c-red-600: #a3241c;
+  --c-white: #ffffff;
+
+  /* Neutres et surfaces */
+  --c-bg: #ffffff;
+  --c-surface: #f4f6fb;
+  --c-surface-2: #e8edf6;
+  --c-border: #d3dae8;
+  --c-muted: #4a5468;
+
+  /* États (statuts de timeline) */
+  --c-ok: #1a7f4b;
+  --c-warn: #8a5a00;
+
+  /* Typographie (polices auto-hébergées) */
+  --font-body: "Inter Variable", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Sora Variable", "Inter Variable", system-ui, sans-serif;
+  --fs-xs: 0.8125rem;
+  --fs-sm: 0.9375rem;
+  --fs-base: 1rem;
+  --fs-md: 1.125rem;
+  --fs-lg: clamp(1.25rem, 1.1rem + 0.7vw, 1.5rem);
+  --fs-xl: clamp(1.625rem, 1.3rem + 1.6vw, 2.25rem);
+  --fs-2xl: clamp(2rem, 1.4rem + 3vw, 3.5rem);
+  --lh-tight: 1.15;
+  --lh-body: 1.6;
+
+  /* Espacements */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.5rem;
+  --sp-6: 2rem;
+  --sp-7: 3rem;
+  --sp-8: 4.5rem;
+  --sp-9: 6rem;
+
+  /* Formes */
+  --radius-sm: 0.5rem;
+  --radius: 1rem;
+  --radius-lg: 1.75rem;
+  --radius-pill: 999px;
+  --shadow-1: 0 1px 2px rgb(10 31 68 / 8%), 0 4px 16px rgb(10 31 68 / 8%);
+  --shadow-2: 0 8px 32px rgb(10 31 68 / 18%);
+
+  /* Mise en page */
+  --container: 72rem;
+  --gutter: 1rem;
+  --header-h: 4rem;
+
+  /* Focus visible (non supprimable) */
+  --focus-ring: 0 0 0 3px var(--c-white), 0 0 0 6px var(--c-blue);
+
+  /* Mouvement */
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --dur: 220ms;
+}
+
+@media (min-width: 48em) {
+  :root { --gutter: 2rem; --header-h: 4.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --dur: 0.01ms; }
+}

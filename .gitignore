@@ -1,0 +1,29 @@
+# Secrets : jamais versionnés
+.env
+.env.*
+!.env.example
+
+# Dépendances et builds
+node_modules/
+dist/
+public/assets/
+public/hot
+
+# Données d'exécution (le dossier reste, pas le contenu)
+storage/cv/*
+storage/logs/*
+storage/sessions/*
+!storage/*/.gitkeep
+public/uploads/*
+!public/uploads/.gitkeep
+!public/uploads/.htaccess
+database/*.sqlite
+database/*.sqlite-*
+
+# État de déploiement local
+.deploy-state*.json
+
+# Divers
+*.log
+.DS_Store
+Thumbs.db
