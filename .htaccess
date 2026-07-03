@@ -1,0 +1,27 @@
+# Racine du projet (ex. /www/test/). Tout est servi depuis public/ ; le reste est refusé.
+# Aucun RewriteBase : les substitutions relatives fonctionnent à la racine comme dans un sous-dossier (/test/).
+Options -Indexes -MultiViews
+
+# Fichiers sensibles, quel que soit le dossier.
+<FilesMatch "(?i)(^\.env|^\.git|\.(sql|md|sqlite|sqlite3|log|lock|ini|sh|py|mjs|yml|yaml|dist)$|^composer\.|^package(-lock)?\.json$)">
+    Require all denied
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Dossiers internes et fichiers cachés : 403.
+    RewriteRule ^(app|database|storage|scripts|tests|docs|frontend|node_modules|dist|vendor)(/|$) - [F,L]
+    RewriteRule (^|/)\.(?!well-known/) - [F,L]
+    RewriteRule \.(sql|md|sqlite)$ - [F,L,NC]
+
+    # Déjà dans public/ : laisser public/.htaccess décider.
+    RewriteRule ^public/ - [L]
+
+    # Tout le reste vers public/ (chemin relatif au dossier de ce fichier).
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+
+<IfModule !mod_rewrite.c>
+    Require all denied
+</IfModule>

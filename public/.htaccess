@@ -1,0 +1,41 @@
+# Racine web (public/). Fichier existant servi tel quel, sinon front controller index.php.
+Options -Indexes -MultiViews
+DirectoryIndex index.php
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    # Fichiers cachés (.htaccess, .vite/…) hors assets : refusés.
+    RewriteRule (^|/)\.(?!well-known/) - [F,L]
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule ^ - [L]
+    RewriteRule ^ index.php [L,QSA]
+</IfModule>
+
+# Aucun en-tête de version
+<IfModule mod_headers.c>
+    Header unset X-Powered-By
+    Header always set X-Content-Type-Options "nosniff"
+</IfModule>
+
+# Cache long : assets/ (noms hachés par Vite) immuables ; img/ un mois.
+<IfModule mod_headers.c>
+    <If "%{REQUEST_URI} =~ m#/assets/#">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </If>
+    <ElseIf "%{REQUEST_URI} =~ m#/img/#">
+        Header set Cache-Control "public, max-age=2592000"
+    </ElseIf>
+    <ElseIf "%{REQUEST_URI} =~ m#/uploads/#">
+        Header set Cache-Control "public, max-age=604800"
+    </ElseIf>
+</IfModule>
+
+<IfModule mod_mime.c>
+    AddType image/webp .webp
+    AddType font/woff2 .woff2
+    AddType application/manifest+json .webmanifest
+</IfModule>
+
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/javascript application/json application/xml image/svg+xml
+</IfModule>
