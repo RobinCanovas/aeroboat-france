@@ -89,7 +89,7 @@ final class AuthController
                     'username' => $old['username'],
                     'display_name' => $old['display_name'],
                     'email' => $old['email'] === '' ? null : $old['email'],
-                    'password_hash' => password_hash($ctx->p('password'), PASSWORD_DEFAULT),
+                    'password_hash' => Passwords::hash($ctx->p('password')),
                     'role' => 'admin',
                     'active' => 1,
                     'created_at' => Time::nowUtc(),
@@ -123,7 +123,7 @@ final class AuthController
                 } elseif (($err = Validator::passwordError($new, $ctx->p('new_password_confirm'))) !== null) {
                     $errors['new_password'] = $err;
                 } else {
-                    $hash = password_hash($new, PASSWORD_DEFAULT);
+                    $hash = Passwords::hash($new);
                 }
             }
             if ($errors === []) {
