@@ -54,7 +54,7 @@ return [
             if ($err !== null) {
                 $errors['password'] = $err;
             } else {
-                $v['password_hash'] = AppAdminPasswords::hash($password);
+                $v['password_hash'] = \App\Admin\Passwords::hash($password);
             }
         } elseif ($ex === null) {
             $errors['password'] = 'Le mot de passe est obligatoire à la création.';
