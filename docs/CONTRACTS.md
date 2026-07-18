@@ -32,7 +32,7 @@ Namespace `App\Core`. Autoload PSR-4 maison (`App\X\Y` → `app/X/Y.php`).
 - `Lang` : `Lang::current()`, `Lang::t($key,$params=[])`, `Lang::has($key)`. Paramètres `:nom`. Une clé absente renvoie la clé (et journalise en debug).
 - `Router::url(string $key,array $params=[],?string $lang=null): string` (absolu), `Router::alternates(): array` (`['fr'=>url,'en'=>url]` pour la route courante).
 - `View::render(string $tpl,array $data=[]): string` (gabarit `app/views/{tpl}.php`, enveloppé dans `layout.php` si `$data['_layout'] !== false`) ; `View::partial(string $tpl,array $data=[]): string`.
-- `Csrf::formToken(string $form): string` / `Csrf::verifyForm(string $form,string $token,int $minDelay=3,int $maxAge=7200): bool` (HMAC sans cookie : `ts.hmac(APP_KEY, form|ts)`) ; `Csrf::sessionToken(): string` / `Csrf::verifySession(string $t): bool` (admin).
+- `Csrf::formToken(string $form): string` / `Csrf::verifyForm(string $form,string $token,int $minDelay=3,int $maxAge=3600): bool` (HMAC sans cookie : `ts.hmac(APP_KEY, form|ts)`) ; `Csrf::sessionToken(): string` / `Csrf::verifySession(string $t): bool` (admin).
 - `Throttle::hit(string $bucket,int $limit,int $windowSec): bool` (false = limite atteinte ; IP hachée avec `APP_KEY`, jamais en clair) ; `Throttle::purge()`.
 - `Auth` (session admin) : `Auth::user(): ?array`, `Auth::attempt($username,$password): bool` (régénère l'ID de session), `Auth::logout()`, `Auth::requireRole(string ...$roles): void`, `Auth::hasRole(string $r): bool`. Rôles : `admin` (bureau, tout), `editor` (rédacteur : articles, équipe, partenaires, modules).
 - `Session::start()` : uniquement côté admin. Cookie `abf_admin`, `HttpOnly`, `SameSite=Strict`, `Secure` si https, chemin = `basePath/admin`, stockage `storage/sessions/`.
@@ -48,7 +48,7 @@ Namespace `App\Core`. Autoload PSR-4 maison (`App\X\Y` → `app/X/Y.php`).
 Champs communs : `_token` (obligatoire), `website` (pot de miel, doit être vide), `consent` (case obligatoire). Rejet silencieux (réponse « envoyé ») si pot de miel rempli ; erreur « trop rapide » si délai < 3 s ; limite 5 envois/heure/IP hachée par formulaire. Succès : redirection 303 vers `?sent=1`.
 - `join` : `first_name last_name email school level skills motivation availability`, fichier optionnel `cv` (PDF) → table `applications` (statut `new`).
 - `contact` : `name email subject body` → `messages` (kind `contact`).
-- `rights` : `name email request_type body` (`request_type` ∈ `access|rectify|erase|object|portability`) → `messages` (kind `rights`).
+- `rights` : `name email request_type body` (`request_type` ∈ `access|rectify|erase|restrict|object|portability`) → `messages` (kind `rights`). **Pas de case de consentement** (on ne conditionne pas l'exercice d'un droit à un consentement) : une mention d'information `rights.notice_html` la remplace ; `consent_at` = date d'envoi.
 
 ### Données passées aux vues publiques
 Toutes les vues reçoivent `$meta` = `['title','description','canonical','robots','image','alternates']` et `$page` (clé de route). Spécifiques : `home` → `posts` (3 derniers publics), `partners` (publiés) ; `team` → `members` ; `partners` → `partnersByCategory` (catégorie → lignes) ; `news/index` → `posts`, `page`, `pages` ; `news/show` → `post`, `bodyHtml` ; `join|contact|rights` → `errors` (clé champ → clé lang), `sent` (bool), formulaire préremplie via `old()` ; pages légales → `org` (variables `ORG_*`, vides masquées). Pas de logique dans les vues au-delà de l'affichage.
@@ -66,3 +66,11 @@ Dossier `app/Modules/<Nom>/` : `module.php` retourne `['key','label','icon','rou
 
 ## 8. Sécurité transverse
 CSP `default-src 'self'; script-src 'self' 'nonce-…'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'` (ajouter l'origine Vite seulement si `VITE_DEV=1`). En-têtes : `X-Content-Type-Options`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy` vide, HSTS si https. `X-Robots-Tag: noindex` si `SITE_NOINDEX=1`.
+
+## 9. Décisions de correction (relectures Phase 3)
+- `App\Core\Retention` : `purge(): array` (messages > 12 mois, candidatures > 24 mois CV compris, lignes `throttle` > 24 h) et `runDaily()` (au plus une fois par 24 h, repère `storage/logs/.last-retention`), appelé après les envois de formulaires publics et à l'ouverture du tableau de bord admin ; le bouton admin de purge utilise `purge()`.
+- Notification mail : **aucune donnée personnelle** (« nouveau message n°X, à consulter dans l'espace membres »).
+- Authentification : échecs comptés par couple (identifiant, IP) + seuil global élevé qui ralentit sans bloquer ; session = durée max 12 h ; empreinte du hash du mot de passe gardée en session (un changement de mot de passe invalide les autres sessions) ; jeton CSRF de session régénéré à la connexion.
+- `Config::parse` ignore un BOM UTF-8 initial.
+- Journaux : classe, fichier, ligne ; message brut uniquement si `APP_DEBUG=1`.
+- Clés de langue ajoutées : `forms.errors.summary_title` (`:count`), `forms.required_legend`, `join.consent_short`, `contact.consent_short`, `rights.notice_html` (`:privacy_url`), `rights.types.restrict`.
