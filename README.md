@@ -28,7 +28,7 @@ Au premier lancement, `npm run dev` crée un `.env` de démonstration **s'il n'e
 | Commande | Effet |
 |---|---|
 | `npm run dev` | Vite + `php -S` (routeur `scripts/dev-router.php`) |
-| `npm test` | tests PHP (parité FR/EN, clés utilisées, « Arduino », compatibilité PHP 8.2) |
+| `npm test` | tests PHP (parité FR/EN, clés utilisées, mot interdit, compatibilité PHP 8.2) |
 | `npm run lint:php` | `php -l` sur `app/ database/ public/ tests/ scripts/` (code 1 si erreur) |
 | `npm run build` | assets Vite vers `public/assets/` |
 | `npm run migrate:demo` | migration + seed sur SQLite temporaire |

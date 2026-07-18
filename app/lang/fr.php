@@ -108,12 +108,12 @@ return [
     'project' => [
         'hero' => [
             'kicker' => 'Projet V6',
-            'title' => 'Vers une nouvelle génération d’hydravions',
+            'title' => 'Vers une nouvelle génération d’engins à effet de sol',
             'lead' => 'Depuis six ans, Aéroboat France développe des prototypes d’aéronefs à effet de sol. Après avoir fait voler et testé avec succès des modèles expérimentaux (HV3 et HV4), nous lançons le développement de la V6, un modèle pensé comme une véritable étape dans notre parcours.',
         ],
         'why' => [
             'title' => 'Pourquoi une V6 ?',
-            'text' => 'Chaque prototype construit a été pour nous une occasion d’apprendre. L’objectif de la V6 est simple à énoncer, mais ambitieux : construire un hydravion fiable, performant et modulaire, capable de repousser les limites actuelles de la technologie de l’effet de sol.',
+            'text' => 'Chaque prototype construit a été pour nous une occasion d’apprendre. L’objectif de la V6 est simple à énoncer, mais ambitieux : construire un engin à effet de sol fiable, performant et modulaire, capable de repousser les limites actuelles de la technologie de l’effet de sol.',
             'v3' => 'La HV3 nous a appris l’importance d’une structure rigide et de flotteurs correctement dimensionnés.',
             'v4' => 'La HV4 a validé plusieurs solutions techniques (forme de l’empennage, flottabilité, facilité d’assemblage), mais elle a aussi révélé certaines limites, notamment en matière d’étanchéité, de rigidité de l’aile et de capacité d’emport.',
             'v6' => 'La V6 est donc pensée comme une synthèse : elle s’appuie sur les réussites passées, corrige les défauts précédents et ouvre la voie à de nouvelles innovations.',
@@ -311,6 +311,8 @@ return [
             'csrf' => 'Le formulaire a expiré. Rechargez la page, puis réessayez.',
             'pdf_invalid' => 'Le fichier doit être un PDF valide.',
             'pdf_too_large' => 'Le PDF dépasse la taille maximale de 5 Mo.',
+            'image_invalid' => 'Ce fichier n’est pas une image valide (JPEG, PNG ou WebP).',
+            'image_too_large' => 'L’image dépasse la taille maximale autorisée.',
             'generic' => 'Une erreur est survenue. Veuillez réessayer plus tard.',
         ],
         'honeypot_label' => 'Ne pas remplir ce champ',

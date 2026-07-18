@@ -307,6 +307,8 @@ return [
             'csrf' => 'The form has expired. Reload the page, then try again.',
             'pdf_invalid' => 'The file must be a valid PDF.',
             'pdf_too_large' => 'The PDF exceeds the maximum size of 5 MB.',
+            'image_invalid' => 'This file is not a valid image (JPEG, PNG or WebP).',
+            'image_too_large' => 'The image exceeds the maximum allowed size.',
             'generic' => 'An error occurred. Please try again later.',
         ],
         'honeypot_label' => 'Leave this field empty',

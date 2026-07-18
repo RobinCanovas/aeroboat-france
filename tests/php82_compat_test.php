@@ -8,7 +8,8 @@ declare(strict_types=1);
 return static function (): array {
     $errors = [];
     $forbiddenFunctions = ['json_validate', 'mb_str_pad', 'mb_trim', 'mb_ltrim', 'mb_rtrim', 'array_find', 'array_find_key', 'array_any', 'array_all', 'str_increment', 'str_decrement'];
-    foreach (files_with_ext(ROOT, ['php']) as $file) {
+    $skip = ['node_modules', 'vendor', 'dist', 'assets', '.git', 'uploads', 'storage'];
+    foreach (files_with_ext(ROOT, ['php'], $skip) as $file) {
         if (str_starts_with(rel($file), 'tests/')) {
             continue;
         }

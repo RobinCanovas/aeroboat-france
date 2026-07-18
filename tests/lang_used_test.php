@@ -17,6 +17,20 @@ return static function (): array {
         $src = (string) file_get_contents($file);
         if (preg_match_all('/\bt(?:_html)?\(\s*[\'"]([a-z0-9_.\-]+)[\'"]/i', $src, $m)) {
             foreach (array_unique($m[1]) as $key) {
+                // Clé dynamique (préfixe + concaténation, ex. t('img.' . $slug)) : un groupe de clés doit exister sous ce préfixe.
+                if (str_ends_with($key, '.') || str_ends_with($key, '_')) {
+                    $found = false;
+                    foreach ($keys as $k => $_) {
+                        if (str_starts_with($k, $key)) {
+                            $found = true;
+                            break;
+                        }
+                    }
+                    if (!$found) {
+                        $errors[] = rel($file) . " : aucun groupe de clés « $key… »";
+                    }
+                    continue;
+                }
                 if (!isset($keys[$key])) {
                     $errors[] = rel($file) . " : clé inconnue « $key »";
                 }

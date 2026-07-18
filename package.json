@@ -10,11 +10,12 @@
     "build": "vite build",
     "lint:php": "node scripts/lint-php.mjs",
     "test": "php tests/run.php",
+    "test:scripts": "node --test \"scripts/tests/*.test.mjs\"",
     "migrate:demo": "php database/migrate.php --demo",
     "release": "node scripts/build-release.mjs",
     "deploy:test": "node scripts/deploy.mjs --env test",
     "push-env": "node scripts/push-env.mjs --env test",
-    "ci": "npm run lint:php && npm run test && npm run build && npm run migrate:demo"
+    "ci": "npm run lint:php && npm run test && npm run test:scripts && npm run build && npm run migrate:demo"
   },
   "devDependencies": {
     "@fontsource-variable/inter": "^5.1.0",
