@@ -19,9 +19,8 @@ final class Throttle
         $bucket = substr($bucket, 0, 60);
         $hash = self::ipHash($ip);
         $now = time();
-        if (random_int(1, 50) === 1) {
-            self::purge();
-        }
+        // Table minuscule : purge des entrées expirées à chaque passage.
+        self::purge();
         if (self::count($bucket, $windowSec, $ip) >= $limit) {
             return false;
         }

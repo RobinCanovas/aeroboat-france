@@ -122,6 +122,23 @@ final class Upload
         return $name;
     }
 
+    /**
+     * Supprime un CV de storage/cv/ (nom simple produit par pdf(), sans séparateur ni « .. »).
+     * Retourne true si un fichier a été supprimé.
+     */
+    public static function deletePdf(?string $name, ?string $dir = null): bool
+    {
+        if ($name === null || !preg_match('/^[A-Za-z0-9][A-Za-z0-9._-]{0,99}$/', $name) || str_contains($name, '..')) {
+            return false;
+        }
+        $base = realpath($dir ?? self::cvDir());
+        $path = $base === false ? false : realpath($base . DIRECTORY_SEPARATOR . $name);
+        if ($base === false || $path === false || !is_file($path) || !str_starts_with($path, $base . DIRECTORY_SEPARATOR)) {
+            return false;
+        }
+        return @unlink($path);
+    }
+
     private static function checkFile(array $file, int $maxBytes, string $tooLargeKey): string
     {
         $err = (int) ($file['error'] ?? UPLOAD_ERR_NO_FILE);

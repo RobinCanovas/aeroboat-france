@@ -28,6 +28,24 @@ final class Logger
         }
     }
 
+    /**
+     * Journalise une exception sans donnée personnelle : classe + fichier:ligne.
+     * Le message brut (qui peut contenir des valeurs saisies) n'est ajouté qu'en mode debug (APP_DEBUG=1).
+     */
+    public static function exception(string $context, \Throwable $e, string $level = 'ERROR'): void
+    {
+        $ctx = ['class' => get_class($e), 'at' => self::shortPath($e->getFile()) . ':' . $e->getLine()];
+        if (Config::debug()) {
+            $ctx['message'] = $e->getMessage();
+        }
+        self::write($level, $context, $ctx);
+    }
+
+    public static function shortPath(string $file): string
+    {
+        return ltrim(str_replace([str_replace('\\', '/', Config::root()), '\\'], ['', '/'], str_replace('\\', '/', $file)), '/');
+    }
+
     private static function write(string $level, string $message, array $context): void
     {
         $dir = Config::root() . '/storage/logs';
