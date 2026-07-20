@@ -69,7 +69,9 @@ $o = static function (string $k) use ($org): string {
             <li><?= e(t('privacy.retention.applications')) ?></li>
             <li><?= e(t('privacy.retention.cv')) ?></li>
             <li><?= e(t('privacy.retention.throttle')) ?></li>
+            <li><?= e(t('privacy.retention.logs')) ?></li>
         </ul>
+        <p><?= e(t('privacy.retention.auto')) ?></p>
         <p><?= e(t('privacy.retention.after')) ?></p>
     </section>
 

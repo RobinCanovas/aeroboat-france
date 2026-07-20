@@ -88,7 +88,7 @@ $partners = [
 $bodyFr = <<<'MD'
 Aéroboat France entre dans une nouvelle étape : nous lançons le développement de la **V6**, un modèle pensé comme une véritable étape dans notre parcours.
 
-Après plusieurs années de développement de prototypes d’aéronefs à effet de sol, et après avoir fait voler et testé avec succès les modèles expérimentaux HV3 et HV4, nous voulons construire un hydravion fiable, performant et modulaire, capable de repousser les limites actuelles de la technologie de l’effet de sol.
+Après plusieurs années de développement de prototypes d’aéronefs à effet de sol, et après avoir fait voler et testé avec succès les modèles expérimentaux HV3 et HV4, nous voulons construire un engin à effet de sol fiable, performant et modulaire, capable de repousser les limites actuelles de la technologie de l’effet de sol.
 
 ## Ce que nous ont appris les prototypes
 
@@ -115,7 +115,7 @@ MD;
 $bodyEn = <<<'MD'
 Aéroboat France is entering a new stage: we are launching the development of the **V6**, a model designed as a true milestone in our journey.
 
-After several years of developing ground-effect aircraft prototypes, and after successfully flying and testing the experimental HV3 and HV4 models, we want to build a reliable, high-performance and modular hydroplane capable of pushing the current limits of ground-effect technology.
+After several years of developing ground-effect aircraft prototypes, and after successfully flying and testing the experimental HV3 and HV4 models, we want to build a reliable, high-performance and modular ground-effect craft capable of pushing the current limits of ground-effect technology.
 
 ## What the prototypes taught us
 
@@ -145,8 +145,8 @@ $posts = [
         'slug_en' => 'v6-project-launch',
         'title_fr' => 'Lancement du projet V6',
         'title_en' => 'Launch of the V6 project',
-        'excerpt_fr' => 'Après les essais en vol des modèles HV3 et HV4, Aéroboat France lance le développement de la V6, une nouvelle génération d’hydravions à effet de sol.',
-        'excerpt_en' => 'After flight-testing the HV3 and HV4 models, Aéroboat France is launching the development of the V6, a new generation of ground-effect hydroplanes.',
+        'excerpt_fr' => 'Après les essais en vol des modèles HV3 et HV4, Aéroboat France lance le développement de la V6, une nouvelle génération d’engins à effet de sol.',
+        'excerpt_en' => 'After flight-testing the HV3 and HV4 models, Aéroboat France is launching the development of the V6, a new generation of ground-effect craft.',
         'body_fr' => $bodyFr,
         'body_en' => $bodyEn,
         'cover' => 'water-run',

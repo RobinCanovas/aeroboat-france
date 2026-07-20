@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 /**
  * Interface texts, English. Exact key parity with fr.php (French is the reference language).
- * Same parameters as the French file: :date, :page, :pages, :year, :privacy_url.
+ * Same parameters as the French file: :date, :page, :pages, :year, :privacy_url, :count.
  */
 return [
     'meta' => [
@@ -104,12 +104,12 @@ return [
     'project' => [
         'hero' => [
             'kicker' => 'V6 project',
-            'title' => 'Toward a new generation of hydroplanes',
+            'title' => 'Toward a new generation of ground-effect craft',
             'lead' => 'For six years, Aéroboat France has been developing ground-effect aircraft prototypes. After successfully flying and testing experimental models (HV3 and HV4), we are launching the development of the V6, a model designed as a true milestone in our journey.',
         ],
         'why' => [
             'title' => 'Why a V6?',
-            'text' => 'Each prototype we have built has been an opportunity for us to learn. The objective of the V6 is simple to state but ambitious to achieve: to build a reliable, high-performance and modular hydroplane capable of pushing the current limits of ground-effect technology.',
+            'text' => 'Each prototype we have built has been an opportunity for us to learn. The objective of the V6 is simple to state but ambitious to achieve: to build a reliable, high-performance and modular ground-effect craft capable of pushing the current limits of ground-effect technology.',
             'v3' => 'The HV3 taught us the importance of a rigid structure and properly sized floats.',
             'v4' => 'The HV4 validated several technical solutions (tail design, buoyancy and ease of assembly), but it also revealed certain limitations, particularly regarding waterproofing, wing rigidity and payload capacity.',
             'v6' => 'The V6 is therefore conceived as a synthesis: it builds on past successes, corrects previous shortcomings and paves the way for new innovations.',
@@ -228,10 +228,11 @@ return [
             'cv' => 'CV (PDF, optional)',
         ],
         'hints' => [
-            'cv' => 'PDF files only, 5 MB maximum. It is stored outside the public area of the site.',
+            'cv' => 'PDF files only, 5 MB maximum. It is stored in a folder that cannot be accessed from the internet.',
             'motivation' => 'A few lines are enough: what attracts you to the project and what you would like to bring to it.',
         ],
         'consent_html' => 'I agree that Aéroboat France may use this information to review my application and reply to me. Learn more in the <a href=":privacy_url">privacy policy</a>.',
+        'consent_short' => 'Consent',
         'submit' => 'Send my application',
         'sent' => [
             'title' => 'Application sent',
@@ -256,6 +257,7 @@ return [
             'body' => 'Message',
         ],
         'consent_html' => 'I agree that Aéroboat France may use this information to reply to my message. Learn more in the <a href=":privacy_url">privacy policy</a>.',
+        'consent_short' => 'Consent',
         'submit' => 'Send message',
         'sent' => [
             'title' => 'Message sent',
@@ -272,7 +274,7 @@ return [
     'rights' => [
         'hero' => [
             'title' => 'Exercise my rights',
-            'lead' => 'Access, rectification, erasure, objection, portability: use this form to exercise your rights over your personal data.',
+            'lead' => 'Access, rectification, erasure, restriction, objection, portability: use this form to exercise your rights over your personal data.',
         ],
         'fields' => [
             'name' => 'Name',
@@ -284,10 +286,11 @@ return [
             'access' => 'Access my data',
             'rectify' => 'Correct my data',
             'erase' => 'Erase my data',
+            'restrict' => 'Restrict the processing of my data',
             'object' => 'Object to a processing',
             'portability' => 'Receive my data (portability)',
         ],
-        'consent_html' => 'I agree that Aéroboat France may use this information to handle my request. Learn more in the <a href=":privacy_url">privacy policy</a>.',
+        'notice_html' => 'The information you enter is used only to handle your request to exercise your rights, in compliance with a legal obligation. It can be viewed only by authorised members and is kept for 12 months. Learn more in the <a href=":privacy_url">privacy policy</a>.',
         'submit' => 'Send my request',
         'sent' => [
             'title' => 'Request sent',
@@ -310,7 +313,9 @@ return [
             'image_invalid' => 'This file is not a valid image (JPEG, PNG or WebP).',
             'image_too_large' => 'The image exceeds the maximum allowed size.',
             'generic' => 'An error occurred. Please try again later.',
+            'summary_title' => 'The form contains errors to correct (:count)',
         ],
+        'required_legend' => 'Fields marked with an * are required.',
         'honeypot_label' => 'Leave this field empty',
     ],
 
@@ -404,32 +409,34 @@ return [
             ],
             'members' => [
                 'title' => 'Members’ area',
-                'text' => 'Members’ area accounts are created by the association’s board. They include a username, a display name, possibly an email address, and a password stored only in encrypted (hashed) form. Purpose: to let authorised members manage the site.',
+                'text' => 'Members’ area accounts are created by the association’s board. They include a username, a display name, possibly an email address, the date of the last login and a password stored only in encrypted (hashed) form. Purpose: to let authorised members manage the site.',
             ],
             'security' => [
-                'title' => 'Limiting the number of submissions',
-                'text' => 'To prevent abuse, the number of form submissions is limited. Your IP address is never stored in plain text: only an irreversible fingerprint, computed with a secret key, is recorded, for 24 hours at most.',
+                'title' => 'Limiting submissions and login attempts',
+                'text' => 'To prevent abuse, the number of form submissions is limited, as is the number of login attempts to the members’ area. Your IP address is never stored in plain text: only an irreversible fingerprint, computed with a secret key, is recorded, for a few minutes up to 24 hours at most.',
             ],
         ],
         'basis' => [
             'title' => 'Legal basis',
-            'text' => 'The application and contact forms rely on your consent, which you give by ticking the box provided. Handling requests to exercise rights meets a legal obligation. Limiting the number of submissions relies on our legitimate interest in protecting the site against abuse.',
+            'text' => 'The application and contact forms rely on your consent, which you give by ticking the box provided. Handling requests to exercise rights meets a legal obligation. Limiting submissions and login attempts, as well as technical logs, rely on our legitimate interest in protecting the site against abuse.',
         ],
         'retention' => [
             'title' => 'Retention periods',
             'messages' => 'Contact messages and requests to exercise rights: 12 months.',
             'applications' => 'Applications: 24 months.',
-            'cv' => 'CVs: kept as long as the corresponding application (24 months), in a folder that is not accessible from the internet.',
-            'throttle' => 'IP address fingerprint used to limit submissions: 24 hours at most.',
-            'after' => 'At the end of these periods, the data is deleted. You may ask for it to be deleted earlier.',
+            'cv' => 'CVs: kept as long as the corresponding application (24 months), in a folder to which access from the internet is forbidden.',
+            'throttle' => 'IP address fingerprint used to limit submissions and login attempts: from a few minutes up to 24 hours at most.',
+            'logs' => 'Technical logs of the site: 90 days at most.',
+            'auto' => 'This deletion is automatic: a daily check, triggered by activity on the site (a form submission or opening the members’ area), deletes messages older than 12 months, applications older than 24 months (CVs included) and IP address fingerprints older than 24 hours. A purge button is also available in the members’ area.',
+            'after' => 'You may ask for your data to be deleted before these dates.',
         ],
         'recipients' => [
             'title' => 'Recipients',
-            'text' => 'Your data is intended for the board and team members in charge of handling your request. It is neither sold nor passed on to third parties. A message may be forwarded by email to the association’s contact address to let us know it has arrived.',
+            'text' => 'Your data is intended for the board and team members in charge of handling your request. Data entered in the forms can be viewed only in the members’ area, which is reserved for authorised accounts. It is neither sold nor passed on to third parties. The association receives a notification email when a message or an application arrives, but this email contains no personal data: it only invites us to check the members’ area. The only processor is the host, OVH, which hosts the site and its database.',
         ],
         'hosting' => [
             'title' => 'Hosting and security',
-            'text' => 'The site and its database are hosted by OVH. Forms are protected against automated submissions without any tracker or cookie, and CVs are stored outside the server’s public area. The host may keep technical connection logs needed to operate and secure the service.',
+            'text' => 'The site and its database are hosted by OVH. Forms are protected against automated submissions without any tracker or cookie, and CVs are stored in a folder to which access from the internet is forbidden. Technical logs needed to operate and secure the service are kept; they contain no data entered by visitors and are retained for 90 days at most.',
         ],
         'tracking' => [
             'title' => 'No trackers',
@@ -460,13 +467,13 @@ return [
         ],
         'members' => [
             'title' => 'Members’ area',
-            'text' => 'When an authorised member logs in to the members’ area, a strictly necessary session cookie is set to keep them logged in. It serves no other purpose and is never set for visitors. This type of cookie is exempt from consent.',
+            'text' => 'A strictly necessary session cookie is set as soon as the members’ area login page is opened, even before any username is entered, so that the login and its protection can work. It serves no other purpose and is never set when you browse the public pages of the site. This type of cookie is exempt from consent.',
             'name_label' => 'Cookie name',
             'name_value' => 'abf_admin',
             'purpose_label' => 'Purpose',
-            'purpose_value' => 'Keep the members’ area login session',
+            'purpose_value' => 'Make the members’ area login work and keep the session',
             'duration_label' => 'Duration',
-            'duration_value' => 'Session duration',
+            'duration_value' => 'Session duration (12 hours at most)',
         ],
         'banner' => [
             'title' => 'No consent banner',

@@ -6,7 +6,8 @@ declare(strict_types=1);
  *
  * Paramètres utilisés (identiques en FR et EN) :
  *   common.published_on  :date            news.page_of  :page, :pages
- *   footer.copyright     :year            join|contact|rights.consent_html  :privacy_url (URL absolue de la page confidentialité)
+ *   footer.copyright     :year            join|contact.consent_html, rights.notice_html  :privacy_url (URL absolue de la page confidentialité)
+ *   forms.errors.summary_title  :count
  * Typographie : espaces insécables avant ; : ! ? et dans les guillemets « », apostrophes typographiques.
  */
 return [
@@ -232,10 +233,11 @@ return [
             'cv' => 'CV (PDF, facultatif)',
         ],
         'hints' => [
-            'cv' => 'Fichier PDF uniquement, 5 Mo maximum. Il est stocké hors de l’espace public du site.',
+            'cv' => 'Fichier PDF uniquement, 5 Mo maximum. Il est stocké dans un dossier dont l’accès est interdit depuis internet.',
             'motivation' => 'Quelques lignes suffisent : ce qui vous attire dans le projet et ce que vous aimeriez y apporter.',
         ],
         'consent_html' => 'J’accepte qu’Aéroboat France utilise ces informations pour étudier ma candidature et me répondre. En savoir plus dans la <a href=":privacy_url">politique de confidentialité</a>.',
+        'consent_short' => 'Consentement',
         'submit' => 'Envoyer ma candidature',
         'sent' => [
             'title' => 'Candidature envoyée',
@@ -260,6 +262,7 @@ return [
             'body' => 'Message',
         ],
         'consent_html' => 'J’accepte qu’Aéroboat France utilise ces informations pour répondre à mon message. En savoir plus dans la <a href=":privacy_url">politique de confidentialité</a>.',
+        'consent_short' => 'Consentement',
         'submit' => 'Envoyer le message',
         'sent' => [
             'title' => 'Message envoyé',
@@ -276,7 +279,7 @@ return [
     'rights' => [
         'hero' => [
             'title' => 'Exercer mes droits',
-            'lead' => 'Accès, rectification, effacement, opposition, portabilité : utilisez ce formulaire pour exercer vos droits sur vos données personnelles.',
+            'lead' => 'Accès, rectification, effacement, limitation, opposition, portabilité : utilisez ce formulaire pour exercer vos droits sur vos données personnelles.',
         ],
         'fields' => [
             'name' => 'Nom',
@@ -288,10 +291,11 @@ return [
             'access' => 'Accéder à mes données',
             'rectify' => 'Rectifier mes données',
             'erase' => 'Effacer mes données',
+            'restrict' => 'Limiter le traitement de mes données',
             'object' => 'M’opposer à un traitement',
             'portability' => 'Récupérer mes données (portabilité)',
         ],
-        'consent_html' => 'J’accepte qu’Aéroboat France utilise ces informations pour traiter ma demande. En savoir plus dans la <a href=":privacy_url">politique de confidentialité</a>.',
+        'notice_html' => 'Les informations saisies servent uniquement à traiter votre demande d’exercice de droits, conformément à une obligation légale. Elles ne sont consultables que par les membres autorisés et sont conservées 12 mois. En savoir plus dans la <a href=":privacy_url">politique de confidentialité</a>.',
         'submit' => 'Envoyer ma demande',
         'sent' => [
             'title' => 'Demande envoyée',
@@ -314,7 +318,9 @@ return [
             'image_invalid' => 'Ce fichier n’est pas une image valide (JPEG, PNG ou WebP).',
             'image_too_large' => 'L’image dépasse la taille maximale autorisée.',
             'generic' => 'Une erreur est survenue. Veuillez réessayer plus tard.',
+            'summary_title' => 'Le formulaire contient des erreurs à corriger (:count)',
         ],
+        'required_legend' => 'Les champs marqués d’un * sont obligatoires.',
         'honeypot_label' => 'Ne pas remplir ce champ',
     ],
 
@@ -408,32 +414,34 @@ return [
             ],
             'members' => [
                 'title' => 'Espace membres',
-                'text' => 'Les comptes de l’espace membres sont créés par le bureau de l’association. Ils comportent un identifiant, un nom d’affichage, éventuellement une adresse e-mail, et un mot de passe conservé uniquement sous forme chiffrée (hachée). Finalité : permettre aux membres autorisés de gérer le site.',
+                'text' => 'Les comptes de l’espace membres sont créés par le bureau de l’association. Ils comportent un identifiant, un nom d’affichage, éventuellement une adresse e-mail, la date de dernière connexion et un mot de passe conservé uniquement sous forme chiffrée (hachée). Finalité : permettre aux membres autorisés de gérer le site.',
             ],
             'security' => [
-                'title' => 'Limitation du nombre d’envois',
-                'text' => 'Pour éviter les abus, le nombre d’envois de formulaires est limité. Votre adresse IP n’est jamais conservée en clair : seule une empreinte irréversible, calculée avec une clé secrète, est enregistrée, pendant 24 heures au plus.',
+                'title' => 'Limitation des envois et des tentatives de connexion',
+                'text' => 'Pour éviter les abus, le nombre d’envois de formulaires est limité, de même que le nombre de tentatives de connexion à l’espace membres. Votre adresse IP n’est jamais conservée en clair : seule une empreinte irréversible, calculée avec une clé secrète, est enregistrée, de quelques minutes à 24 heures au plus.',
             ],
         ],
         'basis' => [
             'title' => 'Base légale',
-            'text' => 'Les formulaires de candidature et de contact reposent sur votre consentement, que vous exprimez en cochant la case prévue à cet effet. Le traitement des demandes d’exercice de droits répond à une obligation légale. La limitation du nombre d’envois repose sur notre intérêt légitime à protéger le site contre les abus.',
+            'text' => 'Les formulaires de candidature et de contact reposent sur votre consentement, que vous exprimez en cochant la case prévue à cet effet. Le traitement des demandes d’exercice de droits répond à une obligation légale. La limitation du nombre d’envois et des tentatives de connexion, ainsi que les journaux techniques, reposent sur notre intérêt légitime à protéger le site contre les abus.',
         ],
         'retention' => [
             'title' => 'Durées de conservation',
             'messages' => 'Messages de contact et demandes d’exercice de droits : 12 mois.',
             'applications' => 'Candidatures : 24 mois.',
-            'cv' => 'CV : conservé aussi longtemps que la candidature correspondante (24 mois), dans un dossier non accessible depuis internet.',
-            'throttle' => 'Empreinte d’adresse IP pour la limitation des envois : 24 heures au plus.',
-            'after' => 'À l’issue de ces durées, les données sont supprimées. Vous pouvez demander leur suppression avant l’échéance.',
+            'cv' => 'CV : conservé aussi longtemps que la candidature correspondante (24 mois), dans un dossier dont l’accès est interdit depuis internet.',
+            'throttle' => 'Empreinte d’adresse IP pour la limitation des envois et des tentatives de connexion : de quelques minutes à 24 heures au plus.',
+            'logs' => 'Journaux techniques du site : 90 jours au plus.',
+            'auto' => 'Cette suppression est automatique : un contrôle quotidien, déclenché par l’activité du site (envoi d’un formulaire ou ouverture de l’espace membres), supprime les messages de plus de 12 mois, les candidatures de plus de 24 mois (CV compris) et les empreintes d’adresse IP de plus de 24 heures. Un bouton de purge est aussi disponible dans l’espace membres.',
+            'after' => 'Vous pouvez demander la suppression de vos données avant l’échéance.',
         ],
         'recipients' => [
             'title' => 'Destinataires',
-            'text' => 'Vos données sont destinées aux membres du bureau et de l’équipe en charge du traitement de votre demande. Elles ne sont ni vendues ni cédées à des tiers. Un message peut être transmis par e-mail à l’adresse de contact de l’association pour nous prévenir de son arrivée.',
+            'text' => 'Vos données sont destinées aux membres du bureau et de l’équipe en charge du traitement de votre demande. Les données saisies dans les formulaires ne sont consultables que dans l’espace membres, réservé aux comptes autorisés. Elles ne sont ni vendues ni cédées à des tiers. L’association reçoit un e-mail d’avis à l’arrivée d’un message ou d’une candidature, mais cet e-mail ne contient aucune donnée personnelle : il invite seulement à consulter l’espace membres. Le seul sous-traitant est l’hébergeur OVH, qui héberge le site et sa base de données.',
         ],
         'hosting' => [
             'title' => 'Hébergement et sécurité',
-            'text' => 'Le site et sa base de données sont hébergés par OVH. Les formulaires sont protégés contre les envois automatisés sans traceur ni cookie, et les CV sont stockés hors de l’espace public du serveur. L’hébergeur peut tenir des journaux techniques de connexion, nécessaires au fonctionnement et à la sécurité du service.',
+            'text' => 'Le site et sa base de données sont hébergés par OVH. Les formulaires sont protégés contre les envois automatisés sans traceur ni cookie, et les CV sont stockés dans un dossier dont l’accès est interdit depuis internet. Des journaux techniques, nécessaires au fonctionnement et à la sécurité du service, sont tenus ; ils ne contiennent aucune donnée saisie par les visiteurs et sont conservés 90 jours au plus.',
         ],
         'tracking' => [
             'title' => 'Aucun traceur',
@@ -464,13 +472,13 @@ return [
         ],
         'members' => [
             'title' => 'Espace membres',
-            'text' => 'Lorsqu’un membre autorisé se connecte à l’espace membres, un cookie de session strictement nécessaire est déposé pour maintenir sa connexion. Il ne sert à aucune autre fin et n’est jamais déposé pour les visiteurs. Ce type de cookie est exempté de consentement.',
+            'text' => 'Un cookie de session strictement nécessaire est déposé dès l’accès à la page de connexion de l’espace membres, avant même la saisie d’un identifiant, pour faire fonctionner la connexion et sa protection. Il ne sert à aucune autre fin et n’est jamais déposé lorsque vous consultez les pages publiques du site. Ce type de cookie est exempté de consentement.',
             'name_label' => 'Nom du cookie',
             'name_value' => 'abf_admin',
             'purpose_label' => 'Finalité',
-            'purpose_value' => 'Maintenir la session de connexion à l’espace membres',
+            'purpose_value' => 'Faire fonctionner la connexion à l’espace membres et maintenir la session',
             'duration_label' => 'Durée',
-            'duration_value' => 'Durée de la session',
+            'duration_value' => 'Durée de la session (12 heures au plus)',
         ],
         'banner' => [
             'title' => 'Pas de bannière de consentement',
