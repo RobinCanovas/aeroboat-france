@@ -11,6 +11,7 @@ use App\Core\Logger;
 use App\Core\Mailer;
 use App\Core\Request;
 use App\Core\Response;
+use App\Core\Retention;
 use App\Core\Router;
 use App\Core\Throttle;
 use App\Core\Upload;
@@ -18,7 +19,8 @@ use App\Core\UploadError;
 
 /**
  * Formulaires publics sans cookie (CONTRACTS §4) : jeton HMAC, pot de miel « website », délai minimum 3 s,
- * 5 envois / heure / IP hachée / formulaire, consentement horodaté, écriture en base, mail best effort.
+ * 5 envois / heure / IP hachée / formulaire, consentement horodaté (join, contact ; pas de case pour rights),
+ * écriture en base, notification mail best effort sans donnée personnelle, purge de conservation quotidienne.
  * Vues : pages/join|contact|rights avec `errors` (champ → clé lang ; erreur globale sous `_form`) et `sent`.
  */
 final class FormController extends Controller
@@ -26,7 +28,7 @@ final class FormController extends Controller
     public const MIN_DELAY = 3;
     public const RATE_LIMIT = 5;
     public const RATE_WINDOW = 3600;
-    public const REQUEST_TYPES = ['access', 'rectify', 'erase', 'object', 'portability'];
+    public const REQUEST_TYPES = ['access', 'rectify', 'erase', 'restrict', 'object', 'portability'];
 
     public static function join(array $params = []): void
     {
@@ -46,27 +48,35 @@ final class FormController extends Controller
                     return null;
                 }
             }
-            return static function (string $now) use ($v, $cvName): void {
-                Db::insert('applications', $v + [
-                    'cv_file' => $cvName, 'consent_at' => $now, 'status' => 'new', 'notes' => null,
-                    'locale' => Lang::current(), 'created_at' => $now, 'updated_at' => $now,
-                ]);
-                self::notify('Nouvelle candidature', "Candidature de {$v['first_name']} {$v['last_name']} <{$v['email']}>.\n"
-                    . ($cvName ? "CV joint (voir l'espace membres).\n" : '') . "\nDétails dans l'espace membres.", $v['email']);
+            return static function (string $now) use ($v, $cvName): int {
+                return self::insertApplication($v, $cvName, $now);
             };
         });
+    }
+
+    /** Insère une candidature ; si l'écriture échoue, le CV déjà déplacé est supprimé (pas de fichier orphelin). */
+    public static function insertApplication(array $v, ?string $cvName, string $now): int
+    {
+        try {
+            return Db::insert('applications', $v + [
+                'cv_file' => $cvName, 'consent_at' => $now, 'status' => 'new', 'notes' => null,
+                'locale' => Lang::current(), 'created_at' => $now, 'updated_at' => $now,
+            ]);
+        } catch (\Throwable $e) {
+            Upload::deletePdf($cvName);
+            throw $e;
+        }
     }
 
     public static function contact(array $params = []): void
     {
         $rules = ['name' => [true, 120], 'email' => [true, 190, 'email'], 'subject' => [false, 200], 'body' => [true, 5000]];
         self::handle('contact', $rules, static function (array $v, array &$errors): ?callable {
-            return static function (string $now) use ($v): void {
-                Db::insert('messages', $v + [
+            return static function (string $now) use ($v): int {
+                return Db::insert('messages', $v + [
                     'kind' => 'contact', 'request_type' => null, 'locale' => Lang::current(),
                     'handled' => 0, 'consent_at' => $now, 'created_at' => $now,
                 ]);
-                self::notify('Contact : ' . ($v['subject'] !== '' ? $v['subject'] : '(sans objet)'), "De : {$v['name']} <{$v['email']}>\n\n{$v['body']}", $v['email']);
             };
         });
     }
@@ -75,19 +85,19 @@ final class FormController extends Controller
     {
         $rules = ['name' => [true, 120], 'email' => [true, 190, 'email'], 'request_type' => [true, 20, 'type'], 'body' => [true, 5000]];
         self::handle('rights', $rules, static function (array $v, array &$errors): ?callable {
-            return static function (string $now) use ($v): void {
-                Db::insert('messages', $v + [
+            // Pas de case de consentement : consent_at = date d'envoi (CONTRACTS §4).
+            return static function (string $now) use ($v): int {
+                return Db::insert('messages', $v + [
                     'kind' => 'rights', 'subject' => null, 'locale' => Lang::current(),
                     'handled' => 0, 'consent_at' => $now, 'created_at' => $now,
                 ]);
-                self::notify('Demande RGPD (' . $v['request_type'] . ')', "De : {$v['name']} <{$v['email']}>\nType : {$v['request_type']}\n\n{$v['body']}\n\nDélai légal de réponse : un mois.", $v['email']);
             };
         });
     }
 
     /**
      * @param array<string,array{0:bool,1:int,2?:string}> $rules champ => [obligatoire, longueur max, type]
-     * @param callable(array,array&):?callable $prepare valide les extras et retourne l'écriture à exécuter
+     * @param callable(array,array&):?callable $prepare valide les extras et retourne l'écriture (qui renvoie l'id inséré)
      */
     private static function handle(string $form, array $rules, callable $prepare): void
     {
@@ -133,7 +143,8 @@ final class FormController extends Controller
                 $errors[$field] = 'forms.errors.required';
             }
         }
-        if (Request::input('consent') === null || Request::input('consent') === '' || Request::input('consent') === '0') {
+        $consent = Request::input('consent');
+        if (self::needsConsent($form) && ($consent === null || $consent === '' || $consent === '0')) {
             $errors['consent'] = 'forms.errors.consent';
         }
         if ($errors !== []) {
@@ -152,12 +163,14 @@ final class FormController extends Controller
             return;
         }
         try {
-            $write(Db::now());
+            $id = (int) $write(Db::now());
         } catch (\Throwable $e) {
-            Logger::error('Écriture du formulaire ' . $form . ' en échec : ' . $e->getMessage());
+            Logger::exception('Écriture du formulaire ' . $form . ' en échec', $e);
             self::page($form, ['_form' => 'forms.errors.generic'], false, 500);
             return;
         }
+        self::notify($form, $id);
+        Retention::runDaily();
         Response::redirect($self . '?sent=1', 303);
     }
 
@@ -167,12 +180,33 @@ final class FormController extends Controller
         self::display('pages/' . $form, $meta, ['errors' => $errors, 'sent' => $sent], $code);
     }
 
-    /** Notification best effort : n'interrompt jamais l'enregistrement. */
-    private static function notify(string $subject, string $body, string $replyTo): void
+    /** join et contact exigent la case de consentement ; rights non (on ne conditionne pas l'exercice d'un droit). */
+    public static function needsConsent(string $form): bool
     {
-        $to = (string) Config::env('MAIL_TO', '');
-        if ($to !== '') {
-            Mailer::send($to, '[Site] ' . $subject, $body, $replyTo);
+        return $form !== 'rights';
+    }
+
+    /** @return array{0:string,1:string} sujet fixe et corps sans aucune donnée personnelle ni texte saisi. */
+    public static function notification(string $form, int $id): array
+    {
+        if ($form === 'join') {
+            return ['[Site] Nouvelle candidature', "Nouvelle candidature n°$id, à consulter dans l'espace membres : " . url('/admin/candidatures') . "\n"];
+        }
+        $kind = $form === 'rights' ? 'droits' : 'contact';
+        return ['[Site] Nouveau message', "Nouveau message n°$id ($kind), à consulter dans l'espace membres : " . url('/admin/messages') . "\n"];
+    }
+
+    /** Notification best effort : n'interrompt jamais l'enregistrement. Ni Reply-To, ni nom, ni texte saisi. */
+    private static function notify(string $form, int $id): void
+    {
+        try {
+            $to = (string) Config::env('MAIL_TO', '');
+            if ($to !== '') {
+                [$subject, $body] = self::notification($form, $id);
+                Mailer::send($to, $subject, $body);
+            }
+        } catch (\Throwable $e) {
+            Logger::exception('Notification du formulaire ' . $form . ' en échec', $e, 'WARN');
         }
     }
 }

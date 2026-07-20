@@ -21,13 +21,13 @@ final class Csrf
         return $ts . '.' . hash_hmac('sha256', $form . '|' . $ts, Config::appKey());
     }
 
-    public static function verifyForm(string $form, string $token, int $minDelay = 3, int $maxAge = 7200): bool
+    public static function verifyForm(string $form, string $token, int $minDelay = 3, int $maxAge = 3600): bool
     {
         return self::checkForm($form, $token, $minDelay, $maxAge) === self::OK;
     }
 
     /** Diagnostic détaillé : ok | invalid | expired | too_fast. */
-    public static function checkForm(string $form, string $token, int $minDelay = 3, int $maxAge = 7200, ?int $now = null): string
+    public static function checkForm(string $form, string $token, int $minDelay = 3, int $maxAge = 3600, ?int $now = null): string
     {
         if (!preg_match('/^(\d{1,12})\.([a-f0-9]{64})$/', $token, $m)) {
             return self::INVALID;

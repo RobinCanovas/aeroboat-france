@@ -36,7 +36,7 @@ final class ErrorHandler
 
     public static function handle(\Throwable $e): void
     {
-        Logger::error(get_class($e) . ': ' . $e->getMessage(), ['at' => self::shortPath($e->getFile()) . ':' . $e->getLine()]);
+        Logger::exception('Exception non capturée', $e);
         if (PHP_SAPI === 'cli') {
             fwrite(STDERR, get_class($e) . ': ' . $e->getMessage() . ' (' . self::shortPath($e->getFile()) . ':' . $e->getLine() . ")\n");
             exit(1);
@@ -47,7 +47,7 @@ final class ErrorHandler
         try {
             \App\Controllers\ErrorController::serverError($e);
         } catch (\Throwable $inner) {
-            Logger::error('Échec de la page 500 : ' . $inner->getMessage());
+            Logger::exception('Échec de la page 500', $inner);
             if (!headers_sent()) {
                 http_response_code(500);
                 header('Content-Type: text/html; charset=utf-8');

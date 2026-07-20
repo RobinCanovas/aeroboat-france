@@ -49,7 +49,7 @@ final class ErrorController extends Controller
                     $html = View::render("errors/$code", ['meta' => $meta, 'page' => 'error', 'routeKey' => 'error', 'code' => $code]);
                 }
             } catch (\Throwable $inner) {
-                Logger::error("Rendu de la page $code en échec : " . $inner->getMessage());
+                Logger::exception("Rendu de la page $code en échec", $inner);
                 $html = null;
             }
         }

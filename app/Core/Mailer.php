@@ -3,7 +3,10 @@ declare(strict_types=1);
 
 namespace App\Core;
 
-/** Envoi via mail() en best effort : ne lève jamais d'exception, la base reste la source de vérité. */
+/**
+ * Envoi via mail() en best effort : ne lève jamais d'exception, la base reste la source de vérité.
+ * Les journaux ne contiennent ni destinataire, ni sujet, ni corps.
+ */
 final class Mailer
 {
     public static function send(string $to, string $subject, string $body, ?string $replyTo = null): bool
@@ -13,7 +16,7 @@ final class Mailer
                 return false;
             }
             if (Config::env('APP_ENV', 'production') === 'local' || !function_exists('mail')) {
-                Logger::info('Mail non envoyé (environnement local)', ['subject' => self::clean($subject)]);
+                Logger::info('Mail non envoyé (environnement local)');
                 return false;
             }
             $host = (string) (parse_url((string) Config::get('app.url'), PHP_URL_HOST) ?: 'localhost');
@@ -38,7 +41,7 @@ final class Mailer
             }
             return (bool) $ok;
         } catch (\Throwable $e) {
-            Logger::warning('Exception Mailer : ' . $e->getMessage());
+            Logger::exception('Exception Mailer', $e, 'WARN');
             return false;
         }
     }
