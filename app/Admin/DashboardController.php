@@ -8,6 +8,13 @@ final class DashboardController
 {
     public static function index(Context $ctx): Reply
     {
+        if (class_exists(\App\Core\Retention::class)) {
+            try {
+                \App\Core\Retention::runDaily();
+            } catch (\Throwable) {
+                // La purge quotidienne ne doit jamais empêcher l'affichage du tableau de bord.
+            }
+        }
         $role = $ctx->role();
         $cards = [];
         if (Policy::allowed($role, 'applications')) {

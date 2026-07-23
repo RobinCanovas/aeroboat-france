@@ -31,19 +31,28 @@ final class PurgeController
                 Flash::add('error', 'Cochez la case de confirmation pour lancer la purge.');
                 return Reply::redirect(Ui::u('/rgpd'));
             }
-            $apps = Store::all('SELECT id, cv_file FROM {t:applications} WHERE created_at < ?', [$cut['applications']]);
-            $cvs = 0;
-            foreach ($apps as $a) {
-                if (CvFiles::delete(ApplicationsController::cvDir(), (string) ($a['cv_file'] ?? ''))) {
-                    $cvs++;
+            if (class_exists(\App\Core\Retention::class)) {
+                // Purge du Core (messages, candidatures, CV, limitation de débit) : les décomptes viennent de lui.
+                $r = \App\Core\Retention::purge();
+                $msgCount = self::count($r, ['messages', 'messages_deleted']);
+                $appCount = self::count($r, ['applications', 'candidatures', 'applications_deleted']);
+                $cvs = self::count($r, ['cv', 'cvs', 'cv_deleted', 'cv_files']);
+            } else {
+                $apps = Store::all('SELECT id, cv_file FROM {t:applications} WHERE created_at < ?', [$cut['applications']]);
+                $cvs = 0;
+                foreach ($apps as $a) {
+                    if (CvFiles::delete(ApplicationsController::cvDir(), (string) ($a['cv_file'] ?? ''))) {
+                        $cvs++;
+                    }
                 }
+                $appCount = count($apps);
+                Store::run('DELETE FROM {t:applications} WHERE created_at < ?', [$cut['applications']]);
+                $msgCount = Store::count('SELECT COUNT(*) FROM {t:messages} WHERE created_at < ?', [$cut['messages']]);
+                Store::run('DELETE FROM {t:messages} WHERE created_at < ?', [$cut['messages']]);
             }
-            Store::run('DELETE FROM {t:applications} WHERE created_at < ?', [$cut['applications']]);
-            $msgCount = Store::count('SELECT COUNT(*) FROM {t:messages} WHERE created_at < ?', [$cut['messages']]);
-            Store::run('DELETE FROM {t:messages} WHERE created_at < ?', [$cut['messages']]);
 
-            self::log(count($apps), $cvs, $msgCount, $ctx->userId());
-            Flash::add('ok', 'Purge effectuée : ' . $msgCount . ' message(s), ' . count($apps) . ' candidature(s) et ' . $cvs . ' CV supprimés.');
+            self::log($appCount, $cvs, $msgCount, $ctx->userId());
+            Flash::add('ok', 'Purge effectuée : ' . $msgCount . ' message(s), ' . $appCount . ' candidature(s) et ' . $cvs . ' CV supprimés.');
             return Reply::redirect(Ui::u('/rgpd'));
         }
         return Ui::page($ctx, 'Purge RGPD', 'purge', [
@@ -51,6 +60,22 @@ final class PurgeController
             'applications' => Store::count('SELECT COUNT(*) FROM {t:applications} WHERE created_at < ?', [$cut['applications']]),
             'months' => ['messages' => self::MESSAGES_MONTHS, 'applications' => self::APPLICATIONS_MONTHS],
         ], 'rgpd');
+    }
+
+    /**
+     * Premier décompte entier trouvé parmi les clés possibles du retour de Retention::purge().
+     *
+     * @param array<string,mixed> $result
+     * @param list<string> $keys
+     */
+    public static function count(array $result, array $keys): int
+    {
+        foreach ($keys as $k) {
+            if (isset($result[$k]) && is_numeric($result[$k])) {
+                return max(0, (int) $result[$k]);
+            }
+        }
+        return 0;
     }
 
     /** Journal : nombres uniquement, aucune donnée personnelle. */

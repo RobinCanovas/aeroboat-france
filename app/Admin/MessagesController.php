@@ -13,6 +13,7 @@ final class MessagesController
         'access' => 'Accès',
         'rectify' => 'Rectification',
         'erase' => 'Effacement',
+        'restrict' => 'Limitation',
         'object' => 'Opposition',
         'portability' => 'Portabilité',
     ];
@@ -80,8 +81,13 @@ final class MessagesController
     {
         $kind = in_array($ctx->q('kind'), ['contact', 'rights'], true) ? $ctx->q('kind') : '';
         $state = in_array($ctx->q('state'), ['open', 'done'], true) ? $ctx->q('state') : '';
+        $type = $kind === 'rights' && isset(self::RIGHTS_TYPES[$ctx->q('type')]) ? $ctx->q('type') : '';
         $where = [];
         $params = [];
+        if ($type !== '') {
+            $where[] = 'request_type = ?';
+            $params[] = $type;
+        }
         if ($kind !== '') {
             $where[] = 'kind = ?';
             $params[] = $kind;
@@ -107,7 +113,7 @@ final class MessagesController
         }
         unset($m);
         return Ui::page($ctx, 'Messages', 'messages/list', [
-            'rows' => $rows, 'kind' => $kind, 'state' => $state, 'rightsTypes' => self::RIGHTS_TYPES,
+            'rows' => $rows, 'type' => $type, 'kind' => $kind, 'state' => $state, 'rightsTypes' => self::RIGHTS_TYPES,
         ], 'messages');
     }
 }

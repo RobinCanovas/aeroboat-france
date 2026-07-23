@@ -38,6 +38,12 @@ return [
         'filters' => ['role' => 'Rôle'],
         'per_page' => 30,
     ],
+    'after_save' => static function (array $v, ?array $ex, int $id, Context $ctx): void {
+        // Mot de passe changé pour le compte connecté : on garde sa session valide.
+        if (isset($v['password_hash']) && $id === $ctx->userId() && method_exists(\App\Core\Auth::class, 'refreshFingerprint')) {
+            \App\Core\Auth::refreshFingerprint();
+        }
+    },
     'before_save' => static function (array $v, ?array $ex, Context $ctx): array {
         $errors = [];
         $id = (int) ($ex['id'] ?? 0);
