@@ -14,8 +14,8 @@ Convention : liste = tableau indexé ; `{…}` = objet d'une liste. Les statuts 
 - `news.hero.{title,lead}` ; `news.empty` ; `news.by` ; `news.back` ; `news.page_of`
 - `join.hero.{title,lead}` ; `join.fields.{first_name,last_name,email,school,level,skills,motivation,availability,cv}` (chaque clé = libellé) ; `join.hints.{cv,motivation}` ; `join.consent_html` ; `join.submit` ; `join.sent.{title,text}` ; `join.steps[{title,text}]`
 - `contact.hero.{title,lead}` ; `contact.fields.{name,email,subject,body}` ; `contact.consent_html` ; `contact.submit` ; `contact.sent.{title,text}` ; `contact.info.{title,email_label,phone_label,city_label}`
-- `rights.hero.{title,lead}` ; `rights.fields.{name,email,request_type,body}` ; `rights.types.{access,rectify,erase,object,portability}` ; `rights.consent_html` ; `rights.submit` ; `rights.sent.{title,text}` ; `rights.delay_note`
-- `forms.errors.{required,email,too_long,consent,too_fast,rate_limit,csrf,pdf_invalid,pdf_too_large,generic}` ; `forms.honeypot_label`
+- `rights.hero.{title,lead}` ; `rights.fields.{name,email,request_type,body}` ; `rights.types.{access,rectify,erase,restrict,object,portability}` ; `rights.notice_html` (information, sans case de consentement ; `:privacy_url`) ; `rights.submit` ; `rights.sent.{title,text}` ; `rights.delay_note`
+- `forms.errors.{required,email,too_long,consent,too_fast,rate_limit,csrf,pdf_invalid,pdf_too_large,image_invalid,image_too_large,generic,summary_title}` (`summary_title` : `:count`) ; `forms.required_legend` ; `join.consent_short`, `contact.consent_short` ; `forms.honeypot_label`
 - `footer.about.{title,text}` ; `footer.nav.title` ; `footer.legal.{title,legal,privacy,cookies,rights}` ; `footer.contact.{title,text}` ; `footer.social.{title,instagram,linkedin}` ; `footer.copyright` ; `footer.no_tracking`
 - `legal.*` (mentions : éditeur, directeur de publication, hébergeur, propriété intellectuelle, responsabilité ; lignes dépendantes de `ORG_*` portent des libellés, les valeurs viennent de `$org`) ; `privacy.*` ; `cookies.*`
 - `errors.404.{title,text,cta}` ; `errors.500.{title,text}` ; `errors.403.{title,text}`
