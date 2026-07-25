@@ -132,6 +132,10 @@ final class AuthController
                     $data['password_hash'] = $hash;
                 }
                 Store::update('users', $id, $data);
+                if ($hash !== null && method_exists(Auth::class, 'refreshFingerprint')) {
+                    // Garde la session courante valide après le changement de mot de passe.
+                    Auth::refreshFingerprint();
+                }
                 Flash::add('ok', $hash !== null ? 'Profil et mot de passe mis à jour.' : 'Profil mis à jour.');
                 return Reply::redirect(Ui::u('/profil'));
             }

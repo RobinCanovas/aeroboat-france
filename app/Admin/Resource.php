@@ -11,7 +11,8 @@ use App\Core\Upload;
  * Définition : key, table, area (zone de Policy), label, singular, title_field, fields (ordre = ordre du formulaire),
  * groups (mise en page du formulaire), list{columns,search,sort,default_sort,per_page,filters},
  * defaults (valeurs d'un nouvel enregistrement), timestamps, can_create, can_delete, virtual (champs non stockés),
- * before_save(array $values, ?array $existing, Context $ctx): array{0:array,1:array<string,string>}, before_delete(array $row, Context $ctx): ?string.
+ * before_save(array $values, ?array $existing, Context $ctx): array{0:array,1:array<string,string>}, before_delete(array $row, Context $ctx): ?string,
+ * after_save(array $values, ?array $existing, int $id, Context $ctx): void (après écriture réussie).
  */
 final class Resource
 {
@@ -213,6 +214,13 @@ final class Resource
             $errors += $hookErrors;
         }
         if ($errors !== []) {
+            // Une image téléversée dans cette requête mais non enregistrée (erreur ailleurs) ne doit pas rester sur le disque.
+            foreach ($fields as $name => $f) {
+                if (($f['type'] ?? '') === 'image' && is_string($values[$name] ?? null)
+                    && $values[$name] !== ($existing[$name] ?? null)) {
+                    ImageFiles::delete(ImageFiles::dir(), $values[$name]);
+                }
+            }
             return ['id' => null, 'errors' => $errors, 'values' => $display];
         }
 
@@ -227,12 +235,27 @@ final class Resource
                 $values['updated_at'] = $now;
             }
             $newId = Store::insert($table, $values);
+            if (isset($this->def['after_save'])) {
+                ($this->def['after_save'])($values, null, $newId, $ctx);
+            }
             return ['id' => $newId, 'errors' => [], 'values' => $display];
         }
         if (!empty($this->def['timestamps'])) {
             $values['updated_at'] = $now;
         }
         Store::update($table, (int) $existing['id'], $values);
+        // Fichiers devenus orphelins (image remplacée ou retirée) : supprimés après la réussite de l'écriture.
+        foreach ($fields as $name => $f) {
+            if (($f['type'] ?? '') === 'image') {
+                $old = (string) ($existing[$name] ?? '');
+                if ($old !== '' && $old !== (string) ($values[$name] ?? '')) {
+                    ImageFiles::delete(ImageFiles::dir(), $old);
+                }
+            }
+        }
+        if (isset($this->def['after_save'])) {
+            ($this->def['after_save'])($values, $existing, (int) $existing['id'], $ctx);
+        }
         return ['id' => (int) $existing['id'], 'errors' => [], 'values' => $display];
     }
 
@@ -250,6 +273,11 @@ final class Resource
             }
         }
         Store::delete((string) $this->def['table'], $id);
+        foreach ($this->fields() as $name => $f) {
+            if (($f['type'] ?? '') === 'image') {
+                ImageFiles::delete(ImageFiles::dir(), (string) ($row[$name] ?? ''));
+            }
+        }
         return null;
     }
 }

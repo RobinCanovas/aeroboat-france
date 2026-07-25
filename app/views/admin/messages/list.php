@@ -4,9 +4,9 @@ declare(strict_types=1);
 use App\Admin\Time;
 use App\Admin\Ui;
 
-/** @var list<array> $rows @var string $kind @var string $state @var array<string,string> $rightsTypes */
-$qs = static function (array $over) use ($kind, $state): string {
-    $p = array_filter(array_merge(['kind' => $kind, 'state' => $state], $over), static fn ($v) => $v !== null && $v !== '');
+/** @var list<array> $rows @var string $kind @var string $state @var string $type @var array<string,string> $rightsTypes */
+$qs = static function (array $over) use ($kind, $state, $type): string {
+    $p = array_filter(array_merge(['kind' => $kind, 'state' => $state, 'type' => $kind === 'rights' ? $type : ''], $over), static fn ($v) => $v !== null && $v !== '');
     return $p === [] ? '' : '?' . http_build_query($p);
 };
 ?>
@@ -23,6 +23,14 @@ $qs = static function (array $over) use ($kind, $state): string {
         <li><a href="<?= e(Ui::u('/messages') . $qs(['state' => 'open'])) ?>"<?= $state === 'open' ? ' aria-current="page"' : '' ?>>À traiter</a></li>
         <li><a href="<?= e(Ui::u('/messages') . $qs(['state' => 'done'])) ?>"<?= $state === 'done' ? ' aria-current="page"' : '' ?>>Traités</a></li>
     </ul>
+    <?php if ($kind === 'rights') : ?>
+    <ul aria-label="Type de demande">
+        <li><a href="<?= e(Ui::u('/messages') . $qs(['type' => null])) ?>"<?= $type === '' ? ' aria-current="page"' : '' ?>>Tous types</a></li>
+        <?php foreach ($rightsTypes as $tk => $tl) : ?>
+            <li><a href="<?= e(Ui::u('/messages') . $qs(['type' => $tk])) ?>"<?= $type === $tk ? ' aria-current="page"' : '' ?>><?= e($tl) ?></a></li>
+        <?php endforeach; ?>
+    </ul>
+    <?php endif; ?>
 </nav>
 
 <?php if (!$rows) : ?><p>Aucun message.</p><?php endif; ?>
