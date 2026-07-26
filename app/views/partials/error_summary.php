@@ -15,7 +15,7 @@ if ($errors === []) {
 }
 ?>
 <div class="form-errors" role="alert" tabindex="-1" data-error-summary>
-  <h2><?= e(t('forms.errors.generic')) ?></h2>
+  <h2><?= e(t('forms.errors.summary_title', ['count' => count($errors)])) ?></h2>
   <ul>
 <?php foreach ($errors as $field => $key): ?>
 <?php if (isset($labels[$field])): ?>

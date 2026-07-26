@@ -13,7 +13,7 @@ $labels = [];
 foreach ($fields as $f) {
     $labels[$f] = t('join.fields.' . $f);
 }
-$labels['consent'] = strip_tags(t_html('join.consent_html', ['privacy_url' => route('privacy')]));
+$labels['consent'] = t('join.consent_short');
 $steps = ui_list('join.steps', ['title', 'text'], 5);
 ?>
 <?= View::partial('partials/page_hero', [
@@ -39,6 +39,7 @@ $steps = ui_list('join.steps', ['title', 'text'], 5);
     <?= View::partial('partials/error_summary', ['errors' => $errors, 'labels' => $labels]) ?>
     <form class="form" method="post" action="<?= e(route('join')) ?>" enctype="multipart/form-data">
       <?= csrf_field('join') ?>
+      <p class="form-legend"><?= e(t('forms.required_legend')) ?></p>
       <div class="form-grid form-grid--2">
         <?= View::partial('partials/field', ['name' => 'first_name', 'label' => $labels['first_name'], 'required' => true, 'errors' => $errors, 'maxlength' => 100, 'autocomplete' => 'given-name']) ?>
         <?= View::partial('partials/field', ['name' => 'last_name', 'label' => $labels['last_name'], 'required' => true, 'errors' => $errors, 'maxlength' => 100, 'autocomplete' => 'family-name']) ?>
@@ -48,8 +49,8 @@ $steps = ui_list('join.steps', ['title', 'text'], 5);
         <?= View::partial('partials/field', ['name' => 'school', 'label' => $labels['school'], 'errors' => $errors, 'maxlength' => 160]) ?>
         <?= View::partial('partials/field', ['name' => 'level', 'label' => $labels['level'], 'errors' => $errors, 'maxlength' => 100]) ?>
       </div>
-      <?= View::partial('partials/field', ['name' => 'skills', 'type' => 'textarea', 'rows' => 4, 'label' => $labels['skills'], 'errors' => $errors]) ?>
-      <?= View::partial('partials/field', ['name' => 'motivation', 'type' => 'textarea', 'rows' => 6, 'label' => $labels['motivation'], 'required' => true, 'errors' => $errors, 'hint' => t('join.hints.motivation')]) ?>
+      <?= View::partial('partials/field', ['name' => 'skills', 'type' => 'textarea', 'rows' => 4, 'label' => $labels['skills'], 'errors' => $errors, 'maxlength' => 2000]) ?>
+      <?= View::partial('partials/field', ['name' => 'motivation', 'type' => 'textarea', 'rows' => 6, 'label' => $labels['motivation'], 'required' => true, 'errors' => $errors, 'maxlength' => 5000, 'hint' => t('join.hints.motivation')]) ?>
       <?= View::partial('partials/field', ['name' => 'availability', 'label' => $labels['availability'], 'errors' => $errors, 'maxlength' => 250]) ?>
       <?= View::partial('partials/field', ['name' => 'cv', 'type' => 'file', 'accept' => 'application/pdf,.pdf', 'label' => $labels['cv'], 'errors' => $errors, 'hint' => t('join.hints.cv')]) ?>
       <?= View::partial('partials/consent', ['labelHtml' => t_html('join.consent_html', ['privacy_url' => route('privacy')]), 'errors' => $errors]) ?>

@@ -587,3 +587,10 @@ input[type="file"].field__control { padding: var(--sp-3); }
 
 .logo-wall + .btn-row, .posts + .btn-row, .empty-note + .btn-row { margin-top: var(--sp-6); }
 .form-wrap > .form-errors, .contact-layout .form-errors { margin-bottom: var(--sp-5); }
+
+.prose, .legal-list, dd { overflow-wrap: anywhere; }
+
+.form-legend { margin: 0; color: var(--c-muted); font-size: var(--fs-sm); }
+.form-legend::before { content: "* "; color: var(--c-red); font-weight: 700; }
+.form-delay { margin: 0; color: var(--c-muted); font-size: var(--fs-sm); }
+.note a { color: var(--c-blue); }
