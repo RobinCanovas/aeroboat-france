@@ -12,9 +12,8 @@ $labels = [];
 foreach (['name', 'email', 'request_type', 'body'] as $f) {
     $labels[$f] = t('rights.fields.' . $f);
 }
-$labels['consent'] = strip_tags(t_html('rights.consent_html', ['privacy_url' => route('privacy')]));
 $types = [];
-foreach (['access', 'rectify', 'erase', 'object', 'portability'] as $k) {
+foreach (['access', 'rectify', 'erase', 'object', 'portability', 'restrict'] as $k) {
     $types[$k] = t('rights.types.' . $k);
 }
 ?>
@@ -34,14 +33,15 @@ foreach (['access', 'rectify', 'erase', 'object', 'portability'] as $k) {
     <?= View::partial('partials/error_summary', ['errors' => $errors, 'labels' => $labels]) ?>
     <form class="form" method="post" action="<?= e(route('rights')) ?>">
       <?= csrf_field('rights') ?>
+      <p class="form-legend"><?= e(t('forms.required_legend')) ?></p>
       <div class="form-grid form-grid--2">
         <?= View::partial('partials/field', ['name' => 'name', 'label' => $labels['name'], 'required' => true, 'errors' => $errors, 'maxlength' => 120, 'autocomplete' => 'name']) ?>
         <?= View::partial('partials/field', ['name' => 'email', 'type' => 'email', 'label' => $labels['email'], 'required' => true, 'errors' => $errors, 'maxlength' => 190, 'autocomplete' => 'email']) ?>
       </div>
       <?= View::partial('partials/field', ['name' => 'request_type', 'type' => 'select', 'options' => $types, 'label' => $labels['request_type'], 'required' => true, 'errors' => $errors]) ?>
-      <?= View::partial('partials/field', ['name' => 'body', 'type' => 'textarea', 'rows' => 6, 'label' => $labels['body'], 'required' => true, 'errors' => $errors]) ?>
-      <?= View::partial('partials/consent', ['labelHtml' => t_html('rights.consent_html', ['privacy_url' => route('privacy')]), 'errors' => $errors]) ?>
-      <p class="note"><?= e(t('rights.delay_note')) ?></p>
+      <?= View::partial('partials/field', ['name' => 'body', 'type' => 'textarea', 'rows' => 6, 'label' => $labels['body'], 'required' => true, 'errors' => $errors, 'maxlength' => 5000]) ?>
+      <div class="note"><p><?= t_html('rights.notice_html', ['privacy_url' => route('privacy')]) ?></p></div>
+      <p class="form-delay"><?= e(t('rights.delay_note')) ?></p>
       <div><button class="btn btn--primary" type="submit"><?= e(t('rights.submit')) ?></button></div>
     </form>
 <?php endif; ?>

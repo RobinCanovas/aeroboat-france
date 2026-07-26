@@ -47,9 +47,9 @@ $members = is_array($members ?? null) ? $members : [];
         <article class="member reveal">
           <div class="member__photo">
 <?php if ($hasPhoto && ui_is_slug($photo)): ?>
-            <?= img_tag($photo, $name, '(min-width: 80em) 18rem, (min-width: 48em) 30vw, 46vw') ?>
+            <?= img_tag($photo, '', '(min-width: 80em) 18rem, (min-width: 48em) 30vw, 46vw') ?>
 <?php elseif ($hasPhoto): ?>
-            <img src="<?= e(ui_upload($photo)) ?>" alt="<?= e($name) ?>" width="640" height="800" loading="lazy" decoding="async">
+            <img src="<?= e(ui_upload($photo)) ?>" alt="" width="640" height="800" loading="lazy" decoding="async">
 <?php else: ?>
             <span class="member__initials" aria-hidden="true"><?= e(ui_initials($name)) ?></span>
 <?php endif; ?>

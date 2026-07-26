@@ -13,7 +13,7 @@ $labels = [];
 foreach (['name', 'email', 'subject', 'body'] as $f) {
     $labels[$f] = t('contact.fields.' . $f);
 }
-$labels['consent'] = strip_tags(t_html('contact.consent_html', ['privacy_url' => route('privacy')]));
+$labels['consent'] = t('contact.consent_short');
 $orgEmail = trim((string) Config::env('ORG_EMAIL', ''));
 $orgPhone = trim((string) Config::env('ORG_PHONE', ''));
 $orgCity = trim((string) Config::env('ORG_CITY', ''));
@@ -35,12 +35,13 @@ $orgCity = trim((string) Config::env('ORG_CITY', ''));
       <?= View::partial('partials/error_summary', ['errors' => $errors, 'labels' => $labels]) ?>
       <form class="form" method="post" action="<?= e(route('contact')) ?>">
         <?= csrf_field('contact') ?>
+        <p class="form-legend"><?= e(t('forms.required_legend')) ?></p>
         <div class="form-grid form-grid--2">
           <?= View::partial('partials/field', ['name' => 'name', 'label' => $labels['name'], 'required' => true, 'errors' => $errors, 'maxlength' => 120, 'autocomplete' => 'name']) ?>
           <?= View::partial('partials/field', ['name' => 'email', 'type' => 'email', 'label' => $labels['email'], 'required' => true, 'errors' => $errors, 'maxlength' => 190, 'autocomplete' => 'email']) ?>
         </div>
         <?= View::partial('partials/field', ['name' => 'subject', 'label' => $labels['subject'], 'errors' => $errors, 'maxlength' => 200]) ?>
-        <?= View::partial('partials/field', ['name' => 'body', 'type' => 'textarea', 'rows' => 7, 'label' => $labels['body'], 'required' => true, 'errors' => $errors]) ?>
+        <?= View::partial('partials/field', ['name' => 'body', 'type' => 'textarea', 'rows' => 7, 'label' => $labels['body'], 'required' => true, 'errors' => $errors, 'maxlength' => 5000]) ?>
         <?= View::partial('partials/consent', ['labelHtml' => t_html('contact.consent_html', ['privacy_url' => route('privacy')]), 'errors' => $errors]) ?>
         <div><button class="btn btn--primary" type="submit"><?= e(t('contact.submit')) ?></button></div>
       </form>

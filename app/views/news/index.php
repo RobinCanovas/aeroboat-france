@@ -21,7 +21,7 @@ $base = route('news');
 <?php if ($posts): ?>
     <ul class="posts">
 <?php foreach ($posts as $post): ?>
-      <li class="reveal"><?= View::partial('partials/post_card', ['post' => $post]) ?></li>
+      <li class="reveal"><?= View::partial('partials/post_card', ['post' => $post, 'headingLevel' => 2]) ?></li>
 <?php endforeach; ?>
     </ul>
 <?php if ($total > 1): ?>

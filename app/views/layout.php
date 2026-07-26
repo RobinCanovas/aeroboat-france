@@ -29,11 +29,12 @@ if ($ogImage === '') {
     $ogImage = ui_is_slug($ogImage) ? ui_img_full($ogImage) : ui_upload($ogImage);
 }
 
+// Ordre du site actuel (Accueil, Équipe, Partenaires, Projets), puis les rubriques ajoutées.
 $navItems = [
     ['home', 'nav.home', false],
-    ['project', 'nav.project', false],
     ['team', 'nav.team', false],
     ['partners', 'nav.partners', false],
+    ['project', 'nav.project', false],
     ['news', 'nav.news', false],
     ['contact', 'nav.contact', false],
     ['join', 'nav.join', true],
