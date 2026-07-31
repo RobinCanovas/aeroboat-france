@@ -7,7 +7,8 @@ use DateTimeImmutable;
 use DateTimeZone;
 
 /**
- * Durées de conservation RGPD : messages 12 mois, candidatures 24 mois (CV compris), limite de débit 24 h.
+ * Durées de conservation RGPD : messages 12 mois, candidatures 24 mois (CV compris), limite de débit 24 h,
+ * journaux storage/logs/*.log 90 jours.
  * purge() supprime et retourne les décomptes ; runDaily() l'exécute au plus une fois par 24 h, sans jamais bloquer.
  */
 final class Retention
@@ -15,6 +16,7 @@ final class Retention
     public const MESSAGES_MONTHS = 12;
     public const APPLICATIONS_MONTHS = 24;
     public const INTERVAL = 86400;
+    public const LOGS_DAYS = 90;
 
     /** @return array{messages:string,applications:string} seuils UTC « Y-m-d H:i:s » */
     public static function cutoffs(?DateTimeImmutable $now = null): array
@@ -27,8 +29,8 @@ final class Retention
         ];
     }
 
-    /** @return array{messages:int,applications:int,cv:int,throttle:int} */
-    public static function purge(?string $cvDir = null): array
+    /** @return array{messages:int,applications:int,cv:int,throttle:int,logs:int} */
+    public static function purge(?string $cvDir = null, ?string $logDir = null): array
     {
         $cut = self::cutoffs();
         $cv = 0;
@@ -41,7 +43,30 @@ final class Retention
         $applications = Db::run('DELETE FROM {t:applications} WHERE created_at < :c', ['c' => $cut['applications']])->rowCount();
         $messages = Db::run('DELETE FROM {t:messages} WHERE created_at < :c', ['c' => $cut['messages']])->rowCount();
         $throttle = Throttle::purge();
-        return ['messages' => $messages, 'applications' => $applications, 'cv' => $cv, 'throttle' => $throttle];
+        $logs = self::purgeLogs($logDir);
+        return ['messages' => $messages, 'applications' => $applications, 'cv' => $cv, 'throttle' => $throttle, 'logs' => $logs];
+    }
+
+    /** Supprime les fichiers *.log de storage/logs/ modifiés il y a plus de 90 jours (jamais le repère, jamais ailleurs). */
+    public static function purgeLogs(?string $logDir = null): int
+    {
+        $base = realpath($logDir ?? Config::root() . '/storage/logs');
+        if ($base === false) {
+            return 0;
+        }
+        $limit = time() - self::LOGS_DAYS * 86400;
+        $n = 0;
+        foreach (glob($base . DIRECTORY_SEPARATOR . '*.log') ?: [] as $f) {
+            $real = realpath($f);
+            if ($real === false || dirname($real) !== $base || !is_file($real) || !str_ends_with($real, '.log')) {
+                continue;
+            }
+            $mtime = @filemtime($real);
+            if ($mtime !== false && $mtime < $limit && @unlink($real)) {
+                $n++;
+            }
+        }
+        return $n;
     }
 
     public static function markerFile(): string

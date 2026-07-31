@@ -57,12 +57,27 @@ return static function (): array {
         $app($fmt(800), '../db.sqlite');
         $keptApp = $app($fmt(600), 'new.pdf');
         App\Core\Db::insert('throttle', ['bucket' => 'old', 'ip_hash' => 'x', 'created_at' => time() - 2 * 86400]);
-        $r = App\Core\Retention::purge($tmp . '/cv');
-        if ($r !== ['messages' => 1, 'applications' => 2, 'cv' => 1, 'throttle' => 1]) {
+        @mkdir($tmp . '/logs', 0700, true);
+        $old = time() - 100 * 86400;
+        foreach (['old.log', 'new.log', '.last-retention', 'keep.txt'] as $f) {
+            file_put_contents($tmp . '/logs/' . $f, 'x');
+            touch($tmp . '/logs/' . $f, $f === 'new.log' ? time() - 10 * 86400 : $old);
+        }
+        file_put_contents($tmp . '/outside.log', 'x');
+        touch($tmp . '/outside.log', $old);
+        $r = App\Core\Retention::purge($tmp . '/cv', $tmp . '/logs');
+        if ($r !== ['messages' => 1, 'applications' => 2, 'cv' => 1, 'throttle' => 1, 'logs' => 1]) {
             $errors[] = 'Retention::purge : décomptes ' . json_encode($r);
         }
         if (is_file($tmp . '/cv/old.pdf') || !is_file($tmp . '/cv/new.pdf') || !is_file($file)) {
             $errors[] = 'Retention::purge : CV mal supprimés (ou chemin hors dossier suivi)';
+        }
+        if (is_file($tmp . '/logs/old.log') || !is_file($tmp . '/logs/new.log') || !is_file($tmp . '/logs/.last-retention')
+            || !is_file($tmp . '/logs/keep.txt') || !is_file($tmp . '/outside.log')) {
+            $errors[] = 'Retention::purge : journaux de plus de 90 jours mal purgés (ou fichier hors périmètre supprimé)';
+        }
+        if (!(new ReflectionMethod(App\Core\Retention::class, 'cutoffs'))->isPublic()) {
+            $errors[] = 'Retention::cutoffs non publique';
         }
         if (App\Core\Db::one('SELECT id FROM {t:messages} WHERE id = ?', [$keptMsg]) === null
             || App\Core\Db::one('SELECT id FROM {t:applications} WHERE id = ?', [$keptApp]) === null) {
@@ -146,9 +161,37 @@ return static function (): array {
         $uid = (int) App\Core\Auth::user()['id'];
         $saved = $_SESSION;
         App\Core\Db::update('users', $uid, ['password_hash' => App\Core\Auth::hashPassword('Nouveau-mot-2')]);
+        $_SESSION['_csrf'] = 'avant-changement';
         App\Core\Auth::refreshFingerprint();
         if (App\Core\Auth::user() === null) {
             $errors[] = 'Auth::refreshFingerprint inopérant';
+        }
+        if (($_SESSION['_csrf'] ?? null) === 'avant-changement') {
+            $errors[] = 'Auth::refreshFingerprint ne régénère pas le jeton CSRF';
+        }
+        // Leurre : même algorithme que les vrais comptes, calculé une seule fois.
+        $decoy = App\Core\Auth::decoyHash();
+        if (password_get_info($decoy)['algo'] !== password_get_info(App\Core\Auth::hashPassword('x'))['algo']
+            || App\Core\Auth::decoyHash() !== $decoy) {
+            $errors[] = 'Auth : hachage leurre d\'un autre algorithme ou recalculé';
+        }
+        // Timing : identifiant inconnu vs existant (ratio large)
+        $t0 = hrtime(true);
+        App\Core\Auth::attempt('inconnu-' . bin2hex(random_bytes(3)), 'faux');
+        $tUnknown = hrtime(true) - $t0;
+        $_SERVER['REMOTE_ADDR'] = '198.51.100.30';
+        $t0 = hrtime(true);
+        App\Core\Auth::attempt('bureau', 'faux');
+        $tKnown = hrtime(true) - $t0;
+        $_SERVER['REMOTE_ADDR'] = '198.51.100.21';
+        if (max($tUnknown, $tKnown) / max(1, min($tUnknown, $tKnown)) > 1.5) {
+            $errors[] = sprintf('Auth : écart de temps inconnu/existant %.0f ms / %.0f ms', $tUnknown / 1e6, $tKnown / 1e6);
+        }
+        // Throttle purgé à l'affichage de la page de connexion
+        App\Core\Db::insert('throttle', ['bucket' => 'old', 'ip_hash' => 'x', 'created_at' => time() - 2 * 86400]);
+        App\Core\Auth::prepareLogin();
+        if (App\Core\Db::one("SELECT id FROM {t:throttle} WHERE bucket = 'old'") !== null) {
+            $errors[] = 'Auth::prepareLogin ne purge pas le throttle';
         }
         $_SESSION = $saved;
         $reset = (new ReflectionClass(App\Core\Auth::class))->getProperty('loaded');
@@ -180,7 +223,7 @@ return static function (): array {
         App\Core\Config::set('APP_DEBUG', null);
         App\Core\Db::swap(null);
         gc_collect_cycles();
-        foreach ([$tmp . '/cv', $tmp] as $d) {
+        foreach ([$tmp . '/cv', $tmp . '/logs', $tmp] as $d) {
             foreach (is_dir($d) ? (scandir($d) ?: []) : [] as $f) {
                 if (is_file($d . '/' . $f)) {
                     @unlink($d . '/' . $f);
@@ -188,6 +231,7 @@ return static function (): array {
             }
         }
         @rmdir($tmp . '/cv');
+        @rmdir($tmp . '/logs');
         @rmdir($tmp);
     }
     return $errors;
