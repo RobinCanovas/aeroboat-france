@@ -26,6 +26,7 @@ final class Auth
     private static ?array $user = null;
     private static bool $loaded = false;
     private static string $lastError = '';
+    private static ?string $decoy = null;
 
     public static function hashPassword(string $password): string
     {
@@ -80,6 +81,9 @@ final class Auth
         }
         $row = Db::one('SELECT password_hash FROM {t:users} WHERE id = :id', ['id' => $id]);
         if ($row !== null) {
+            // Nouvel identifiant de session et nouveau jeton CSRF après un changement de mot de passe.
+            Session::regenerate();
+            unset($_SESSION['_csrf']);
             $_SESSION['auth_fp'] = self::fingerprint((string) $row['password_hash']);
         }
         self::$loaded = false;
@@ -92,9 +96,44 @@ final class Auth
         return self::$lastError;
     }
 
+    /**
+     * À appeler à l'affichage de la page de connexion : purge les empreintes d'IP de plus de 24 h,
+     * même quand aucun formulaire n'est envoyé.
+     */
+    public static function prepareLogin(): void
+    {
+        try {
+            Throttle::purge();
+        } catch (\Throwable $e) {
+            Logger::exception('Purge du throttle en échec', $e, 'WARN');
+        }
+    }
+
+    /**
+     * Hachage leurre (mot de passe aléatoire jeté) au même algorithme que hashPassword().
+     * Cache statique + fichier storage/sessions/.auth-decoy (non secret) pour ne le calculer qu'une fois.
+     */
+    public static function decoyHash(): string
+    {
+        if (self::$decoy !== null) {
+            return self::$decoy;
+        }
+        $algo = defined('PASSWORD_ARGON2ID') ? PASSWORD_ARGON2ID : PASSWORD_BCRYPT;
+        $file = Config::root() . '/storage/sessions/.auth-decoy';
+        $h = is_file($file) ? trim((string) @file_get_contents($file)) : '';
+        if ($h === '' || password_get_info($h)['algo'] === null || password_needs_rehash($h, $algo)) {
+            $h = self::hashPassword(bin2hex(random_bytes(16)));
+            if (is_dir(dirname($file))) {
+                @file_put_contents($file, $h, LOCK_EX);
+            }
+        }
+        return self::$decoy = $h;
+    }
+
     /** Blocage pour le couple (identifiant, IP courante) ou pour l'IP courante. */
     public static function isLocked(string $username): bool
     {
+        Throttle::purge();
         return Throttle::count(self::pairBucket($username), self::LOCK_WINDOW) >= self::MAX_FAILS
             || Throttle::count('login_ip', self::LOCK_WINDOW) >= self::MAX_IP_FAILS;
     }
@@ -118,7 +157,9 @@ final class Auth
         }
         $row = $username === '' ? null : Db::one('SELECT * FROM {t:users} WHERE username = :u', ['u' => $username]);
         // Utilisateur inconnu : on vérifie quand même un hachage pour ne pas révéler l'existence du compte par le temps de réponse.
-        $hash = $row['password_hash'] ?? password_hash(random_bytes(8), PASSWORD_BCRYPT);
+        // Identifiant inconnu : un seul password_verify contre un hachage leurre de même algorithme que les vrais
+        // comptes (calculé une fois, mis en cache) : temps de réponse identique, pas d'énumération des comptes.
+        $hash = $row['password_hash'] ?? self::decoyHash();
         $ok = password_verify($password, (string) $hash) && $row !== null && (int) $row['active'] === 1;
         if (!$ok) {
             $fails = Throttle::count(self::pairBucket($username), self::LOCK_WINDOW);

@@ -62,7 +62,7 @@ final class PageController extends Controller
     /** Variables ORG_* (clé sans préfixe, en minuscules) ; les valeurs vides sont omises. */
     public static function org(): array
     {
-        $keys = ['NAME', 'LEGAL_FORM', 'RNA', 'ADDRESS', 'PUBLISHER', 'EMAIL', 'PHONE', 'CITY', 'HOST_NAME', 'HOST_ADDRESS'];
+        $keys = ['NAME', 'LEGAL_FORM', 'RNA', 'ADDRESS', 'PUBLISHER', 'EMAIL', 'PHONE', 'CITY', 'HOST_NAME', 'HOST_ADDRESS', 'HOST_PHONE'];
         $out = [];
         foreach ($keys as $k) {
             $v = trim((string) Config::env('ORG_' . $k, ''));

@@ -17,7 +17,7 @@ DirectoryIndex index.php
     Header always set X-Content-Type-Options "nosniff"
 </IfModule>
 
-# Cache long : assets/ (noms hachés par Vite) immuables ; img/ un mois.
+# Cache long : assets/ (noms hachés par Vite) immuables ; img/ un mois ; uploads/ (remplaçables depuis l'admin) 1 h.
 <IfModule mod_headers.c>
     <If "%{REQUEST_URI} =~ m#/assets/#">
         Header set Cache-Control "public, max-age=31536000, immutable"
@@ -26,7 +26,7 @@ DirectoryIndex index.php
         Header set Cache-Control "public, max-age=2592000"
     </ElseIf>
     <ElseIf "%{REQUEST_URI} =~ m#/uploads/#">
-        Header set Cache-Control "public, max-age=604800"
+        Header set Cache-Control "public, max-age=3600"
     </ElseIf>
 </IfModule>
 
