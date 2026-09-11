@@ -32,6 +32,7 @@ $publisherRows = [
 $hostRows = [
     ['legal.host.name_label', $o('host_name')],
     ['legal.host.address_label', $o('host_address')],
+    ['legal.host.phone_label', $o('host_phone')],
 ];
 ?>
 <article class="legal-page container">
@@ -53,7 +54,7 @@ $hostRows = [
         </dl>
     </section>
 
-    <?php if ($o('host_name') !== '' || $o('host_address') !== ''): ?>
+    <?php if ($o('host_name') !== '' || $o('host_address') !== '' || $o('host_phone') !== ''): ?>
         <section class="prose" aria-labelledby="legal-host">
             <h2 id="legal-host"><?= e(t('legal.host.title')) ?></h2>
             <dl class="legal-list">
