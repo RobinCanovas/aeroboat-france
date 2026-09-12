@@ -50,7 +50,7 @@ $value = (string) old((string) $name);
   <textarea<?= $attrs ?> rows="<?= (int) ($rows ?? 6) ?>"><?= e($value) ?></textarea>
 <?php elseif ($type === 'select'): ?>
   <select<?= $attrs ?>>
-    <option value=""<?= $value === '' ? ' selected' : '' ?>></option>
+    <option value="" disabled<?= $value === '' ? ' selected' : '' ?>><?= e(t('forms.choose')) ?></option>
 <?php foreach (($options ?? []) as $optValue => $optLabel): ?>
     <option value="<?= e((string) $optValue) ?>"<?= $value === (string) $optValue ? ' selected' : '' ?>><?= e((string) $optLabel) ?></option>
 <?php endforeach; ?>
