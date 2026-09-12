@@ -7,7 +7,7 @@ declare(strict_types=1);
  * Paramètres utilisés (identiques en FR et EN) :
  *   common.published_on  :date            news.page_of  :page, :pages
  *   footer.copyright     :year            join|contact.consent_html, rights.notice_html  :privacy_url (URL absolue de la page confidentialité)
- *   forms.errors.summary_title  :count
+ *   forms.errors.summary_title  :count     privacy.recipients.text, privacy.hosting.text  :host
  * Typographie : espaces insécables avant ; : ! ? et dans les guillemets « », apostrophes typographiques.
  */
 return [
@@ -318,10 +318,11 @@ return [
             'image_invalid' => 'Ce fichier n’est pas une image valide (JPEG, PNG ou WebP).',
             'image_too_large' => 'L’image dépasse la taille maximale autorisée.',
             'generic' => 'Une erreur est survenue. Veuillez réessayer plus tard.',
-            'summary_title' => 'Le formulaire contient des erreurs à corriger (:count)',
+            'summary_title' => 'Nombre d’erreurs à corriger : :count',
         ],
         'required_legend' => 'Les champs marqués d’un * sont obligatoires.',
         'honeypot_label' => 'Ne pas remplir ce champ',
+        'choose' => 'Choisir…',
     ],
 
     'footer' => [
@@ -370,6 +371,7 @@ return [
             'title' => 'Hébergeur',
             'name_label' => 'Société',
             'address_label' => 'Adresse',
+            'phone_label' => 'Téléphone',
         ],
         'ip' => [
             'title' => 'Propriété intellectuelle',
@@ -414,7 +416,7 @@ return [
             ],
             'members' => [
                 'title' => 'Espace membres',
-                'text' => 'Les comptes de l’espace membres sont créés par le bureau de l’association. Ils comportent un identifiant, un nom d’affichage, éventuellement une adresse e-mail, la date de dernière connexion et un mot de passe conservé uniquement sous forme chiffrée (hachée). Finalité : permettre aux membres autorisés de gérer le site.',
+                'text' => 'Les comptes de l’espace membres sont créés par le bureau de l’association. Ils comportent un identifiant, un nom d’affichage, éventuellement une adresse e-mail, la date de dernière connexion et un mot de passe conservé uniquement sous forme hachée, non réversible. Finalité : permettre aux membres autorisés de gérer le site.',
             ],
             'security' => [
                 'title' => 'Limitation des envois et des tentatives de connexion',
@@ -437,11 +439,12 @@ return [
         ],
         'recipients' => [
             'title' => 'Destinataires',
-            'text' => 'Vos données sont destinées aux membres du bureau et de l’équipe en charge du traitement de votre demande. Les données saisies dans les formulaires ne sont consultables que dans l’espace membres, réservé aux comptes autorisés. Elles ne sont ni vendues ni cédées à des tiers. L’association reçoit un e-mail d’avis à l’arrivée d’un message ou d’une candidature, mais cet e-mail ne contient aucune donnée personnelle : il invite seulement à consulter l’espace membres. Le seul sous-traitant est l’hébergeur OVH, qui héberge le site et sa base de données.',
+            'text' => 'Vos données sont destinées aux membres du bureau et de l’équipe en charge du traitement de votre demande. Les données saisies dans les formulaires ne sont consultables que dans l’espace membres, réservé aux comptes autorisés. Elles ne sont ni vendues ni cédées à des tiers. L’association reçoit un e-mail d’avis à l’arrivée d’un message ou d’une candidature, mais cet e-mail ne contient aucune donnée personnelle : il invite seulement à consulter l’espace membres. Le seul sous-traitant est :host, qui héberge le site et sa base de données.',
         ],
         'hosting' => [
             'title' => 'Hébergement et sécurité',
-            'text' => 'Le site et sa base de données sont hébergés par OVH. Les formulaires sont protégés contre les envois automatisés sans traceur ni cookie, et les CV sont stockés dans un dossier dont l’accès est interdit depuis internet. Des journaux techniques, nécessaires au fonctionnement et à la sécurité du service, sont tenus ; ils ne contiennent aucune donnée saisie par les visiteurs et sont conservés 90 jours au plus.',
+            'generic_host' => 'notre hébergeur',
+            'text' => 'Le site et sa base de données sont hébergés par :host. Les formulaires sont protégés contre les envois automatisés sans traceur ni cookie, et les CV sont stockés dans un dossier dont l’accès est interdit depuis internet. Des journaux techniques, nécessaires au fonctionnement et à la sécurité du service, sont tenus ; ils ne contiennent aucune donnée saisie par les visiteurs et sont conservés 90 jours au plus.',
         ],
         'tracking' => [
             'title' => 'Aucun traceur',

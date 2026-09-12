@@ -16,6 +16,8 @@ $o = static function (string $k) use ($org): string {
     }
     return '';
 };
+// Nom de l’hébergeur (ORG_HOST_NAME) ; repli générique si vide, jamais de nom en dur.
+$hostLabel = $o('host_name') !== '' ? $o('host_name') : t('privacy.hosting.generic_host');
 ?>
 <article class="legal-page container">
     <header class="page-hero">
@@ -77,12 +79,12 @@ $o = static function (string $k) use ($org): string {
 
     <section class="prose" aria-labelledby="privacy-recipients">
         <h2 id="privacy-recipients"><?= e(t('privacy.recipients.title')) ?></h2>
-        <p><?= e(t('privacy.recipients.text')) ?></p>
+        <p><?= e(t('privacy.recipients.text', ['host' => $hostLabel])) ?></p>
     </section>
 
     <section class="prose" aria-labelledby="privacy-hosting">
         <h2 id="privacy-hosting"><?= e(t('privacy.hosting.title')) ?></h2>
-        <p><?= e(t('privacy.hosting.text')) ?></p>
+        <p><?= e(t('privacy.hosting.text', ['host' => $hostLabel])) ?></p>
     </section>
 
     <section class="prose" aria-labelledby="privacy-tracking">

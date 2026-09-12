@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 /**
  * Interface texts, English. Exact key parity with fr.php (French is the reference language).
- * Same parameters as the French file: :date, :page, :pages, :year, :privacy_url, :count.
+ * Same parameters as the French file: :date, :page, :pages, :year, :privacy_url, :count, :host.
  */
 return [
     'meta' => [
@@ -313,10 +313,11 @@ return [
             'image_invalid' => 'This file is not a valid image (JPEG, PNG or WebP).',
             'image_too_large' => 'The image exceeds the maximum allowed size.',
             'generic' => 'An error occurred. Please try again later.',
-            'summary_title' => 'The form contains errors to correct (:count)',
+            'summary_title' => 'Errors to correct: :count',
         ],
         'required_legend' => 'Fields marked with an * are required.',
         'honeypot_label' => 'Leave this field empty',
+        'choose' => 'Choose…',
     ],
 
     'footer' => [
@@ -365,6 +366,7 @@ return [
             'title' => 'Hosting provider',
             'name_label' => 'Company',
             'address_label' => 'Address',
+            'phone_label' => 'Phone',
         ],
         'ip' => [
             'title' => 'Intellectual property',
@@ -409,7 +411,7 @@ return [
             ],
             'members' => [
                 'title' => 'Members’ area',
-                'text' => 'Members’ area accounts are created by the association’s board. They include a username, a display name, possibly an email address, the date of the last login and a password stored only in encrypted (hashed) form. Purpose: to let authorised members manage the site.',
+                'text' => 'Members’ area accounts are created by the association’s board. They include a username, a display name, possibly an email address, the date of the last login and a password stored only in hashed, non-reversible form. Purpose: to let authorised members manage the site.',
             ],
             'security' => [
                 'title' => 'Limiting submissions and login attempts',
@@ -432,11 +434,12 @@ return [
         ],
         'recipients' => [
             'title' => 'Recipients',
-            'text' => 'Your data is intended for the board and team members in charge of handling your request. Data entered in the forms can be viewed only in the members’ area, which is reserved for authorised accounts. It is neither sold nor passed on to third parties. The association receives a notification email when a message or an application arrives, but this email contains no personal data: it only invites us to check the members’ area. The only processor is the host, OVH, which hosts the site and its database.',
+            'text' => 'Your data is intended for the board and team members in charge of handling your request. Data entered in the forms can be viewed only in the members’ area, which is reserved for authorised accounts. It is neither sold nor passed on to third parties. The association receives a notification email when a message or an application arrives, but this email contains no personal data: it only invites us to check the members’ area. The only processor is :host, which hosts the site and its database.',
         ],
         'hosting' => [
             'title' => 'Hosting and security',
-            'text' => 'The site and its database are hosted by OVH. Forms are protected against automated submissions without any tracker or cookie, and CVs are stored in a folder to which access from the internet is forbidden. Technical logs needed to operate and secure the service are kept; they contain no data entered by visitors and are retained for 90 days at most.',
+            'generic_host' => 'our hosting provider',
+            'text' => 'The site and its database are hosted by :host. Forms are protected against automated submissions without any tracker or cookie, and CVs are stored in a folder to which access from the internet is forbidden. Technical logs needed to operate and secure the service are kept; they contain no data entered by visitors and are retained for 90 days at most.',
         ],
         'tracking' => [
             'title' => 'No trackers',
