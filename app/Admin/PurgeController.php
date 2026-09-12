@@ -16,6 +16,9 @@ final class PurgeController
     /** @return array{messages:string,applications:string} seuils UTC « Y-m-d H:i:s » */
     public static function cutoffs(?DateTimeImmutable $now = null): array
     {
+        if (class_exists(\App\Core\Retention::class)) {
+            return \App\Core\Retention::cutoffs($now);
+        }
         $now ??= new DateTimeImmutable('now', new DateTimeZone('UTC'));
         return [
             'messages' => $now->modify('-' . self::MESSAGES_MONTHS . ' months')->format(Time::FMT_DB),
@@ -37,6 +40,8 @@ final class PurgeController
                 $msgCount = self::count($r, ['messages', 'messages_deleted']);
                 $appCount = self::count($r, ['applications', 'candidatures', 'applications_deleted']);
                 $cvs = self::count($r, ['cv', 'cvs', 'cv_deleted', 'cv_files']);
+                $logs = self::count($r, ['logs']);
+                $logsSuffix = isset($r['logs']) ? ', ' . $logs . ' élément(s) de journal ancien(s)' : '';
             } else {
                 $apps = Store::all('SELECT id, cv_file FROM {t:applications} WHERE created_at < ?', [$cut['applications']]);
                 $cvs = 0;
@@ -45,6 +50,7 @@ final class PurgeController
                         $cvs++;
                     }
                 }
+                $logsSuffix = '';
                 $appCount = count($apps);
                 Store::run('DELETE FROM {t:applications} WHERE created_at < ?', [$cut['applications']]);
                 $msgCount = Store::count('SELECT COUNT(*) FROM {t:messages} WHERE created_at < ?', [$cut['messages']]);
@@ -52,7 +58,7 @@ final class PurgeController
             }
 
             self::log($appCount, $cvs, $msgCount, $ctx->userId());
-            Flash::add('ok', 'Purge effectuée : ' . $msgCount . ' message(s), ' . $appCount . ' candidature(s) et ' . $cvs . ' CV supprimés.');
+            Flash::add('ok', 'Purge effectuée : ' . $msgCount . ' message(s), ' . $appCount . ' candidature(s) et ' . $cvs . ' CV supprimés' . $logsSuffix . '.');
             return Reply::redirect(Ui::u('/rgpd'));
         }
         return Ui::page($ctx, 'Purge RGPD', 'purge', [

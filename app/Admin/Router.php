@@ -160,8 +160,8 @@ final class Router
     private static function logError(\Throwable $e): void
     {
         try {
-            $line = gmdate('Y-m-d H:i:s') . ' admin-error ' . get_class($e) . ' ' . basename($e->getFile()) . ':' . $e->getLine() . ' ' . preg_replace('/\s+/', ' ', $e->getMessage()) . "\n";
-            @file_put_contents(rtrim((string) Config::root(), '/\\') . '/storage/logs/admin.log', $line, FILE_APPEND | LOCK_EX);
+            // Classe + fichier:ligne ; le message brut (valeurs saisies possibles) n'est journalisé qu'en APP_DEBUG=1.
+            \App\Core\Logger::exception('Erreur admin', $e);
         } catch (\Throwable) {
             // Journal indisponible : ne jamais bloquer la réponse.
         }

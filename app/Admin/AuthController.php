@@ -18,12 +18,18 @@ final class AuthController
         }
         $error = '';
         if ($ctx->isPost()) {
-            if (!Throttle::hit('admin_login', 10, 900)) {
-                $error = 'Trop de tentatives. Réessayez dans quelques minutes.';
-            } elseif (Auth::attempt(trim($ctx->p('username')), $ctx->p('password'))) {
+            // Anti-bruteforce : Auth::attempt() compte les échecs par couple identifiant+IP et par IP (verrou 'locked').
+            if (Auth::attempt(trim($ctx->p('username')), $ctx->p('password'))) {
                 return Reply::redirect(Ui::u(''));
-            } else {
-                $error = 'Identifiant ou mot de passe incorrect.';
+            }
+            $error = Auth::lastError() === 'locked'
+                ? 'Trop de tentatives. Réessayez dans quelques minutes.'
+                : 'Identifiant ou mot de passe incorrect.';
+        } elseif (method_exists(Throttle::class, 'purge')) {
+            try {
+                Throttle::purge();
+            } catch (\Throwable) {
+                // Nettoyage opportuniste : sans effet sur l'affichage.
             }
         }
         return Ui::wrap(null, 'Connexion', Ui::render('login', ['error' => $error, 'username' => trim($ctx->p('username'))]), '', $error !== '' ? 401 : 200);
