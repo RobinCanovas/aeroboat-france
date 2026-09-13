@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+use App\Core\View;
+
 /**
  * Mentions légales. Vue mince : textes via t(), identité via $org (variables ORG_*).
  * Une valeur vide n’est jamais affichée (ni libellé, ni ligne) : aucun faux numéro.
@@ -35,11 +37,12 @@ $hostRows = [
     ['legal.host.phone_label', $o('host_phone')],
 ];
 ?>
+<?= View::partial('partials/page_hero', [
+    'title' => t('legal.title'),
+    'lead' => t('legal.lead'),
+]) ?>
+
 <article class="legal-page container">
-    <header class="page-hero">
-        <h1><?= e(t('legal.title')) ?></h1>
-        <p class="lead"><?= e(t('legal.lead')) ?></p>
-    </header>
 
     <section class="prose" aria-labelledby="legal-publisher">
         <h2 id="legal-publisher"><?= e(t('legal.publisher.title')) ?></h2>

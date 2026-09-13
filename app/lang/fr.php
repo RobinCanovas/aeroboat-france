@@ -193,8 +193,8 @@ return [
         'dx' => [
             'title' => '3DEXPERIENCE',
             'text' => 'Nous remercions chaleureusement 3DEXPERIENCE pour son soutien depuis 4 ans. Grâce à son engagement, nous bénéficions chaque année d’un accompagnement technique précieux et, en novembre, de licences pour tous les membres de l’association qui le souhaitent (20 licences disponibles). Ce soutien continu nous permet de réaliser nos projets avec des outils de niveau professionnel et de garantir la qualité de nos développements.',
-            'licenses_label' => 'Licences pour les membres',
-            'years_label' => 'Années de soutien',
+            'licenses_label' => '20 licences pour les membres',
+            'years_label' => '4 ans de soutien',
             'others_label' => '3DEXPERIENCE soutient aussi d’autres associations.',
         ],
         'become' => [

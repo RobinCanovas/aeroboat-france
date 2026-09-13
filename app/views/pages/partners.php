@@ -29,7 +29,7 @@ $linkOf = static function (?array $p): string {
     $u = (string) ($p['url'] ?? '');
     return preg_match('#^https?://#i', $u) ? $u : '';
 };
-$dxFacts = [t('partners.dx.licenses_label'), t('partners.dx.years_label'), t('partners.dx.others_label')];
+$dxFacts = [t('partners.dx.licenses_label'), t('partners.dx.years_label')];
 ?>
 <?= View::partial('partials/page_hero', [
     'title' => t('partners.hero.title'),
@@ -64,6 +64,7 @@ $dxFacts = [t('partners.dx.licenses_label'), t('partners.dx.years_label'), t('pa
           <li><?= e($fact) ?></li>
 <?php endforeach; ?>
         </ul>
+        <p><?= e(t('partners.dx.others_label')) ?></p>
 <?php if ($linkOf($featured['dx']) !== ''): ?>
         <p><a href="<?= e($linkOf($featured['dx'])) ?>" rel="noopener noreferrer" target="_blank"><?= e(t('partners.visit')) ?></a></p>
 <?php endif; ?>

@@ -321,6 +321,13 @@ textarea {
   color: var(--c-white);
 }
 
+/* .admin a (bleu) est plus spécifique que .btn-primary : sans ceci, texte bleu sur fond bleu. */
+.admin a.btn-primary,
+.admin a.btn-primary:hover,
+.admin a.btn-primary:focus-visible {
+  color: var(--c-white);
+}
+
 .btn-primary:disabled {
   opacity: 0.6;
   cursor: progress;

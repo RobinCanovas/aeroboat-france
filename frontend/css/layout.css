@@ -61,6 +61,20 @@
   cursor: pointer;
 }
 .nav-toggle[hidden] { display: none; }
+
+/* Très petits écrans : bouton réduit à l'icône (le libellé reste lu par les lecteurs d'écran) pour tenir sur la ligne du logo. */
+@media (max-width: 29.99em) {
+  .nav-toggle { padding: 0 var(--sp-3); }
+  .nav-toggle [data-nav-label] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
 .nav-toggle__bars, .nav-toggle__bars::before, .nav-toggle__bars::after {
   display: block;
   width: 18px; height: 2px;

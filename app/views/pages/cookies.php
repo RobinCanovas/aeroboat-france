@@ -1,13 +1,16 @@
 <?php
 declare(strict_types=1);
 
+use App\Core\View;
+
 /** Page cookies : vue mince, textes via t(). */
 ?>
+<?= View::partial('partials/page_hero', [
+    'title' => t('cookies.title'),
+    'lead' => t('cookies.lead'),
+]) ?>
+
 <article class="legal-page container">
-    <header class="page-hero">
-        <h1><?= e(t('cookies.title')) ?></h1>
-        <p class="lead"><?= e(t('cookies.lead')) ?></p>
-    </header>
 
     <section class="prose" aria-labelledby="cookies-visitors">
         <h2 id="cookies-visitors"><?= e(t('cookies.visitors.title')) ?></h2>

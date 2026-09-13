@@ -188,8 +188,8 @@ return [
         'dx' => [
             'title' => '3DEXPERIENCE',
             'text' => 'We warmly thank 3DEXPERIENCE for its support over the past 4 years. Thanks to its commitment, we receive valuable technical guidance every year and, in November, licences for all interested association members (20 licences available). This continuous support lets us carry out our projects with professional-grade tools and ensure the quality of our developments.',
-            'licenses_label' => 'Licences for members',
-            'years_label' => 'Years of support',
+            'licenses_label' => '20 licenses for members',
+            'years_label' => '4 years of support',
             'others_label' => '3DEXPERIENCE also supports other associations.',
         ],
         'become' => [

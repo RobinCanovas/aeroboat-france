@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+use App\Core\View;
+
 /**
  * Politique de confidentialité. Vue mince : textes via t() / t_html(), coordonnées via $org (valeurs vides masquées).
  *
@@ -19,11 +21,12 @@ $o = static function (string $k) use ($org): string {
 // Nom de l’hébergeur (ORG_HOST_NAME) ; repli générique si vide, jamais de nom en dur.
 $hostLabel = $o('host_name') !== '' ? $o('host_name') : t('privacy.hosting.generic_host');
 ?>
+<?= View::partial('partials/page_hero', [
+    'title' => t('privacy.title'),
+    'lead' => t('privacy.lead'),
+]) ?>
+
 <article class="legal-page container">
-    <header class="page-hero">
-        <h1><?= e(t('privacy.title')) ?></h1>
-        <p class="lead"><?= e(t('privacy.lead')) ?></p>
-    </header>
 
     <section class="prose" aria-labelledby="privacy-controller">
         <h2 id="privacy-controller"><?= e(t('privacy.controller.title')) ?></h2>

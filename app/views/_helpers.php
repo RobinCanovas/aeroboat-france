@@ -65,6 +65,10 @@ if (!function_exists('ui_upload')) {
     /** URL d'un fichier téléversé (chemin relatif à public/uploads/). */
     function ui_upload(string $path): string
     {
+        // Les données de départ (seed) référencent un slug d'image du manifeste, pas un fichier téléversé.
+        if (ui_is_slug($path)) {
+            return ui_img_full($path);
+        }
         return url('/uploads/' . ltrim($path, '/'));
     }
 }
