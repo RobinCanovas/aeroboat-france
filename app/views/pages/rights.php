@@ -13,7 +13,7 @@ foreach (['name', 'email', 'request_type', 'body'] as $f) {
     $labels[$f] = t('rights.fields.' . $f);
 }
 $types = [];
-foreach (['access', 'rectify', 'erase', 'object', 'portability', 'restrict'] as $k) {
+foreach (['access', 'rectify', 'erase', 'restrict', 'object', 'portability'] as $k) {
     $types[$k] = t('rights.types.' . $k);
 }
 ?>

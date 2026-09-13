@@ -33,7 +33,7 @@
 
 @media (min-width: 48em) {
   .hero::before {
-    background: linear-gradient(95deg, rgb(10 31 68 / 92%) 0%, rgb(10 31 68 / 82%) 45%, rgb(10 31 68 / 40%) 100%);
+    background: linear-gradient(95deg, rgb(10 31 68 / 92%) 0%, rgb(10 31 68 / 82%) 45%, rgb(10 31 68 / 66%) 100%);
   }
   .hero__inner { padding-block: var(--sp-9) var(--sp-7); }
 }
