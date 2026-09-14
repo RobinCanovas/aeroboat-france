@@ -56,48 +56,24 @@ return [
 
     'home' => [
         'hero' => [
-            'badge' => 'Prototype V6 en conception',
-            'title' => 'Des aéronefs à effet de sol, conçus et testés par des étudiants',
-            'lead' => 'Depuis six ans, Aéroboat France développe des prototypes d’aéronefs à effet de sol. Après avoir fait voler et testé les modèles expérimentaux HV3 et HV4, nous lançons la conception de la V6.',
-            'cta_primary' => 'Découvrir le projet V6',
-            'cta_secondary' => 'Rejoindre l’équipe',
-        ],
-        'stats' => [
-            ['value' => '6 ans', 'label' => 'de développement de prototypes à effet de sol'],
-            ['value' => '2', 'label' => 'prototypes expérimentaux testés en vol : HV3 et HV4'],
-            ['value' => '8', 'label' => 'membres dans l’équipe'],
-            ['value' => '20', 'label' => 'licences 3DEXPERIENCE pour les membres'],
+            'title' => 'Aéroboat France',
+            'lead' => 'Nous concevons et construisons des maquettes à effet de sol, avec une aérodynamique, des structures et une instrumentation innovantes, toujours en quête de performance.',
+            'cta_primary' => 'Rejoindre l’équipe',
+            'cta_secondary' => 'Nous contacter',
         ],
         'about' => [
-            'kicker' => 'Qui sommes-nous ?',
-            'title' => 'Une équipe d’étudiants passionnés d’aéronautique',
-            'text' => 'Aéroboat France est une équipe composée principalement d’étudiants, passionnés d’aéronautique, de maquettisme et de science de l’effet de sol. Nous concevons, construisons et testons des maquettes de grande envergure pour approfondir nos connaissances par la pratique.',
+            'kicker' => 'À la poursuite de l’effet de sol',
+            'title' => 'À propos',
+            'text' => 'Née d’un projet à deux élèves en fin de lycée et inspirée des aéronefs soviétiques à effet de sol (les ékranoplanes), Aéroboat France a depuis construit plusieurs générations de maquettes pour comprendre quelles conceptions exploitent le mieux l’effet de sol. Fondée à l’été 2025 par trois étudiants, nous concevons, testons et mesurons, avec un double objectif : rendre cette physique accessible et ludique, et continuer à en explorer l’usage pratique, en réunissant passionnés d’aéronautique et de modélisme.',
         ],
-        'cards' => [
-            ['title' => 'Performance aérodynamique', 'text' => 'Optimiser la géométrie de l’aile (allongement, dièdre, flèche) et explorer de nouvelles configurations : winglets orientés vers le bas, flotteurs intégrés.'],
-            ['title' => 'Polyvalence', 'text' => 'Concevoir un modèle capable de voler efficacement dans et hors de l’effet de sol, pour valider nos calculs et élargir son domaine d’utilisation.'],
-            ['title' => 'Fiabilité et simplicité', 'text' => 'Garantir un montage rapide, en moins de 30 minutes, des liaisons robustes et une meilleure rigidité d’ensemble.'],
-            ['title' => 'Flottabilité optimisée', 'text' => 'Conserver une densité globale inférieure à celle de l’eau grâce à des mousses étanches, avec une ligne de flottaison basse même dans les vagues.'],
+        'founders' => [
+            'title' => 'Membres fondateurs',
+            'text' => 'Amis réunis par une passion commune pour l’aéromodélisme, nos trois fondateurs ont uni leurs forces en avril 2025 pour créer une structure dédiée aux aéronefs à effet de sol. Notre première apparition publique a eu lieu au Salon du Bourget (Paris Air Show) 2025.',
         ],
-        'timeline' => [
-            'title' => 'Le chemin parcouru',
-            'lead' => 'Chaque prototype nous a appris quelque chose. La V6 est pensée comme leur synthèse.',
-            'items' => [
-                ['date' => 'Étape 1', 'title' => 'HV3', 'text' => 'Un premier modèle qui nous a appris l’importance d’une structure rigide et de flotteurs correctement dimensionnés.', 'status' => 'done'],
-                ['date' => 'Étape 2', 'title' => 'HV4', 'text' => 'Plusieurs solutions validées (forme de l’empennage, flottabilité, facilité d’assemblage) et des limites identifiées : étanchéité, rigidité de l’aile, capacité d’emport.', 'status' => 'done'],
-                ['date' => 'Étape 3', 'title' => 'V6 : conception', 'text' => 'Une synthèse des acquis qui corrige les défauts passés et ouvre la voie à de nouvelles innovations.', 'status' => 'current'],
-                ['date' => 'Étape 4', 'title' => 'V6 : construction et essais', 'text' => 'Valider nos calculs et élargir le domaine d’utilisation du modèle.', 'status' => 'planned'],
-            ],
-        ],
-        'partners' => [
-            'title' => 'Ils nous soutiennent',
-            'lead' => 'Le projet avance grâce à l’engagement de ses partenaires.',
-            'cta' => 'Voir les partenaires',
-        ],
-        'news' => [
-            'title' => 'Actualités',
-            'empty' => 'Aucune actualité pour le moment. Revenez bientôt !',
-            'cta' => 'Toutes les actualités',
+        'contact' => [
+            'title' => 'Nous contacter',
+            'text' => 'Rejoignez-nous, devenez partenaire ou échangeons simplement autour des maquettes à effet de sol : écrivez-nous à tout moment.',
+            'button' => 'Écrire à l’équipe',
         ],
         'cta' => [
             'title' => 'Envie de rejoindre l’aventure ?',
@@ -369,7 +345,7 @@ return [
         ],
         'host' => [
             'title' => 'Hébergeur',
-            'name_label' => 'Société',
+            'name_label' => 'Association',
             'address_label' => 'Adresse',
             'phone_label' => 'Téléphone',
         ],
@@ -516,6 +492,7 @@ return [
     ],
 
     'img' => [
+        'hero-v6' => 'Image de synthèse d’une maquette bleue à effet de sol au ras d’un lac, avec des montagnes dans la brume en arrière-plan',
         'lake-alpine' => 'Image de synthèse d’une maquette blanche à effet de sol sur un lac de montagne, avec des sommets en arrière-plan',
         'water-run' => 'Maquette rouge à hélice flottant sur l’eau d’un lac, vue de trois quarts',
         'water-skim' => 'Maquette rouge filant sur l’eau en soulevant des gerbes d’écume',

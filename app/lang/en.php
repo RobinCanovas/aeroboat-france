@@ -51,48 +51,24 @@ return [
 
     'home' => [
         'hero' => [
-            'badge' => 'V6 prototype in design',
-            'title' => 'Ground-effect aircraft, designed and tested by students',
-            'lead' => 'For six years, Aéroboat France has been developing ground-effect aircraft prototypes. After flying and testing the experimental HV3 and HV4 models, we are now designing the V6.',
-            'cta_primary' => 'Discover the V6 project',
-            'cta_secondary' => 'Join the team',
-        ],
-        'stats' => [
-            ['value' => '6 years', 'label' => 'developing ground-effect prototypes'],
-            ['value' => '2', 'label' => 'experimental prototypes flown and tested: HV3 and HV4'],
-            ['value' => '8', 'label' => 'team members'],
-            ['value' => '20', 'label' => '3DEXPERIENCE licences for members'],
+            'title' => 'Aéroboat France',
+            'lead' => 'We design and build ground-effect scale models with innovative aerodynamics, structures, and instrumentation—always in pursuit of performance.',
+            'cta_primary' => 'Join the team',
+            'cta_secondary' => 'Contact us',
         ],
         'about' => [
-            'kicker' => 'Who are we?',
-            'title' => 'A team of students passionate about aeronautics',
-            'text' => 'Aéroboat France is a team made up mainly of students, passionate about aeronautics, model making and the science of ground effect. We design, build and test large-span scale aircraft to deepen our understanding through hands-on work.',
+            'kicker' => 'Chasing ground effect',
+            'title' => 'About us',
+            'text' => 'Born from a two-student project at the end of high school and inspired by Soviet ground-effect aircraft (ekranoplans), Aéroboat France has since built multiple scale iterations to see which designs exploit ground effect best. Founded in summer 2025 by three students, we now design, test, and measure—with a dual aim: make this physics accessible and fun, and keep pushing its practical use—bringing together aeronautics and model-making enthusiasts.',
         ],
-        'cards' => [
-            ['title' => 'Aerodynamic performance', 'text' => 'Optimise the wing geometry (aspect ratio, dihedral, sweep) and explore new configurations: downward winglets and integrated floats.'],
-            ['title' => 'Versatility', 'text' => 'Design a model able to fly efficiently both in and out of ground effect, to validate our calculations and widen its range of use.'],
-            ['title' => 'Reliability and simplicity', 'text' => 'Ensure quick assembly, in under 30 minutes, robust connections and improved overall stiffness.'],
-            ['title' => 'Optimised buoyancy', 'text' => 'Keep an overall density lower than that of water thanks to watertight foams, with a low waterline even in waves.'],
+        'founders' => [
+            'title' => 'Founding members',
+            'text' => 'Friends with a shared passion for aeromodelling, our three founders joined forces in April 2025 to create a structure dedicated to ground-effect aircraft. We made our first public appearance at the 2025 Paris Air Show (Salon du Bourget).',
         ],
-        'timeline' => [
-            'title' => 'The road so far',
-            'lead' => 'Each prototype taught us something. The V6 is designed as their synthesis.',
-            'items' => [
-                ['date' => 'Step 1', 'title' => 'HV3', 'text' => 'A first model that taught us the importance of a rigid structure and properly sized floats.', 'status' => 'done'],
-                ['date' => 'Step 2', 'title' => 'HV4', 'text' => 'Several solutions validated (tail design, buoyancy, ease of assembly) and limits identified: waterproofing, wing rigidity, payload capacity.', 'status' => 'done'],
-                ['date' => 'Step 3', 'title' => 'V6: design', 'text' => 'A synthesis of what we have learned, correcting past shortcomings and paving the way for new innovations.', 'status' => 'current'],
-                ['date' => 'Step 4', 'title' => 'V6: construction and testing', 'text' => 'Validate our calculations and widen the model’s range of use.', 'status' => 'planned'],
-            ],
-        ],
-        'partners' => [
-            'title' => 'They support us',
-            'lead' => 'The project moves forward thanks to the commitment of its partners.',
-            'cta' => 'See our partners',
-        ],
-        'news' => [
-            'title' => 'News',
-            'empty' => 'No news yet. Check back soon!',
-            'cta' => 'All news',
+        'contact' => [
+            'title' => 'Contact us',
+            'text' => 'Join us, partner with us, or simply exchange ideas about ground-effect models—reach out anytime.',
+            'button' => 'Write to the team',
         ],
         'cta' => [
             'title' => 'Want to join the adventure?',
@@ -364,7 +340,7 @@ return [
         ],
         'host' => [
             'title' => 'Hosting provider',
-            'name_label' => 'Company',
+            'name_label' => 'Association',
             'address_label' => 'Address',
             'phone_label' => 'Phone',
         ],
@@ -511,6 +487,7 @@ return [
     ],
 
     'img' => [
+        'hero-v6' => 'Computer-generated image of a blue ground-effect model skimming a lake, with misty mountains in the background',
         'lake-alpine' => 'Computer-generated image of a white ground-effect model over a mountain lake, with peaks in the background',
         'water-run' => 'Red propeller-driven model floating on a lake, seen from three-quarters',
         'water-skim' => 'Red model racing across the water, throwing up spray',

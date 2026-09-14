@@ -13,9 +13,17 @@ final class PageController extends Controller
     public static function home(array $params = []): void
     {
         self::display('pages/home', self::meta(Lang::t('meta.site_name') . ' · ' . Lang::t('meta.tagline'), Lang::t('meta.default_description'), null, false), [
-            'posts' => self::latestPosts(3),
-            'partners' => self::publishedPartners(),
+            'founders' => self::founders(),
         ]);
+    }
+
+    /** Les cofondateurs (rôle contenant « cofondateur »), affichés sur l'accueil comme sur le site actuel. */
+    private static function founders(): array
+    {
+        return Db::all(
+            'SELECT * FROM {t:team_members} WHERE published = 1 AND role_fr LIKE ? ORDER BY sort_order, id LIMIT 3',
+            ['%cofondateur%']
+        );
     }
 
     public static function project(array $params = []): void

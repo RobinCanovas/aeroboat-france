@@ -12,11 +12,11 @@ declare(strict_types=1);
 
 $now = gmdate('Y-m-d H:i:s');
 
-/** Membres : noms, dans l’ordre et la graphie de la page « Équipe » actuelle. Aucun rôle n’est publié dans les sources. */
+/** Membres : noms, dans l’ordre et la graphie de la page « Équipe » actuelle. Rôles des trois fondateurs : page « Équipe » du site actuel ; les autres membres n’ont pas de titre publié. */
 $members = [
-    ['Clément THIBAULT', 'team-clement'],
-    ['Joan LE POUHAËR', 'team-joan'],
-    ['Pierre STAMM', 'team-pierre'],
+    ['Clément THIBAULT', 'team-clement', 'Président et cofondateur', 'President and co-founder'],
+    ['Joan LE POUHAËR', 'team-joan', 'Trésorier et cofondateur', 'Treasurer and co-founder'],
+    ['Pierre STAMM', 'team-pierre', 'Secrétaire et cofondateur', 'Secretary and co-founder'],
     ['Kerian FITER', 'team-kerian'],
     ['Mathis WOJTKOWSKI', 'team-mathis'],
     ['Benjamin CANOVAS', 'team-benjamin'],
@@ -25,11 +25,14 @@ $members = [
 ];
 
 $team = [];
-foreach ($members as $i => [$name, $photo]) {
+foreach ($members as $i => $member) {
+    [$name, $photo] = $member;
+    $roleFr = $member[2] ?? null;
+    $roleEn = $member[3] ?? null;
     $team[] = [
         'name' => $name,
-        'role_fr' => null, // repli sur team.role_default (« Membre »)
-        'role_en' => null, // fallback to team.role_default (“Member”)
+        'role_fr' => $roleFr ?? null, // sinon repli sur team.role_default (« Membre »)
+        'role_en' => $roleEn ?? null, // otherwise fallback to team.role_default (“Member”)
         'bio_fr' => null,
         'bio_en' => null,
         'photo' => $photo,

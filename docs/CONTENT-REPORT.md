@@ -47,3 +47,10 @@ Sources : `docs/source/wp-pages.json` (site actuel, daté d’octobre 2025), `Pr
 - Vues juridiques : `$org` accepte les clés `name`, `ORG_NAME` ou `org_name` ; clés attendues : name, legal_form, rna, address, city, email, phone, publisher, host_name, host_address. Classes CSS utilisées : `legal-page container`, `page-hero`, `lead`, `prose`, `legal-list`, `legal-row`.
 - Seed : `cover`, `photo`, `logo` = noms de base du manifeste d’images ; `author_id` nul ; l’idempotence se fait sur `name` (team, partners) et `slug_fr` (posts).
 - Racine `admin_public` : 2 clés ajoutées (`restricted`, `link`), non listées dans LANG-KEYS.
+
+## Refonte « comme le site actuel » (novembre 2026)
+Accueil reconstruit d'après le site WordPress en ligne : héros photo (image `Screenshot-2025-11-11-042435.png`, slug `hero-v6`), « À propos », « Membres fondateurs », bloc contact. Textes repris du site actuel (traduits en français) ; à confirmer :
+- **Date de création contradictoire dans les sources** : l'accueil actuel dit « fondée à l'été 2025 par trois étudiants » et « fondateurs réunis en avril 2025 », alors que la page Projets dit « depuis six ans, Aéroboat France développe… » (un projet à deux élèves en fin de lycée a précédé l'association). Texte conservé tel quel ; à harmoniser.
+- « Paris Air Show 2025 » est rendu par « Salon du Bourget (Paris Air Show) 2025 » : à confirmer.
+- **Rôles des fondateurs** (site actuel) : Clément Thibault, président ; Joan Le Pouhaër, trésorier ; Pierre Stamm, secrétaire (tous cofondateurs). Les cinq autres membres n'ont pas de titre publié (« Membre »).
+- **Statut juridique** : « Association » (valeur par défaut de `ORG_LEGAL_FORM`) ; préciser la forme exacte (loi 1901 ? déclarée en préfecture ?), le numéro RNA et le siège avant la production.
