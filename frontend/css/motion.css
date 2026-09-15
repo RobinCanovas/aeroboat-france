@@ -1,0 +1,77 @@
+/* Mouvement et transparence. Tout le mouvement est dans prefers-reduced-motion: no-preference ;
+   les effets de transparence (flou, verre dépoli) restent actifs pour tous. */
+
+/* En-tête en verre dépoli : le héros transparaît légèrement au défilement */
+.site-header {
+  background: rgb(255 255 255 / 80%);
+  backdrop-filter: saturate(1.6) blur(14px);
+  -webkit-backdrop-filter: saturate(1.6) blur(14px);
+}
+
+/* Boutons « fantôme » translucides sur les photos */
+.btn--ghost {
+  background: rgb(255 255 255 / 14%);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.btn--ghost:hover { background: rgb(255 255 255 / 26%); }
+
+/* Bandeau de contact : halos translucides derrière la carte, carte en verre clair */
+.band-dark {
+  background:
+    radial-gradient(60rem 28rem at 12% 10%, rgb(29 76 154 / 38%), transparent 70%),
+    radial-gradient(44rem 24rem at 92% 95%, rgb(198 47 37 / 26%), transparent 70%),
+    #12141c;
+}
+.contact-card {
+  background: rgb(244 246 251 / 93%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 20px 60px rgb(0 0 0 / 35%);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes abf-rise {
+    from { opacity: 0; transform: translateY(22px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes abf-fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes abf-drift {
+    from { transform: scale(1.02); }
+    to { transform: scale(1.09); }
+  }
+  @keyframes abf-glow {
+    from { filter: drop-shadow(0 0 0 rgb(255 255 255 / 0%)); }
+    to { filter: drop-shadow(0 0 18px rgb(159 194 255 / 45%)); }
+  }
+
+  /* Chaque page apparaît en fondu */
+  main { animation: abf-fade 600ms var(--ease) both; }
+
+  /* Héros de l'accueil : fond qui dérive lentement, contenu qui se révèle en cascade */
+  .hero--home .hero__bg img { animation: abf-drift 26s ease-in-out infinite alternate; transform-origin: 50% 60%; }
+  .hero--home .hero__logo { animation: abf-rise 900ms var(--ease) 120ms both, abf-glow 4.5s ease-in-out 1s infinite alternate; }
+  .hero--home h1 { animation: abf-rise 900ms var(--ease) 280ms both; }
+  .hero--home .hero__lead { animation: abf-rise 900ms var(--ease) 440ms both; }
+  .hero--home .btn-row { animation: abf-rise 900ms var(--ease) 600ms both; }
+
+  /* Apparitions au défilement plus marquées, en cascade pour les fondateurs */
+  .js .reveal:not(.is-visible) { transform: translateY(26px); }
+  .js .reveal { transition-duration: 800ms; }
+  .js .founders__list .founder:nth-child(2).reveal { transition-delay: 140ms; }
+  .js .founders__list .founder:nth-child(3).reveal { transition-delay: 280ms; }
+
+  /* Interactions : images et portraits réagissent doucement */
+  .split__media img { transition: transform 900ms var(--ease); }
+  .split__media:hover img { transform: scale(1.04); }
+  .founder__photo { transition: transform 400ms var(--ease), box-shadow 400ms var(--ease); }
+  .founder:hover .founder__photo { transform: translateY(-4px) scale(1.05); box-shadow: 0 14px 30px rgb(10 31 68 / 22%); }
+  .contact-card { transition: transform 500ms var(--ease), box-shadow 500ms var(--ease); }
+  .contact-card:hover { transform: translateY(-3px); box-shadow: 0 28px 70px rgb(0 0 0 / 45%); }
+  .btn { transition: transform 200ms var(--ease), background-color 200ms var(--ease), border-color 200ms var(--ease), box-shadow 200ms var(--ease); }
+  .btn:hover { transform: translateY(-2px); }
+  .btn:active { transform: none; }
+}

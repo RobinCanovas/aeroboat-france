@@ -43,14 +43,14 @@ $city = (string) Config::env('ORG_CITY', '');
 <section class="section section--grey" aria-labelledby="founders-title">
   <div class="container founders">
     <h2 id="founders-title" class="title-bar title-bar--center"><?= e(t('home.founders.title')) ?></h2>
-    <p class="founders__text"><?= e(t('home.founders.text')) ?></p>
+    <p class="founders__text reveal"><?= e(t('home.founders.text')) ?></p>
     <ul class="founders__list">
 <?php foreach ($founders as $m):
     $photo = (string) ($m['photo'] ?? '');
     $role = trim(loc($m, 'role')) !== '' ? loc($m, 'role') : t('team.role_default');
     $name = (string) $m['name'];
 ?>
-      <li class="founder">
+      <li class="founder reveal">
 <?php if ($photo !== '' && !empty($m['photo_consent'])): ?>
         <span class="founder__photo">
 <?php if (ui_is_slug($photo)): ?>
@@ -71,7 +71,7 @@ $city = (string) Config::env('ORG_CITY', '');
 
 <section class="band-dark" aria-labelledby="contact-title">
   <div class="container">
-    <div class="contact-card">
+    <div class="contact-card reveal">
       <div class="contact-card__info">
         <h2 id="contact-title" class="title-bar"><?= e(t('home.contact.title')) ?></h2>
         <p><?= e(t('home.contact.text')) ?></p>
