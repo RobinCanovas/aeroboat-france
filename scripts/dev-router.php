@@ -18,17 +18,30 @@ if (str_contains($path, '..') || str_contains($path, "\0") || preg_match('#/\.#'
     return true;
 }
 
-$file = $root . $path;
-if ($path !== '/' && is_file($file)) {
+// Simule le sous-dossier de déploiement (ex. /test) : ABF_BASE=/test retire ce préfixe pour les fichiers statiques.
+$base = rtrim((string) getenv('ABF_BASE'), '/');
+$staticPath = ($base !== '' && str_starts_with($path, $base . '/')) ? substr($path, strlen($base)) : $path;
+$file = $root . $staticPath;
+if ($staticPath !== '/' && is_file($file)) {
     $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
     // Pas d'exécution de PHP dans uploads/ ; index.php passe par le front controller ci-dessous.
-    if ($ext === 'php' && str_starts_with($path, '/uploads/')) {
+    if ($ext === 'php' && str_starts_with($staticPath, '/uploads/')) {
         http_response_code(404);
         echo 'Not found';
         return true;
     }
     if ($ext !== 'php') {
-        return false; // le serveur intégré sert le fichier statique avec le bon type MIME
+        if ($staticPath === $path) {
+            return false; // le serveur intégré sert le fichier statique avec le bon type MIME
+        }
+        // Chemin réécrit (préfixe simulé) : le serveur intégré ne sait pas le servir, on envoie le fichier nous-mêmes.
+        $mimes = ['css' => 'text/css', 'js' => 'text/javascript', 'webp' => 'image/webp', 'png' => 'image/png', 'jpg' => 'image/jpeg',
+            'jpeg' => 'image/jpeg', 'svg' => 'image/svg+xml', 'ico' => 'image/x-icon', 'woff2' => 'font/woff2', 'json' => 'application/json',
+            'webmanifest' => 'application/manifest+json', 'txt' => 'text/plain'];
+        header('Content-Type: ' . ($mimes[$ext] ?? 'application/octet-stream'));
+        header('Content-Length: ' . (string) filesize($file));
+        readfile($file);
+        return true;
     }
 }
 

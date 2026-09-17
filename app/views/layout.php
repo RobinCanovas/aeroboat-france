@@ -82,10 +82,6 @@ $social = [
 <body class="page-<?= e($page !== '' ? $page : 'default') ?>">
 <a class="skip-link" href="#main"><?= e(t('nav.skip_to_content')) ?></a>
 
-<?php if (is_test()): ?>
-<div class="test-banner" role="note"><?= e(t('meta.test_banner')) ?></div>
-<?php endif; ?>
-
 <header class="site-header">
   <div class="container site-header__bar">
     <a class="brand" href="<?= e(route('home')) ?>">

@@ -24,9 +24,6 @@ if (function_exists('vite_tags')) {
 </head>
 <body class="admin">
 <a class="skip-link" href="#contenu">Aller au contenu</a>
-<?php if ($isTest) : ?>
-    <p class="test-banner" role="note">Version de test : les données de ce site sont fictives ou provisoires.</p>
-<?php endif; ?>
 <header class="admin-header">
     <a class="brand" href="<?= e(Ui::u('')) ?>">Aéroboat France · Espace membres</a>
     <?php if ($user) : ?>

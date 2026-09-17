@@ -16,6 +16,13 @@ final class AuthController
         if ($ctx->user !== null) {
             return Reply::redirect(Ui::u(''));
         }
+        // Aucun compte (ou base pas encore installée) : on guide vers l'installation au lieu d'une erreur.
+        if (!self::accountExists()) {
+            if ((string) Config::env('SETUP_TOKEN', '') !== '') {
+                return Reply::redirect(Ui::u('/setup'));
+            }
+            return Ui::error(null, 404, "Aucun compte n'existe : renseignez SETUP_TOKEN dans le fichier .env du serveur puis ouvrez /admin/setup.");
+        }
         $error = '';
         if ($ctx->isPost()) {
             // Anti-bruteforce : Auth::attempt() compte les échecs par couple identifiant+IP et par IP (verrou 'locked').
@@ -61,6 +68,13 @@ final class AuthController
         $old = ['username' => '', 'display_name' => '', 'email' => ''];
         if ($ctx->isPost()) {
             $old = ['username' => trim($ctx->p('username')), 'display_name' => trim($ctx->p('display_name')), 'email' => trim($ctx->p('email'))];
+            // Les tables d'abord : la limitation de débit ci-dessous en a besoin (base vide au premier passage).
+            try {
+                Migrator::run();
+            } catch (\Throwable $e) {
+                \App\Core\Logger::exception('Installation : migrations', $e);
+                return Ui::wrap(null, 'Installation', "<h1>Base de données inaccessible</h1><p>Les tables n'ont pas pu être créées. Vérifiez DB_HOST, DB_NAME, DB_USER et DB_PASS dans le fichier .env du serveur (et que le préfixe DB_PREFIX est abf_), puis réessayez. Le détail technique est dans storage/logs/.</p>", '', 500);
+            }
             if (!Throttle::hit('admin_setup', 5, 3600)) {
                 return Ui::wrap(null, 'Installation', '<h1>Trop de tentatives</h1><p>Réessayez dans une heure.</p>', '', 429);
             }

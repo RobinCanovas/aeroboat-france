@@ -40,7 +40,8 @@ Si une de ces adresses affiche quelque chose : arrêtez, ne communiquez pas l'ad
 
 ## 6. Si ça ne marche pas
 - Page blanche ou erreur 500 : vérifier que `.htaccess` est bien présent dans `/www/test/` (fichiers cachés affichés) et que `.env` existe.
-- Erreur de base de données : le fichier `.env` doit être celui généré par `.env.test` (pas le modèle `.env.example`).
+- Message « Base de données inaccessible » sur `/admin/setup` : le fichier `.env` du serveur n'a pas les bons `DB_HOST`, `DB_NAME`, `DB_USER`, `DB_PASS` (il doit être celui généré par `.env.test`, pas le modèle `.env.example`) ; le détail est dans `storage/logs/`.
+- `/admin/login` vous renvoie vers `/admin/setup` : normal tant qu'aucun compte n'existe ; créez-le avec le jeton `SETUP_TOKEN`.
 - Le site WordPress ne doit pas avoir changé : testez `https://www.aeroboat-france.com/`.
 
 ## 7. Plus tard : `test.aeroboat-france.com`

@@ -594,3 +594,35 @@ input[type="file"].field__control { padding: var(--sp-3); }
 .form-legend::before { content: "* "; color: var(--c-red); font-weight: 700; }
 .form-delay { margin: 0; color: var(--c-muted); font-size: var(--fs-sm); }
 .note a { color: var(--c-blue); }
+
+/* ---------- Formulaires : mise en page cohérente (contact, rejoindre, droits) ---------- */
+.contact-layout { display: grid; gap: var(--sp-7); align-items: start; }
+@media (min-width: 62em) {
+  .contact-layout { grid-template-columns: minmax(0, 1.6fr) minmax(16rem, 1fr); gap: var(--sp-8); }
+  .contact-layout .info-card { position: sticky; top: calc(var(--header-h) + var(--sp-5)); }
+}
+.form-wrap { max-width: 46rem; }
+.form {
+  padding: var(--sp-5);
+  background: var(--c-white);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-1);
+}
+@media (min-width: 48em) { .form { padding: var(--sp-7); } }
+.form-legend { margin: 0; font-size: var(--fs-sm); color: var(--c-muted); }
+
+/* Bouton « Choisir un fichier » aux couleurs du site */
+input[type="file"].field__control::file-selector-button {
+  margin-right: var(--sp-3);
+  padding: var(--sp-2) var(--sp-4);
+  font: inherit;
+  font-weight: 600;
+  color: var(--c-white);
+  background: var(--c-navy);
+  border: 0;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+}
+input[type="file"].field__control::file-selector-button:hover { background: var(--c-blue-600); }
+.contact-layout:not(:has(.info-card)) { max-width: 46rem; margin-inline: auto; }
