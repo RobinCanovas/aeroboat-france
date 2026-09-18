@@ -11,7 +11,7 @@ Toute modification d'un contrat passe par le mainteneur du dépôt.
 | `front-design` | `frontend/**` (sauf `admin*`), `vite.config.js`, `app/views/**` (sauf `admin/`, pages juridiques), `public/img/**`, `public/favicon*`, `public/manifest.webmanifest` |
 | `cms-admin` | `app/Admin/**`, `app/Modules/**`, `app/views/admin/**`, `frontend/admin.js`, `frontend/css/admin.css`, `tests/admin_*_test.php` |
 | `devops` | `scripts/**` (hors `build-images.py`), `.github/**`, `README.md`, `tests/run.php` ne change pas |
-| Mainteneur | `CONTRIBUTING.md`, `docs/**` (hors rapports), `package.json`, `.env.example`, `database/migrations/001_init.sql`, `app/routes.php`, `frontend/css/tokens.css`, `tests/` (runner et tests transverses) |
+| Mainteneur | `docs/**` (hors rapports), `package.json`, `.env.example`, `database/migrations/001_init.sql`, `app/routes.php`, `frontend/css/tokens.css`, `tests/` (runner et tests transverses) |
 
 ## 2. Routes (`app/routes.php`, figé)
 Chaque entrée : clé → chemins FR/EN (sans slash initial), contrôleur, méthodes. URL publique = `APP_URL` + `/{lang}/` + chemin. `{slug}` = paramètre.

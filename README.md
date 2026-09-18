@@ -1,149 +1,133 @@
 # Aéroboat France v2
 
-Site de **test** de l'association Aéroboat France (la production WordPress reste intouchée) : PHP 8.2 natif, PDO (SQLite en local, MySQL chez OVH), Vite, mini-CMS maison, FR/EN, aucun cookie visiteur.
+Nouveau site de l'association **Aéroboat France**, une association étudiante toulousaine qui conçoit, construit et teste des maquettes d'aéronefs à effet de sol (les « aéroboats »). Le site présente le projet, l'équipe, les partenaires et les actualités, permet de contacter l'association ou de candidater, et inclut un petit calculateur d'effet de sol.
 
-Conventions et contrats : [`CONTRIBUTING.md`](CONTRIBUTING.md), [`docs/CONTRACTS.md`](docs/CONTRACTS.md).
+Il remplace à terme le site WordPress actuel. Pendant la phase de test, il est hébergé dans un sous-dossier séparé et n'est pas indexé par les moteurs de recherche.
+
+## Ce que fait le site
+
+- **Pages publiques** : accueil, projet, équipe, partenaires, actualités, rejoindre l'association, contact.
+- **Deux langues** : français (langue de référence) et anglais, avec des adresses localisées (`/fr/projet`, `/en/project`).
+- **Respect de la vie privée** : aucun cookie côté visiteur, aucun traceur, aucun service externe, polices hébergées sur le site. Les formulaires sont protégés sans cookie (jeton signé, champ piège, délai minimum).
+- **Accessibilité** : navigation au clavier, contrastes AA, respect de `prefers-reduced-motion`, mise en page pensée d'abord pour mobile.
+- **Espace membres** (`/admin`) : mini-CMS pour gérer l'équipe, les partenaires et les actualités, lire les messages et les candidatures, et purger les données personnelles. Les accès sont répartis entre administrateurs (bureau) et rédacteurs.
+- **Module Calculateur** : estimation des effets de sol, pensé comme le premier d'une série de modules ajoutables à l'espace membres.
+- **Pages légales** : mentions légales, confidentialité, cookies, exercice des droits.
+
+## Technique
+
+| | |
+|---|---|
+| Langage | PHP 8.2 natif, sans framework ni Composer |
+| Base de données | PDO : SQLite en local, MySQL en hébergement. Migrations en SQL portable |
+| Front | CSS et JavaScript maison, assets construits avec Vite. Le site reste utilisable sans JavaScript |
+| Contenu | éditable en base, en français et en anglais |
+| Déploiement | scripts Node (FTPS) ou GitHub Actions |
 
 ## Prérequis
 
-| Outil | Version | Installation (Windows) |
-|---|---|---|
-| Node.js | 20 ou plus | <https://nodejs.org> |
-| PHP | **8.2** (cible OVH ; une version plus récente fonctionne en local, un avertissement s'affiche) | `winget install PHP.PHP.8.2` |
-| Git | récent | `winget install Git.Git` |
+- Node.js 20 ou plus
+- PHP 8.2 (une version plus récente fonctionne en local, avec un avertissement), avec les extensions `pdo_sqlite`, `pdo_mysql`, `mbstring`, `gd` et `fileinfo`
+- Git
 
-Extensions PHP utilisées : `pdo_sqlite` (local), `pdo_mysql` (OVH), `mbstring`, `gd`, `fileinfo`. Les scripts cherchent PHP dans le `PATH`, puis dans `C:\wamp64\bin\php\php8.2.*`, puis dans les paquets WinGet. Variable `PHP_BIN` pour forcer un exécutable. S'il est introuvable, le script s'arrête (code 1) en affichant la commande d'installation.
+Sous Windows : `winget install PHP.PHP.8.2`. Les scripts cherchent PHP dans le `PATH`, puis dans les installations WAMP et WinGet. La variable `PHP_BIN` permet de forcer un exécutable.
 
-## Installation locale
+## Démarrer en local
 
 ```bash
 npm install
-npm run dev          # http://127.0.0.1:8000 (PHP) + Vite (HMR)
+npm run dev
 ```
 
-Au premier lancement, `npm run dev` crée un `.env` de démonstration **s'il n'existe pas** (SQLite `database/dev.sqlite`, `APP_KEY` et `SETUP_TOKEN` aléatoires, aucun secret réel), puis migre et alimente la base. `Ctrl+C` arrête proprement PHP et Vite.
+Le site est alors disponible sur <http://127.0.0.1:8000>, avec rechargement à chaud des assets.
+
+Au premier lancement, un fichier `.env` de démonstration est créé s'il n'existe pas (base SQLite, clés aléatoires, aucun secret réel), puis la base est migrée et remplie avec le contenu de départ. `Ctrl+C` arrête proprement PHP et Vite.
+
+Pour créer le premier compte administrateur, ouvrir `/admin/setup?token=<SETUP_TOKEN>` (le jeton est dans le `.env`). La page se désactive dès qu'un compte existe. Les rédacteurs se créent ensuite depuis l'interface.
 
 ## Commandes
 
 | Commande | Effet |
 |---|---|
-| `npm run dev` | Vite + `php -S` (routeur `scripts/dev-router.php`) |
-| `npm test` | tests PHP (parité FR/EN, clés utilisées, mot interdit, compatibilité PHP 8.2) |
-| `npm run lint:php` | `php -l` sur `app/ database/ public/ tests/ scripts/` (code 1 si erreur) |
-| `npm run build` | assets Vite vers `public/assets/` |
-| `npm run migrate:demo` | migration + seed sur SQLite temporaire |
-| `npm run ci` | lint + tests + build + migration de démonstration (ce que fait GitHub Actions) |
-| `npm run release` | construit `dist/` prêt pour FTP |
-| `npm run deploy:test` | envoie `dist/` vers `/www/test/` (ajouter `-- --dry-run` pour simuler) |
-| `npm run push-env` | envoie `.env.test` vers `/www/test/.env` |
-| `node --test "scripts/tests/*.test.mjs"` | tests des scripts de déploiement (serveur FTP factice local, aucun réseau) |
+| `npm run dev` | serveur PHP et Vite |
+| `npm test` | tests PHP (parité FR/EN, clés de langue utilisées, compatibilité PHP 8.2, base, authentification, admin) |
+| `npm run test:scripts` | tests des scripts de déploiement, sur un serveur FTP factice local |
+| `npm run lint:php` | vérification de syntaxe PHP |
+| `npm run build` | construit les assets dans `public/assets/` |
+| `npm run migrate:demo` | migration et contenu de départ sur une base temporaire |
+| `npm run ci` | enchaîne tout ce qui précède (c'est ce que fait GitHub Actions) |
+| `npm run release` | prépare le dossier `dist/` à envoyer sur l'hébergement |
+| `npm run deploy:test` | envoie `dist/` sur le site de test (`-- --dry-run` pour simuler) |
+| `npm run push-env` | envoie la configuration du site de test |
 
-## Configuration (`.env`)
+## Organisation du dépôt
 
-Modèle : [`.env.example`](.env.example). Les fichiers `.env*` sont ignorés par git (sauf `.env.example`). Clés principales : `APP_ENV`, `APP_DEBUG`, `APP_URL` (son chemin sert de préfixe : `https://aeroboat-france.com/test`), `APP_KEY` (64 hex), `SETUP_TOKEN`, `SITE_NOINDEX`, `DB_*` (jamais le préfixe `mod759_`, réservé à WordPress), `MAIL_*`, `ORG_*` (mentions légales). Une valeur contenant des espaces, `#`, `"` ou `\` est écrite entre guillemets doubles (`\"` et `\\` échappés).
+```
+app/            code PHP : Core (noyau), Controllers, Admin, Modules, vues, textes FR/EN
+database/       migrations SQL, contenu de départ
+frontend/       CSS, JavaScript, polices et images sources
+public/         point d'entrée web et dossier des téléversements
+scripts/        développement, build, déploiement
+tests/          tests PHP
+docs/           contrats techniques, rapport de contenu, guide de mise en ligne
+```
 
-## Premier administrateur
+Les choix techniques détaillés (routes, schéma SQL, API du noyau, clés de langue, jetons CSS) sont dans [`docs/CONTRACTS.md`](docs/CONTRACTS.md).
 
-1. Ouvrir `<APP_URL>/admin/setup?token=<SETUP_TOKEN>` (le jeton est dans le `.env` correspondant).
-2. Créer le compte `admin` (bureau). La page se désactive dès qu'un compte existe.
-3. Se connecter sur `<APP_URL>/admin`. Les rédacteurs (`editor`) se créent ensuite depuis l'interface.
+## Configuration
 
-## Fichiers que vous créez vous-même
+Le modèle est [`.env.example`](.env.example). Les fichiers `.env*` ne sont jamais versionnés. Les réglages principaux :
 
-Aucun identifiant n'est dans le dépôt. Créez à la racine (ils sont ignorés par git) :
+- `APP_ENV`, `APP_DEBUG`, `APP_URL` (son chemin sert de préfixe si le site est dans un sous-dossier), `APP_KEY`, `SETUP_TOKEN`, `SITE_NOINDEX`
+- `DB_*` pour la base de données
+- `MAIL_*` pour les notifications
+- `ORG_*` pour l'identité de l'association affichée dans les mentions légales (les champs vides sont masqués)
 
-**`.env.deploy`** : accès FTP OVH
+Une valeur contenant des espaces, `#`, `"` ou `\` s'écrit entre guillemets doubles.
+
+## Mise en ligne
+
+Le site de test est envoyé en FTPS dans un sous-dossier dédié. Les identifiants d'accès ne sont jamais dans le dépôt : ils se placent dans un fichier `.env.deploy` à la racine, ignoré par git.
 
 ```ini
 FTP_HOST=<hôte FTP de l'hébergeur>
-FTP_USER=<identifiant FTP>
-FTP_PASSWORD=<votre mot de passe FTP>
+FTP_USER=<identifiant>
+FTP_PASSWORD=<mot de passe>
 FTP_SECURE=true
 FTP_REMOTE_DIR=/www/test
 ```
 
-- `FTP_SECURE=true` : FTPS explicite (par défaut). Le FTP en clair est refusé sauf `FTP_SECURE=false` **et** option `--allow-plain-ftp`.
-- `FTP_INSECURE_TLS=true` (optionnel, **jamais par défaut**) : ne vérifie pas le certificat du serveur. À réserver à un dépannage ponctuel (voir Dépannage).
-- `FTP_PORT` (optionnel, 21 par défaut).
-
-**`.env.test`** : configuration du site de test, générée sans rien afficher à partir des accès MySQL de WordPress :
-
 ```bash
-node scripts/extract-db-env.mjs                      # lit ../SiTE/_/www/wp-config.php
-node scripts/extract-db-env.mjs --wp-config <chemin> # autre emplacement
-node scripts/extract-db-env.mjs --force              # écraser un .env.test existant
+npm run release                   # construit dist/
+npm run deploy:test -- --dry-run  # simulation
+npm run deploy:test               # envoi réel
+npm run push-env                  # envoie le .env du site de test (au premier envoi, puis à chaque changement)
 ```
 
-Le script écrit `.env.test` (`APP_URL=https://aeroboat-france.com/test`, `APP_KEY` et `SETUP_TOKEN` aléatoires, `DB_DRIVER=mysql`, `DB_PREFIX=abf_`, `APP_ENV=test`, `APP_DEBUG=0`, `SITE_NOINDEX=1`, `ORG_*`), n'affiche **que les noms** des clés et refuse d'écraser sans `--force`.
+Quelques garde-fous :
 
-## Déploiement manuel vers `/www/test/`
+- seuls les fichiers modifiés sont renvoyés, et une interruption se reprend en relançant la commande ;
+- le script ne supprime que ce qu'il a lui-même envoyé, et jamais `storage/`, `public/uploads/` ni `.env` ;
+- la racine du site de production est protégée : le script refuse d'y écrire ;
+- la release échoue si elle contient un secret ou un fichier de configuration sensible.
 
-```bash
-npm run release                          # dist/ (vite build, php -l, contrôle des secrets, RELEASE.json)
-npm run deploy:test -- --dry-run         # simulation : liste ce qui serait envoyé/supprimé
-npm run deploy:test                       # envoi réel
-npm run push-env                          # une première fois, puis à chaque changement de .env.test
-```
+Le workflow GitHub Actions `deploy-test.yml` fait la même chose à chaque push sur `develop`, avec des secrets du dépôt (`FTP_SERVER`, `FTP_USERNAME`, `FTP_PASSWORD`). Le guide pas à pas avec FileZilla est dans [`docs/FILEZILLA.md`](docs/FILEZILLA.md).
 
-Fonctionnement et garde-fous :
+## Étendre le site
 
-- **État par hash** (`.deploy-state-test.json`, ignoré par git) : seuls les fichiers modifiés sont renvoyés ; l'état n'avance qu'après chaque envoi réussi, une interruption se reprend en relançant la commande. Nouvelles tentatives avec temporisation croissante.
-- **Suppression sûre** : seuls les fichiers que ce script a lui-même envoyés peuvent être supprimés ; jamais hors de `FTP_REMOTE_DIR`, jamais `storage/`, `public/uploads/`, `.env`.
-- `storage/.htaccess` et `public/uploads/.htaccess` sont en **création seule** (jamais écrasés ni supprimés). Le contenu de `storage/` et `public/uploads/` (CV, photos téléversées) n'est jamais envoyé.
-- **Garde-fous production** : `FTP_REMOTE_DIR` vide, `/`, `/www`, `/www/` ou hors de `/www/…` : refus. Tout autre nom que `/www/test` exige `--i-know-what-i-am-doing`.
-- `push-env` refuse si `.env.test` contient `DB_PREFIX=mod759_` ou n'est pas ignoré par git (`git check-ignore`).
-- Le premier envoi doit passer par `npm run deploy:test` (il crée `storage/` et `public/uploads/`, que l'action GitHub n'envoie pas).
-- Vérifier une fois que `https://aeroboat-france.com/test/.env` renvoie 403/404 (le `.htaccess` racine doit bloquer les fichiers cachés).
+**Ajouter une langue** : créer `app/lang/<code>.php` à partir de `fr.php` (mêmes clés), déclarer la langue dans `app/routes.php`, ajouter les champs `_<code>` aux contenus en base par une migration, puis lancer `npm test` pour vérifier la parité.
 
-## Déploiement via GitHub
+**Ajouter un module** : créer `app/Modules/<Nom>/` avec un fichier `module.php` (clé, libellé, route, rôles autorisés, contrôleur) et un dossier `views/`. Le menu de l'espace membres le détecte automatiquement.
 
-```bash
-git remote add origin https://github.com/<compte>/aeroboat-france-v2.git
-git push -u origin main develop
-```
+## Données personnelles
 
-Dans GitHub : *Settings → Secrets and variables → Actions → New repository secret* :
-
-| Secret | Valeur |
-|---|---|
-| `FTP_SERVER` | `<hôte FTP de l'hébergeur>` |
-| `FTP_USERNAME` | l'identifiant FTP |
-| `FTP_PASSWORD` | le mot de passe FTP |
-
-- `.github/workflows/ci.yml` : à chaque push/PR, PHP 8.2 + Node 20, `npm ci`, `npm run ci` et tests des scripts.
-- `.github/workflows/deploy-test.yml` : sur push de `develop` ou lancement manuel (*Actions → Déploiement test → Run workflow*) : build de la release puis envoi FTPS de `dist/` vers `/www/test/`, en excluant `storage/**`, `public/uploads/**` et `.env`, sans jamais vider le dossier distant.
-- Le `.env` du serveur reste géré par `npm run push-env` (jamais par GitHub).
-
-## Passer à `test.aeroboat-france.com`
-
-1. OVH Manager → *Web Cloud → Hébergements → Multisite* : ajouter le sous-domaine `test.aeroboat-france.com` avec **dossier racine `test`** (certificat SSL activé).
-2. Dans `.env.test` : `APP_URL=https://test.aeroboat-france.com` (le préfixe `/test` disparaît).
-3. `npm run push-env`, puis vérifier le site et `/admin`.
-
-## Ajouter une langue
-
-1. Créer `app/lang/<code>.php` à partir de `fr.php` (mêmes clés et mêmes paramètres `:nom`, le français reste la référence).
-2. Déclarer la langue dans `app/routes.php` (chemins localisés) et dans la liste des langues du Core.
-3. Ajouter les champs `_<code>` aux contenus éditables en base (migration `database/migrations/NNN_*.sql`) et à `seed-content.php`.
-4. `npm test` : la parité des clés doit rester verte.
-
-## Ajouter un module (espace membres)
-
-Créer `app/Modules/<Nom>/` avec `module.php` (retourne `key`, `label`, `icon`, `route` `/admin/modules/<key>`, `roles`, `controller`, `method`) et un dossier `views/`. Le menu de l'admin le découvre automatiquement (voir `docs/CONTRACTS.md` §7).
-
-## Purge RGPD
-
-Les candidatures (`applications`) et messages (`messages`) sont stockés en base ; les CV PDF dans `storage/cv/` (hors web). Pour une demande d'effacement : supprimer la ligne depuis l'admin, supprimer le PDF correspondant de `storage/cv/` (FTP), puis vérifier le journal. Les IP ne sont jamais conservées en clair (hachées avec `APP_KEY`). Prévoir une purge périodique des candidatures traitées (durée de conservation à fixer par le bureau).
+Les candidatures et les messages sont stockés en base, les CV dans `storage/cv/` (hors du web). Pour une demande d'effacement, supprimer l'entrée depuis l'admin, supprimer le CV correspondant, puis vérifier le journal. Les adresses IP ne sont jamais conservées en clair. La durée de conservation des candidatures traitées reste à fixer par le bureau.
 
 ## Dépannage
 
-- **Erreur TLS / certificat FTPS** (`self-signed`, `hostname mismatch`) : OVH présente parfois un certificat au nom du cluster. Vérifier `FTP_HOST`. En dernier recours seulement et pour un envoi ponctuel : `FTP_INSECURE_TLS=true` dans `.env.deploy` (le certificat n'est alors plus vérifié ; retirer la ligne ensuite).
-- **`530 Login incorrect`** : identifiant ou mot de passe FTP erroné (le mot de passe n'est jamais affiché). **Timeout / liste de dossier** : le mode passif peut être bloqué par un pare-feu ou un VPN.
-- **404 sur toutes les pages, ou règles WordPress qui reviennent** : un `.htaccess` WordPress à la racine de `/www/` ne doit pas s'appliquer à `/www/test/`. Le `.htaccess` du site de test (`.htaccess` racine du dépôt) doit gérer lui-même la réécriture ; s'il manque, `npm run release` échoue.
-- **Les mails n'arrivent pas** : le site utilise `mail()` en « best effort » ; la base reste la source de vérité (consulter les messages dans l'admin). Vérifier `MAIL_TO`/`MAIL_FROM` (adresse du domaine) et les spams.
-- **`npm run dev` : PHP introuvable** : `winget install PHP.PHP.8.2`, rouvrir le terminal.
-- **Vite « manifest.json absent » à la release** : `vite.config.js` doit produire `public/assets/.vite/manifest.json` (`build.manifest: true`).
-
-## Fin de mission : changer le mot de passe FTP
-
-Le mot de passe FTP a transité par des outils de développement : **changez-le dans OVH Manager** (*Hébergements → FTP-SSH → Modifier le mot de passe*) à la fin de la mission, mettez à jour `.env.deploy` et le secret GitHub `FTP_PASSWORD`. Même précaution pour le mot de passe MySQL si `wp-config.php` a été manipulé.
+- **Certificat FTPS refusé** : vérifier `FTP_HOST`. En dernier recours et pour un envoi ponctuel, `FTP_INSECURE_TLS=true` désactive la vérification du certificat (à retirer ensuite).
+- **`530 Login incorrect`** : identifiant ou mot de passe FTP erroné.
+- **Délai dépassé lors de l'envoi** : le mode passif peut être bloqué par un pare-feu ou un VPN.
+- **404 sur toutes les pages** : un `.htaccess` d'un site parent peut interférer. Le `.htaccess` du dépôt gère lui-même la réécriture d'adresses.
+- **Les mails n'arrivent pas** : l'envoi est « au mieux ». La base reste la référence, les messages se lisent dans l'admin.
+- **PHP introuvable** : installer PHP 8.2 puis rouvrir le terminal.
