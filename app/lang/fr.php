@@ -57,27 +57,27 @@ return [
     'home' => [
         'hero' => [
             'title' => 'Aéroboat France',
-            'lead' => 'Nous concevons et construisons des maquettes à effet de sol, avec une aérodynamique, des structures et une instrumentation innovantes, toujours en quête de performance.',
+            'lead' => 'Nous concevons et construisons des maquettes à effet de sol, avec l’envie constante d’améliorer leur aérodynamique, leurs structures et leur instrumentation.',
             'cta_primary' => 'Rejoindre l’équipe',
             'cta_secondary' => 'Nous contacter',
         ],
         'about' => [
             'kicker' => 'À la poursuite de l’effet de sol',
             'title' => 'À propos',
-            'text' => 'Née d’un projet à deux élèves en fin de lycée et inspirée des aéronefs soviétiques à effet de sol (les ékranoplanes), Aéroboat France a depuis construit plusieurs générations de maquettes pour comprendre quelles conceptions exploitent le mieux l’effet de sol. Fondée à l’été 2025 par trois étudiants, nous concevons, testons et mesurons, avec un double objectif : rendre cette physique accessible et ludique, et continuer à en explorer l’usage pratique, en réunissant passionnés d’aéronautique et de modélisme.',
+            'text' => 'Tout est parti d’un projet à deux élèves, en fin de lycée, inspirés par les aéronefs soviétiques à effet de sol, les ékranoplanes. Depuis, nous avons construit plusieurs maquettes pour comprendre quelles formes tirent le mieux parti de l’effet de sol. L’association a été fondée à l’été 2025 par trois étudiants. Nous concevons, testons et mesurons, avec deux envies : rendre cette physique accessible et amusante, et voir jusqu’où elle peut servir. Passionné d’aéronautique ou de modélisme, vous êtes le bienvenu.',
         ],
         'founders' => [
             'title' => 'Membres fondateurs',
-            'text' => 'Amis réunis par une passion commune pour l’aéromodélisme, nos trois fondateurs ont uni leurs forces en avril 2025 pour créer une structure dédiée aux aéronefs à effet de sol. Notre première apparition publique a eu lieu au Salon du Bourget (Paris Air Show) 2025.',
+            'text' => 'Trois amis réunis par la même passion pour l’aéromodélisme. Nous nous sommes associés en avril 2025 pour créer une structure dédiée aux aéronefs à effet de sol, et nous avons fait notre première apparition publique au Salon du Bourget (Paris Air Show) 2025.',
         ],
         'contact' => [
             'title' => 'Nous contacter',
-            'text' => 'Rejoignez-nous, devenez partenaire ou échangeons simplement autour des maquettes à effet de sol : écrivez-nous à tout moment.',
+            'text' => 'Envie de nous rejoindre, de devenir partenaire ou simplement de parler d’effet de sol ? Écrivez-nous, quand vous voulez.',
             'button' => 'Écrire à l’équipe',
         ],
         'cta' => [
             'title' => 'Envie de rejoindre l’aventure ?',
-            'text' => 'Vous êtes passionné d’aéronautique, de modélisme ou d’effet de sol ? Parlez-nous de vous.',
+            'text' => 'Passionné d’aéronautique, de modélisme ou d’effet de sol ? Dites-nous qui vous êtes.',
             'button' => 'Nous rejoindre',
         ],
     ],
@@ -86,69 +86,69 @@ return [
         'hero' => [
             'kicker' => 'Projet V6',
             'title' => 'Vers une nouvelle génération d’engins à effet de sol',
-            'lead' => 'Depuis six ans, Aéroboat France développe des prototypes d’aéronefs à effet de sol. Après avoir fait voler et testé avec succès des modèles expérimentaux (HV3 et HV4), nous lançons le développement de la V6, un modèle pensé comme une véritable étape dans notre parcours.',
+            'lead' => 'Depuis six ans, Aéroboat France développe des prototypes d’aéronefs à effet de sol. Après les essais en vol réussis des modèles HV3 et HV4, nous lançons la V6, une étape importante dans notre parcours.',
         ],
         'why' => [
             'title' => 'Pourquoi une V6 ?',
-            'text' => 'Chaque prototype construit a été pour nous une occasion d’apprendre. L’objectif de la V6 est simple à énoncer, mais ambitieux : construire un engin à effet de sol fiable, performant et modulaire, capable de repousser les limites actuelles de la technologie de l’effet de sol.',
-            'v3' => 'La HV3 nous a appris l’importance d’une structure rigide et de flotteurs correctement dimensionnés.',
-            'v4' => 'La HV4 a validé plusieurs solutions techniques (forme de l’empennage, flottabilité, facilité d’assemblage), mais elle a aussi révélé certaines limites, notamment en matière d’étanchéité, de rigidité de l’aile et de capacité d’emport.',
-            'v6' => 'La V6 est donc pensée comme une synthèse : elle s’appuie sur les réussites passées, corrige les défauts précédents et ouvre la voie à de nouvelles innovations.',
+            'text' => 'Chaque prototype nous a appris quelque chose. L’objectif de la V6 est simple à dire, moins à réaliser : construire un engin à effet de sol fiable, performant et modulaire, qui repousse les limites actuelles de cette technologie.',
+            'v3' => 'La HV3 nous a appris qu’il faut une structure rigide et des flotteurs bien dimensionnés.',
+            'v4' => 'La HV4 a validé plusieurs solutions (forme de l’empennage, flottabilité, facilité d’assemblage), mais elle a aussi montré ses limites, surtout sur l’étanchéité, la rigidité de l’aile et la charge utile.',
+            'v6' => 'La V6 est donc une synthèse. Elle garde ce qui a marché, corrige ce qui a posé problème et nous permet d’essayer de nouvelles idées.',
         ],
         'objectives' => [
             'title' => 'Nos objectifs',
             'items' => [
-                ['title' => 'Performance aérodynamique', 'text' => 'Optimiser la géométrie de l’aile (allongement, dièdre, flèche) et explorer de nouvelles configurations : winglets orientés vers le bas, flotteurs intégrés.'],
-                ['title' => 'Polyvalence', 'text' => 'Concevoir un modèle capable de voler efficacement dans et hors de l’effet de sol, afin de valider nos calculs et d’élargir son domaine d’utilisation.'],
-                ['title' => 'Fiabilité et simplicité', 'text' => 'Garantir un montage rapide (moins de 30 minutes), des liaisons robustes et une meilleure rigidité d’ensemble.'],
-                ['title' => 'Flottabilité optimisée', 'text' => 'Conserver une densité globale inférieure à celle de l’eau grâce à des mousses étanches, et assurer une ligne de flottaison basse même en présence de vagues.'],
-                ['title' => 'Charge utile accrue', 'text' => 'Augmenter la capacité d’emport tout en maintenant une masse à vide inférieure à 2 kg : un véritable défi de conception légère.'],
+                ['title' => 'Performance aérodynamique', 'text' => 'Optimiser la géométrie de l’aile (allongement, dièdre, flèche) et tester de nouvelles configurations, comme des winglets orientés vers le bas ou des flotteurs intégrés.'],
+                ['title' => 'Polyvalence', 'text' => 'Concevoir un modèle capable de voler aussi bien dans l’effet de sol qu’en dehors, pour valider nos calculs et élargir ses usages.'],
+                ['title' => 'Fiabilité et simplicité', 'text' => 'Un montage rapide, en moins de 30 minutes, des liaisons robustes et une structure plus rigide.'],
+                ['title' => 'Flottabilité optimisée', 'text' => 'Garder une densité globale inférieure à celle de l’eau grâce à des mousses étanches, avec une ligne de flottaison basse même dans les vagues.'],
+                ['title' => 'Charge utile accrue', 'text' => 'Emporter davantage de charge tout en gardant une masse à vide inférieure à 2 kg. Un vrai défi de construction légère.'],
             ],
         ],
         'v6' => [
             'title' => 'Les innovations de la V6',
             'lead' => 'Les principaux choix de conception retenus à ce stade du projet.',
             'items' => [
-                ['title' => 'Ailes basses', 'text' => 'Des ailes de 100 cm de chaque côté, avec une corde de 50 cm, pour maximiser l’effet de sol tout en conservant une bonne stabilité.'],
-                ['title' => 'Empennage en T en carbone', 'text' => 'Conçu pour rester rigide tout en évitant les perturbations du sillage de l’aile.'],
-                ['title' => 'Mousses étanches', 'text' => 'Une densité globale inférieure à celle de l’eau, pour une ligne de flottaison basse même dans les vagues.'],
-                ['title' => 'Train d’atterrissage amovible', 'text' => 'Étudié pour préserver l’étanchéité.'],
-                ['title' => 'Étanchéité renforcée', 'text' => 'Des jonctions d’aile et un cockpit électronique protégés par des solutions d’inspiration nautique.'],
-                ['title' => 'Flotteurs carénés', 'text' => 'Pour améliorer l’hydrodynamique et réduire les projections d’eau, avec des cavités internes qui évitent tout risque de naufrage.'],
-                ['title' => 'Incidence réglable en vol', 'text' => 'Une piste d’innovation qui permettrait d’adapter la portance aux différentes phases de vol.'],
+                ['title' => 'Ailes basses', 'text' => 'Des ailes de 100 cm de chaque côté, avec une corde de 50 cm, pour tirer le maximum de l’effet de sol tout en restant stables.'],
+                ['title' => 'Empennage en T en carbone', 'text' => 'Il doit rester rigide sans subir les perturbations du sillage de l’aile.'],
+                ['title' => 'Mousses étanches', 'text' => 'Une densité globale inférieure à celle de l’eau, pour flotter bas même dans les vagues.'],
+                ['title' => 'Train d’atterrissage amovible', 'text' => 'Pensé pour préserver l’étanchéité.'],
+                ['title' => 'Étanchéité renforcée', 'text' => 'Les jonctions d’aile et le cockpit électronique sont protégés par des solutions inspirées du monde nautique.'],
+                ['title' => 'Flotteurs carénés', 'text' => 'Pour mieux glisser et limiter les projections d’eau, avec des cavités internes qui évitent tout risque de couler.'],
+                ['title' => 'Incidence réglable en vol', 'text' => 'Une piste que nous explorons : régler la portance selon la phase de vol.'],
             ],
             'note_html' => 'La V6 est <strong>en cours de conception</strong> : ces choix peuvent encore évoluer.',
         ],
         'electronics' => [
             'title' => 'Une électronique avancée',
-            'text' => 'La V6 repose sur une architecture à double calculateur, avec enregistrements automatiques sur carte SD. Nous étudions aussi l’utilisation de moteurs pour manœuvrer à l’arrêt.',
+            'text' => 'La V6 repose sur une architecture à double calculateur, avec enregistrement automatique sur carte SD. Nous étudions aussi des moteurs pour manœuvrer à l’arrêt.',
         ],
         'timeline' => [
             'title' => 'Les étapes du projet',
             'items' => [
-                ['date' => 'Étape 1', 'title' => 'HV3', 'text' => 'Premier prototype expérimental, testé en vol. Il a mis en évidence l’importance d’une structure rigide et de flotteurs bien dimensionnés.', 'status' => 'done'],
-                ['date' => 'Étape 2', 'title' => 'HV4', 'text' => 'Deuxième prototype expérimental, testé en vol. Il a validé plusieurs solutions et révélé des limites à corriger.', 'status' => 'done'],
-                ['date' => 'Étape 3', 'title' => 'V6 : conception', 'text' => 'Définition de la nouvelle génération de maquettes, en synthèse des acquis des prototypes précédents.', 'status' => 'current'],
-                ['date' => 'Étape 4', 'title' => 'V6 : construction et essais', 'text' => 'Mise en œuvre et validation de nos calculs, pour élargir le domaine d’utilisation du modèle.', 'status' => 'planned'],
+                ['date' => 'Étape 1', 'title' => 'HV3', 'text' => 'Premier prototype expérimental, testé en vol. Il nous a montré l’importance d’une structure rigide et de flotteurs bien dimensionnés.', 'status' => 'done'],
+                ['date' => 'Étape 2', 'title' => 'HV4', 'text' => 'Deuxième prototype expérimental, testé en vol. Il a validé plusieurs solutions et fait apparaître des limites à corriger.', 'status' => 'done'],
+                ['date' => 'Étape 3', 'title' => 'V6 : conception', 'text' => 'Nous définissons la nouvelle génération de maquettes en nous appuyant sur ce que les prototypes précédents nous ont appris.', 'status' => 'current'],
+                ['date' => 'Étape 4', 'title' => 'V6 : construction et essais', 'text' => 'Construction, puis validation de nos calculs pour élargir les usages du modèle.', 'status' => 'planned'],
             ],
         ],
         'gallery' => [
             'title' => 'Galerie',
-            'lead' => 'Essais sur l’eau, construction, simulations numériques et rendus 3D : le projet en images.',
+            'lead' => 'Essais sur l’eau, atelier, simulations et rendus 3D : voici le projet en images.',
         ],
     ],
 
     'team' => [
         'hero' => [
             'title' => 'L’équipe',
-            'lead' => 'Celles et ceux qui conçoivent, construisent et testent les maquettes d’Aéroboat France.',
+            'lead' => 'Les personnes qui conçoivent, construisent et testent les maquettes d’Aéroboat France.',
         ],
         'who' => [
             'title' => 'Qui sommes-nous ?',
-            'text' => 'Nous sommes une équipe composée principalement d’étudiants, passionnés d’aéronautique, de maquettisme et de science de l’effet de sol. Nous concevons, construisons et testons des maquettes de grande envergure pour approfondir nos connaissances par la pratique.',
+            'text' => 'Nous sommes une équipe composée surtout d’étudiants, passionnés d’aéronautique, de maquettisme et de science de l’effet de sol. Nous concevons, construisons et testons des maquettes de grande envergure, parce que c’est en mettant les mains dedans qu’on comprend vraiment.',
         ],
         'role_default' => 'Membre',
-        'photo_note' => 'Chaque photo est publiée avec l’accord de la personne. Pour la modifier ou la retirer, écrivez-nous ou utilisez la page « Exercer mes droits ».',
+        'photo_note' => 'Chaque photo est publiée avec l’accord de la personne. Pour la modifier ou la retirer, écrivez-nous ou passez par la page « Exercer mes droits ».',
     ],
 
     'partners' => [
@@ -168,14 +168,14 @@ return [
         ],
         'dx' => [
             'title' => '3DEXPERIENCE',
-            'text' => 'Nous remercions chaleureusement 3DEXPERIENCE pour son soutien depuis 4 ans. Grâce à son engagement, nous bénéficions chaque année d’un accompagnement technique précieux et, en novembre, de licences pour tous les membres de l’association qui le souhaitent (20 licences disponibles). Ce soutien continu nous permet de réaliser nos projets avec des outils de niveau professionnel et de garantir la qualité de nos développements.',
+            'text' => 'Merci à 3DEXPERIENCE, qui nous soutient depuis 4 ans. Nous bénéficions chaque année d’un accompagnement technique et, en novembre, de licences pour tous les membres de l’association qui le souhaitent (20 licences disponibles). Grâce à ces outils de niveau professionnel, nous menons nos projets avec sérieux.',
             'licenses_label' => '20 licences pour les membres',
             'years_label' => '4 ans de soutien',
             'others_label' => '3DEXPERIENCE soutient aussi d’autres associations.',
         ],
         'become' => [
             'title' => 'Devenir partenaire',
-            'text' => 'Vous souhaitez soutenir un projet étudiant d’aéronautique ? Écrivez-nous, nous serons ravis d’en discuter.',
+            'text' => 'Vous voulez soutenir un projet étudiant d’aéronautique ? Écrivez-nous, nous en discuterons avec plaisir.',
             'button' => 'Nous contacter',
         ],
         'visit' => 'Visiter le site',
@@ -255,7 +255,7 @@ return [
     'rights' => [
         'hero' => [
             'title' => 'Exercer mes droits',
-            'lead' => 'Accès, rectification, effacement, limitation, opposition, portabilité : utilisez ce formulaire pour exercer vos droits sur vos données personnelles.',
+            'lead' => 'Vous pouvez demander l’accès à vos données, leur rectification, leur effacement ou leur limitation, vous opposer à leur traitement ou demander leur portabilité. Ce formulaire sert à ça.',
         ],
         'fields' => [
             'name' => 'Nom',

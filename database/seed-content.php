@@ -89,57 +89,57 @@ $partners = [
 ];
 
 $bodyFr = <<<'MD'
-Aéroboat France entre dans une nouvelle étape : nous lançons le développement de la **V6**, un modèle pensé comme une véritable étape dans notre parcours.
+Aéroboat France passe à l’étape suivante : nous lançons le développement de la **V6**, un modèle pensé comme un vrai jalon dans notre parcours.
 
-Après plusieurs années de développement de prototypes d’aéronefs à effet de sol, et après avoir fait voler et testé avec succès les modèles expérimentaux HV3 et HV4, nous voulons construire un engin à effet de sol fiable, performant et modulaire, capable de repousser les limites actuelles de la technologie de l’effet de sol.
+Après plusieurs années de prototypes à effet de sol, et après avoir fait voler et testé les modèles expérimentaux HV3 et HV4, nous voulons construire un engin fiable, performant et modulaire, qui repousse les limites actuelles de cette technologie.
 
-## Ce que nous ont appris les prototypes
+## Ce que les prototypes nous ont appris
 
-- La HV3 nous a appris l’importance d’une structure rigide et de flotteurs correctement dimensionnés.
-- La HV4 a validé plusieurs solutions techniques (forme de l’empennage, flottabilité, facilité d’assemblage), mais elle a aussi révélé des limites en matière d’étanchéité, de rigidité de l’aile et de capacité d’emport.
+- La HV3 nous a montré qu’il faut une structure rigide et des flotteurs bien dimensionnés.
+- La HV4 a validé plusieurs solutions (forme de l’empennage, flottabilité, facilité d’assemblage), mais elle a aussi montré ses limites sur l’étanchéité, la rigidité de l’aile et la charge utile.
 
-La V6 est pensée comme une synthèse : elle s’appuie sur les réussites passées, corrige les défauts précédents et ouvre la voie à de nouvelles innovations.
+La V6 est une synthèse : elle garde ce qui a marché, corrige ce qui a posé problème et nous permet d’essayer de nouvelles idées.
 
 ## Ce que nous visons
 
-- Optimiser la géométrie de l’aile et explorer de nouvelles configurations.
-- Voler efficacement dans et hors de l’effet de sol.
-- Garantir un montage rapide (moins de 30 minutes) et une meilleure rigidité d’ensemble.
-- Conserver une densité globale inférieure à celle de l’eau grâce à des mousses étanches.
-- Augmenter la capacité d’emport tout en maintenant une masse à vide inférieure à 2 kg.
+- Optimiser la géométrie de l’aile et tester de nouvelles configurations.
+- Voler aussi bien dans l’effet de sol qu’en dehors.
+- Monter l’ensemble en moins de 30 minutes, avec une structure plus rigide.
+- Rester plus léger que l’eau grâce à des mousses étanches.
+- Emporter davantage de charge, avec une masse à vide inférieure à 2 kg.
 
 ## Les choix de conception à ce stade
 
-Des ailes basses, un empennage en T en carbone, un train d’atterrissage amovible, une étanchéité renforcée par des solutions d’inspiration nautique, des flotteurs carénés à cavités internes et une incidence réglable en vol, qui reste une piste d’innovation. Côté électronique, la V6 repose sur une architecture à double calculateur, avec enregistrements automatiques sur carte SD.
+Des ailes basses, un empennage en T en carbone, un train d’atterrissage amovible, une étanchéité renforcée par des solutions inspirées du monde nautique, des flotteurs carénés à cavités internes et une incidence réglable en vol, qui reste pour l’instant une piste. Côté électronique, la V6 repose sur une architecture à double calculateur, avec enregistrement automatique sur carte SD, et nous étudions des moteurs pour manœuvrer à l’arrêt.
 
-Le projet est en cours de conception : ces choix peuvent encore évoluer. Retrouvez le détail sur la page du projet, et n’hésitez pas à nous écrire si vous souhaitez nous rejoindre.
+Le projet est en cours de conception et ces choix peuvent encore changer. Retrouvez le détail sur la page du projet, et écrivez-nous si vous voulez nous rejoindre.
 MD;
 
 $bodyEn = <<<'MD'
-Aéroboat France is entering a new stage: we are launching the development of the **V6**, a model designed as a true milestone in our journey.
+Aéroboat France is moving on to the next step: we are launching the development of the **V6**, a model designed as a real milestone in our journey.
 
-After several years of developing ground-effect aircraft prototypes, and after successfully flying and testing the experimental HV3 and HV4 models, we want to build a reliable, high-performance and modular ground-effect craft capable of pushing the current limits of ground-effect technology.
+After several years of ground-effect prototypes, and after flying and testing the experimental HV3 and HV4 models, we want to build a reliable, high-performance and modular craft that pushes the current limits of the technology.
 
 ## What the prototypes taught us
 
-- The HV3 taught us the importance of a rigid structure and properly sized floats.
-- The HV4 validated several technical solutions (tail design, buoyancy, ease of assembly), but it also revealed limitations regarding waterproofing, wing rigidity and payload capacity.
+- The HV3 showed us that we need a rigid structure and properly sized floats.
+- The HV4 validated several solutions (tail design, buoyancy, ease of assembly), but it also showed its limits on waterproofing, wing rigidity and payload.
 
-The V6 is conceived as a synthesis: it builds on past successes, corrects previous shortcomings and paves the way for new innovations.
+The V6 is a synthesis: it keeps what worked, fixes what caused problems and lets us try new ideas.
 
 ## What we are aiming for
 
-- Optimise the wing geometry and explore new configurations.
-- Fly efficiently both in and out of ground effect.
-- Ensure quick assembly (under 30 minutes) and improved overall stiffness.
-- Keep an overall density lower than that of water by using watertight foams.
-- Increase the carrying capacity while keeping the empty weight under 2 kg.
+- Optimise the wing geometry and test new configurations.
+- Fly both in and out of ground effect.
+- Assemble everything in under 30 minutes, with a stiffer structure.
+- Stay lighter than water thanks to watertight foams.
+- Carry more payload, with an empty weight under 2 kg.
 
 ## Design choices at this stage
 
-Low wings, a carbon-fibre T-tail, removable landing gear, enhanced watertightness through solutions inspired by nautical engineering, streamlined floats with internal cavities and an in-flight adjustable angle of incidence, which remains an innovation pathway. On the electronics side, the V6 relies on a dual-computer architecture, with automatic recordings on an SD card.
+Low wings, a carbon-fibre T-tail, removable landing gear, watertightness improved with solutions inspired by boat building, streamlined floats with internal cavities and an in-flight adjustable angle of incidence, which is still just an idea for now. On the electronics side, the V6 relies on a dual-computer architecture with automatic recording to an SD card, and we are looking at motors to manoeuvre when stationary.
 
-The project is still being designed: these choices may still change. Find the details on the project page, and feel free to write to us if you would like to join us.
+The project is still being designed and these choices may change. Find the details on the project page, and write to us if you would like to join us.
 MD;
 
 $posts = [
@@ -148,8 +148,8 @@ $posts = [
         'slug_en' => 'v6-project-launch',
         'title_fr' => 'Lancement du projet V6',
         'title_en' => 'Launch of the V6 project',
-        'excerpt_fr' => 'Après les essais en vol des modèles HV3 et HV4, Aéroboat France lance le développement de la V6, une nouvelle génération d’engins à effet de sol.',
-        'excerpt_en' => 'After flight-testing the HV3 and HV4 models, Aéroboat France is launching the development of the V6, a new generation of ground-effect craft.',
+        'excerpt_fr' => 'Après les essais en vol des modèles HV3 et HV4, nous lançons la V6, une nouvelle génération d’engins à effet de sol.',
+        'excerpt_en' => 'After the flight tests of the HV3 and HV4 models, we are launching the V6, a new generation of ground-effect craft.',
         'body_fr' => $bodyFr,
         'body_en' => $bodyEn,
         'cover' => 'water-run',

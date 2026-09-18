@@ -52,27 +52,27 @@ return [
     'home' => [
         'hero' => [
             'title' => 'Aéroboat France',
-            'lead' => 'We design and build ground-effect scale models with innovative aerodynamics, structures, and instrumentation—always in pursuit of performance.',
+            'lead' => 'We design and build ground-effect scale models, and we keep looking for ways to improve their aerodynamics, structures and instrumentation.',
             'cta_primary' => 'Join the team',
             'cta_secondary' => 'Contact us',
         ],
         'about' => [
             'kicker' => 'Chasing ground effect',
             'title' => 'About us',
-            'text' => 'Born from a two-student project at the end of high school and inspired by Soviet ground-effect aircraft (ekranoplans), Aéroboat France has since built multiple scale iterations to see which designs exploit ground effect best. Founded in summer 2025 by three students, we now design, test, and measure—with a dual aim: make this physics accessible and fun, and keep pushing its practical use—bringing together aeronautics and model-making enthusiasts.',
+            'text' => 'It all started as a two-student project at the end of high school, inspired by Soviet ground-effect aircraft, the ekranoplans. Since then we have built several scale models to find out which shapes make the best use of ground effect. The association was founded in the summer of 2025 by three students. We design, test and measure, with two goals: make this physics accessible and fun, and see how far it can be put to practical use. If you love aeronautics or model-making, you are welcome.',
         ],
         'founders' => [
             'title' => 'Founding members',
-            'text' => 'Friends with a shared passion for aeromodelling, our three founders joined forces in April 2025 to create a structure dedicated to ground-effect aircraft. We made our first public appearance at the 2025 Paris Air Show (Salon du Bourget).',
+            'text' => 'Three friends with the same passion for aeromodelling. We joined forces in April 2025 to create a structure dedicated to ground-effect aircraft, and we made our first public appearance at the 2025 Paris Air Show (Salon du Bourget).',
         ],
         'contact' => [
             'title' => 'Contact us',
-            'text' => 'Join us, partner with us, or simply exchange ideas about ground-effect models—reach out anytime.',
+            'text' => 'Want to join us, become a partner, or simply talk about ground effect? Write to us anytime.',
             'button' => 'Write to the team',
         ],
         'cta' => [
             'title' => 'Want to join the adventure?',
-            'text' => 'Are you passionate about aeronautics, model making or ground effect? Tell us about yourself.',
+            'text' => 'Into aeronautics, model-making or ground effect? Tell us who you are.',
             'button' => 'Join us',
         ],
     ],
@@ -81,55 +81,55 @@ return [
         'hero' => [
             'kicker' => 'V6 project',
             'title' => 'Toward a new generation of ground-effect craft',
-            'lead' => 'For six years, Aéroboat France has been developing ground-effect aircraft prototypes. After successfully flying and testing experimental models (HV3 and HV4), we are launching the development of the V6, a model designed as a true milestone in our journey.',
+            'lead' => 'For six years, Aéroboat France has been developing ground-effect aircraft prototypes. After the successful flight tests of the HV3 and HV4 models, we are launching the V6, an important step in our journey.',
         ],
         'why' => [
             'title' => 'Why a V6?',
-            'text' => 'Each prototype we have built has been an opportunity for us to learn. The objective of the V6 is simple to state but ambitious to achieve: to build a reliable, high-performance and modular ground-effect craft capable of pushing the current limits of ground-effect technology.',
-            'v3' => 'The HV3 taught us the importance of a rigid structure and properly sized floats.',
-            'v4' => 'The HV4 validated several technical solutions (tail design, buoyancy and ease of assembly), but it also revealed certain limitations, particularly regarding waterproofing, wing rigidity and payload capacity.',
-            'v6' => 'The V6 is therefore conceived as a synthesis: it builds on past successes, corrects previous shortcomings and paves the way for new innovations.',
+            'text' => 'Every prototype has taught us something. The goal of the V6 is easy to state and harder to achieve: build a reliable, high-performance and modular ground-effect craft that pushes the current limits of the technology.',
+            'v3' => 'The HV3 taught us that we need a rigid structure and properly sized floats.',
+            'v4' => 'The HV4 validated several solutions (tail design, buoyancy, ease of assembly), but it also showed its limits, mainly on waterproofing, wing rigidity and payload.',
+            'v6' => 'The V6 is therefore a synthesis. It keeps what worked, fixes what caused problems and lets us try new ideas.',
         ],
         'objectives' => [
             'title' => 'Our objectives',
             'items' => [
-                ['title' => 'Aerodynamic performance', 'text' => 'Optimise the wing geometry (aspect ratio, dihedral, sweep) and explore new configurations: downward winglets and integrated floats.'],
-                ['title' => 'Versatility', 'text' => 'Design a model able to fly efficiently both in and out of ground effect, in order to validate our calculations and widen its range of use.'],
-                ['title' => 'Reliability and simplicity', 'text' => 'Ensure quick assembly (under 30 minutes), robust connections and improved overall stiffness.'],
-                ['title' => 'Optimised buoyancy', 'text' => 'Keep an overall density lower than that of water by using watertight foams, and ensure a low waterline even in the presence of waves.'],
-                ['title' => 'Increased payload', 'text' => 'Increase the carrying capacity while keeping the empty weight under 2 kg: a true challenge in lightweight design.'],
+                ['title' => 'Aerodynamic performance', 'text' => 'Optimise the wing geometry (aspect ratio, dihedral, sweep) and test new configurations, such as downward winglets or integrated floats.'],
+                ['title' => 'Versatility', 'text' => 'Design a model that can fly both in and out of ground effect, to validate our calculations and widen its uses.'],
+                ['title' => 'Reliability and simplicity', 'text' => 'Quick assembly in under 30 minutes, robust connections and a stiffer structure.'],
+                ['title' => 'Optimised buoyancy', 'text' => 'Keep an overall density lower than water thanks to watertight foams, with a low waterline even in waves.'],
+                ['title' => 'Increased payload', 'text' => 'Carry more payload while keeping the empty weight under 2 kg. A real lightweight-design challenge.'],
             ],
         ],
         'v6' => [
             'title' => 'Innovations of the V6',
             'lead' => 'The main design choices made at this stage of the project.',
             'items' => [
-                ['title' => 'Low wings', 'text' => 'Wings of 100 cm on each side, with a 50 cm chord, to maximise ground effect while maintaining good stability.'],
-                ['title' => 'Carbon-fibre T-tail', 'text' => 'Designed to remain rigid while avoiding disturbances from the wing’s wake.'],
-                ['title' => 'Watertight foams', 'text' => 'An overall density lower than that of water, for a low waterline even in waves.'],
-                ['title' => 'Removable landing gear', 'text' => 'Engineered to preserve watertightness.'],
-                ['title' => 'Enhanced watertightness', 'text' => 'Wing joints and the electronics cockpit protected by solutions inspired by nautical engineering.'],
-                ['title' => 'Streamlined floats', 'text' => 'To improve hydrodynamics and reduce water spray, with internal cavities to prevent the risk of sinking.'],
-                ['title' => 'In-flight adjustable angle of incidence', 'text' => 'An innovation pathway that would allow lift to be adapted to the different phases of flight.'],
+                ['title' => 'Low wings', 'text' => 'Wings of 100 cm on each side with a 50 cm chord, to get the most out of ground effect while staying stable.'],
+                ['title' => 'Carbon-fibre T-tail', 'text' => 'It has to stay rigid without suffering from the disturbed air behind the wing.'],
+                ['title' => 'Watertight foams', 'text' => 'An overall density lower than water, so the craft sits low even in waves.'],
+                ['title' => 'Removable landing gear', 'text' => 'Designed to protect watertightness.'],
+                ['title' => 'Enhanced watertightness', 'text' => 'The wing joints and the electronics cockpit are protected with solutions inspired by boat building.'],
+                ['title' => 'Streamlined floats', 'text' => 'To glide better and limit spray, with internal cavities that prevent any risk of sinking.'],
+                ['title' => 'In-flight adjustable angle of incidence', 'text' => 'A path we are exploring: adjusting lift to the phase of flight.'],
             ],
             'note_html' => 'The V6 is <strong>still being designed</strong>: these choices may still change.',
         ],
         'electronics' => [
             'title' => 'Advanced electronics',
-            'text' => 'The V6 relies on a dual-computer architecture, with automatic recordings on an SD card. We are also considering the use of motors to manoeuvre when stationary.',
+            'text' => 'The V6 relies on a dual-computer architecture, with automatic recording to an SD card. We are also looking at motors to manoeuvre when stationary.',
         ],
         'timeline' => [
             'title' => 'Project milestones',
             'items' => [
-                ['date' => 'Step 1', 'title' => 'HV3', 'text' => 'First experimental prototype, flight-tested. It showed the importance of a rigid structure and well-sized floats.', 'status' => 'done'],
-                ['date' => 'Step 2', 'title' => 'HV4', 'text' => 'Second experimental prototype, flight-tested. It validated several solutions and revealed limitations to correct.', 'status' => 'done'],
-                ['date' => 'Step 3', 'title' => 'V6: design', 'text' => 'Defining the new generation of models, as a synthesis of what the previous prototypes taught us.', 'status' => 'current'],
-                ['date' => 'Step 4', 'title' => 'V6: construction and testing', 'text' => 'Implementation and validation of our calculations, to widen the model’s range of use.', 'status' => 'planned'],
+                ['date' => 'Step 1', 'title' => 'HV3', 'text' => 'First experimental prototype, tested in flight. It showed us how important a rigid structure and well-sized floats are.', 'status' => 'done'],
+                ['date' => 'Step 2', 'title' => 'HV4', 'text' => 'Second experimental prototype, tested in flight. It validated several solutions and revealed limits to fix.', 'status' => 'done'],
+                ['date' => 'Step 3', 'title' => 'V6: design', 'text' => 'We are defining the new generation of models, building on what the earlier prototypes taught us.', 'status' => 'current'],
+                ['date' => 'Step 4', 'title' => 'V6: construction and testing', 'text' => 'Construction, then validation of our calculations to widen the model’s uses.', 'status' => 'planned'],
             ],
         ],
         'gallery' => [
             'title' => 'Gallery',
-            'lead' => 'Water tests, construction, numerical simulations and 3D renders: the project in pictures.',
+            'lead' => 'Water tests, workshop, simulations and 3D renders: the project in pictures.',
         ],
     ],
 
@@ -140,10 +140,10 @@ return [
         ],
         'who' => [
             'title' => 'Who are we?',
-            'text' => 'We are a team made up mainly of students, passionate about aeronautics, model making and the science of ground effect. We design, build and test large-span scale aircraft to deepen our understanding through hands-on work.',
+            'text' => 'We are a team made up mostly of students, passionate about aeronautics, model-making and the science of ground effect. We design, build and test large-span models, because it is by getting our hands dirty that we really understand.',
         ],
         'role_default' => 'Member',
-        'photo_note' => 'Each photo is published with the person’s consent. To change or remove it, write to us or use the “Exercise my rights” page.',
+        'photo_note' => 'Every photo is published with the person’s consent. To change or remove it, write to us or use the “Exercise my rights” page.',
     ],
 
     'partners' => [
@@ -163,14 +163,14 @@ return [
         ],
         'dx' => [
             'title' => '3DEXPERIENCE',
-            'text' => 'We warmly thank 3DEXPERIENCE for its support over the past 4 years. Thanks to its commitment, we receive valuable technical guidance every year and, in November, licences for all interested association members (20 licences available). This continuous support lets us carry out our projects with professional-grade tools and ensure the quality of our developments.',
+            'text' => 'Thank you to 3DEXPERIENCE, which has supported us for 4 years. Every year we receive technical guidance and, in November, licenses for all interested members of the association (20 licenses available). With these professional-grade tools, we carry out our projects seriously.',
             'licenses_label' => '20 licenses for members',
             'years_label' => '4 years of support',
             'others_label' => '3DEXPERIENCE also supports other associations.',
         ],
         'become' => [
             'title' => 'Become a partner',
-            'text' => 'Would you like to support a student aeronautics project? Write to us, we would be glad to talk.',
+            'text' => 'Want to support a student aeronautics project? Write to us, we would be glad to talk about it.',
             'button' => 'Contact us',
         ],
         'visit' => 'Visit website',
@@ -250,7 +250,7 @@ return [
     'rights' => [
         'hero' => [
             'title' => 'Exercise my rights',
-            'lead' => 'Access, rectification, erasure, restriction, objection, portability: use this form to exercise your rights over your personal data.',
+            'lead' => 'You can ask for access to your data, have it corrected or erased, restrict its use, object to its processing or request its portability. This form is for that.',
         ],
         'fields' => [
             'name' => 'Name',
